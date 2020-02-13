@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 return [
     'baseUrl' => 'http://localhost:3000/',
     'production' => false,
-    'siteName' => 'DKanen\'s Blog - Dev',
+    'siteName' => 'David\'s Blog',
     'siteDescription' => 'A great blog you\'ll love to read!',
     'siteAuthor' => 'David Kanenwisher',
 
