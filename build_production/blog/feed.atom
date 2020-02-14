@@ -3,12 +3,153 @@
     <title>David&#039;s Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-13T03:13:53+00:00</updated>
+    <updated>2020-02-14T03:10:25+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/single-expression-functions</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/single-expression-functions" />
+    <title>Single Expression Functions</title>
+    <published>2020-02-13T00:00:00+00:00</published>
+    <updated>2020-02-13T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">I was listening to Talking Kotlin Kotlin Cookbook. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the......</summary>
+    <content type="html"><![CDATA[
+        <p>I was listening to Talking Kotlin <a href="https://pca.st/09ybe338">Kotlin Cookbook</a>. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the functions in the Kotlin standard library are implemented as Single Expression Functions. At this point my curiosity had piqued and I had to know more.</p>
+
+<p>I did some rapid googling and found myself staring at Programming Kotlin by Stephen Samuel and Stefan Bocutiu. There was a very short chapter in there on Single Expression Functions but after staring at it for a few minutes I had to try it out.</p>
+
+<p>I've got this dirt simple class that I was able to change from this:</p>
+
+<pre><code class="kotlin">com.dkanen
+
+class Adventurer(val name: String) {
+
+    var location: Int = 0
+
+    fun walk(): Int {
+        return (++location)
+    }
+
+    fun talk(): String {
+        return "You talk to no one in particular."
+    }
+
+    fun listen(): String {
+        return "There is no sound to hear."
+    }
+
+    fun talk(listener: Adventurer): String {
+       return "Talking to yourself may be a sign of genius"
+    }
+
+    fun heard(): String {
+       return "How fair the beets at this establishment?"
+    }
+
+}
+</code></pre>
+
+<p>To this:</p>
+
+<pre><code class="kotlin">com.dkanen
+
+class Adventurer(val name: String) {
+
+    var location: Int = 0
+
+    fun walk(): Int = (++location)
+
+    fun talk(): String = "You talk to no one in particular."
+
+    fun listen(): String = "There is no sound to hear."
+
+    fun talk(listener: Adventurer): String = "Talking to yourself may be a sign of genius"
+
+    fun heard(): String = "How fair the beets at this establishment?"
+
+}
+</code></pre>
+
+<p>Do you see the difference? Pretty neat eh?</p>
+
+<p>What do you think you could use Single Expression Functions to simplify?</p>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://dkanen.scaleticket.net/blog/getting-started-with-jigsaw</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/getting-started-with-jigsaw" />
+    <title>Getting Started With Jigsaw</title>
+    <published>2020-02-13T00:00:00+00:00</published>
+    <updated>2020-02-13T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">I pretty much followed the Jigsaw&#039;s installation guide to get started. I&#039;ll throw in a quick summary here in case you don&#039;t want to have both tabs open:
+
+First, create the project directory: &lt;code&gt;$ mkdir cool-blog&lt;/code&gt;.
+
+Second, install Jigsaw with......</summary>
+    <content type="html"><![CDATA[
+        <p>I pretty much followed the Jigsaw's <a href="https://jigsaw.tighten.co/docs/installation/">installation guide</a> to get started. I'll throw in a quick summary here in case you don't want to have both tabs open:</p>
+
+<p>First, create the project directory: <code>$ mkdir cool-blog</code>.</p>
+
+<p>Second, install Jigsaw with composer:</p>
+
+<pre><code class="bash">$ cd cool-blog
+$ composer require tightenco/jigsaw
+</code></pre>
+
+<p>Finally, initialize your project and make it a blog:</p>
+
+<pre><code>./vendor/bin/jigsaw init blog
+</code></pre>
+
+<p>Then if you want to take a look at what it looks like run this command:</p>
+
+<pre><code class="bash">$ npm run local
+</code></pre>
+
+<p>This creates a <code>build_local</code> directory that allows you to preview your site. Run this command to see what that looks like:</p>
+
+<pre><code class="bash">npm run watch
+</code></pre>
+
+<p>Run watch is great because it shows local changes as you make them.</p>
+
+<p>If you want to change what shows up in the title and the base URL take a look at <code>config.php</code> and <code>config.production.php</code> and make some adjustments.</p>
+
+<p>If you want to see what your blog looks when it's released run this command:</p>
+
+<pre><code class="bash">$ npm run production
+</code></pre>
+
+<p>As for getting it deployed Jigsaw has a great guide for different targets:
+<a href="https://jigsaw.tighten.co/docs/deploying-your-site/">Deploying your site</a></p>
+
+<p>My target was a special system we use at Bushel that utilizes docker. I had commit the <code>build_production</code> folder to make it work like so:</p>
+
+<pre><code class="bash">git add -f build_production &amp;&amp; git commit -m "Build for deploy"
+</code></pre>
+
+<p>I need the -f because the .gitignore file has an entry to ignore everything in the build directory <code>/build_*/</code>.</p>
+
+<p>Then I created a Dockerfile that uses the <code>copy</code> command to copy it to the correct directory:</p>
+
+<pre><code>copy ./build_production/ /var/www/public/
+</code></pre>
+
+<p>Then I deployed it out to the server and you can see the result!</p>
+
+<p>What are you going to write about in Jigsaw?</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/getting-started</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/getting-started" />
     <title>Getting Started</title>
