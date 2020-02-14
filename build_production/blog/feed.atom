@@ -3,7 +3,7 @@
     <title>David&#039;s Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-14T03:10:25+00:00</updated>
+    <updated>2020-02-14T03:33:00+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
@@ -17,7 +17,7 @@
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">I was listening to Talking Kotlin Kotlin Cookbook. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the......</summary>
+    <summary type="html">Many of the functions in the Kotlin standard library are implemented as Single Expression Functions. I started wondering how I could use them in my own code....</summary>
     <content type="html"><![CDATA[
         <p>I was listening to Talking Kotlin <a href="https://pca.st/09ybe338">Kotlin Cookbook</a>. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the functions in the Kotlin standard library are implemented as Single Expression Functions. At this point my curiosity had piqued and I had to know more.</p>
 
@@ -89,13 +89,9 @@ class Adventurer(val name: String) {
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">I pretty much followed the Jigsaw&#039;s installation guide to get started. I&#039;ll throw in a quick summary here in case you don&#039;t want to have both tabs open:
-
-First, create the project directory: &lt;code&gt;$ mkdir cool-blog&lt;/code&gt;.
-
-Second, install Jigsaw with......</summary>
+    <summary type="html">With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw&#039;s installation guide....</summary>
     <content type="html"><![CDATA[
-        <p>I pretty much followed the Jigsaw's <a href="https://jigsaw.tighten.co/docs/installation/">installation guide</a> to get started. I'll throw in a quick summary here in case you don't want to have both tabs open:</p>
+        <p>With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw's <a href="https://jigsaw.tighten.co/docs/installation/">installation guide</a> I'll throw in a quick summary here in case you don't want to have both tabs open:</p>
 
 <p>First, create the project directory: <code>$ mkdir cool-blog</code>.</p>
 

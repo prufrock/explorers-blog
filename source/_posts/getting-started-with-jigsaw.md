@@ -5,9 +5,10 @@ title: Getting Started With Jigsaw
 date: 2020-02-13
 description: You've got some ideas kicking around your heard for a blog. You know how to use Laravel pretty well and want to get to writing things down now! Jigsaw the Laravel based static site generator may be just what you need.
 cover_image: /assets/img/post-cover-image-2.png
+excerpt: With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw's installation guide.
 ---
 
-I pretty much followed the Jigsaw's [installation guide](https://jigsaw.tighten.co/docs/installation/) to get started. I'll throw in a quick summary here in case you don't want to have both tabs open:
+With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw's [installation guide](https://jigsaw.tighten.co/docs/installation/) I'll throw in a quick summary here in case you don't want to have both tabs open:
 
 First, create the project directory: `$ mkdir cool-blog`.
 
