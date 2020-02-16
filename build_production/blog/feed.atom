@@ -3,14 +3,14 @@
     <title>David&#039;s Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-16T04:01:55+00:00</updated>
+    <updated>2020-02-16T04:10:55+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
-    <id>https://dkanen.scaleticket.net/blog/test_events_were_not_received</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/test_events_were_not_received" />
+    <id>https://dkanen.scaleticket.net/blog/test-events-were-not-received</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/test-events-were-not-received" />
     <title>I&#039;ll Receive You Some Test Events!</title>
     <published>2020-02-15T00:00:00+00:00</published>
     <updated>2020-02-15T00:00:00+00:00</updated>
