@@ -3,12 +3,66 @@
     <title>David&#039;s Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-14T03:33:00+00:00</updated>
+    <updated>2020-02-16T04:01:55+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/test_events_were_not_received</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/test_events_were_not_received" />
+    <title>I&#039;ll Receive You Some Test Events!</title>
+    <published>2020-02-15T00:00:00+00:00</published>
+    <updated>2020-02-15T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">I ran into some trouble tonight try to get Intellij to run all my tests. It kept saying &quot;Test events were not received&quot;. I scratched my head and wondered aloud what could be the cause of this....</summary>
+    <content type="html"><![CDATA[
+        <p>I sat down in front of my laptop to learn some GraphQL. I was flipping through my open windows and I discovered I had some uncommitted Kotlin code in the repo where I am learning Kotlin. This wouldn't do. No, this wouldn't do.</p>
+
+<p>I went to commit the code and Intellij helpfully told me there were some warnings that I should review before committing.</p>
+
+<p>"OK", I thought, "probably not that important. I'll just run the tests and if they pass I'll commit." If it only it were that easy...queue Jefferson Airplane cuz we're going down a rabbit hole. Intellij gave me a very understated message in my test runner window "Test events were not received". I was pretty sure this was related to Gradle.</p>
+
+<p>As a quick aside, I don't know much about Gradle yet. I need to know more about Gradle. Eventually I'll be able to understand Gradle. Until then, I fully expect to lean on my knowledgeable co-workers to set up Gradle projects correctly.</p>
+
+<p>Some quick <a href="https://duckduckgo.com">DuckDuckGo</a>'ing and I found there was an answer on StackOverflow.</p>
+
+<p><a href="https://stackoverflow.com/questions/57795263/test-events-were-not-received-when-run-tests-using-intellij">“Test events were not received” when run tests using Intellij</a></p>
+
+<p>I spoke the words, "Yay! An answer to my exact question!"</p>
+
+<p>They recommended switching test runners. You go to "File -> Settings ->Build,Execution, Deployment -> Build Tools -> Gradle" and set the "Run tests using" to "Intellij". This worked for a hot second. Then I got skeptical(this often causes me trouble). "Shouldn't this just work?", I thought, "Gradle test works in my shell. Why not in Intellij?". I fiddled with some settings mostly in the aforementioned window and broke the tests such that I couldn't get them to work anymore.</p>
+
+<p>I got a little despondent at this point. I wondered if I'd ever be able to run all my tests in Intellij without having to grok all of Gradle. I just wanted to get back to learning about GraphQL!</p>
+
+<p>Then I had heard a light bulb "click" and I right clicked on the "test" folder. There I found a "Run "All Tests"" option.</p>
+
+<p>I clicked it.</p>
+
+<p>They all ran. I clicked it again. They all ran. I tried the gradle test task in Intellij. Agony again "Test events were not received". It was different I was starting to understand the pain now.</p>
+
+<p>When I ran via "Run "All Tests"" I noticed that it showed "<default package>" at the top. I don't understand what that means exactly. It made me wonder if I had the packages correct in my tests. I started checking them.</p>
+
+<p>That's when I found it. One of them had the package set to "acceptance". I switched it to "com.dkanen". Then bingo bango it worked from Intellij's gradle test task! Well, or so I thought.</p>
+
+<p>Friends, I have to admit I ran into a wall on this one. I can never get gradle test to work more than once in Intellij without running gradle clean first. It's always like this:</p>
+
+<ol>
+<li>gradle clean</li>
+<li>gradle test</li>
+<li>goto 1</li>
+</ol>
+
+<p>I'm going to live with "Run "All Tests"" for now.</p>
+
+<p>Have you run into "Test events were not received" in Intellij and found a reliable way to fix it?</p>
+
+<p>I'm going back to GraphQL...for now.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/single-expression-functions</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/single-expression-functions" />
     <title>Single Expression Functions</title>
