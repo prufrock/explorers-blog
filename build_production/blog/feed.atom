@@ -3,12 +3,276 @@
     <title>David&#039;s Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-16T04:10:55+00:00</updated>
+    <updated>2020-02-16T19:53:55+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user" />
+    <title>Oh GraphQL, May I Have Some Users?</title>
+    <published>2020-02-16T00:00:00+00:00</published>
+    <updated>2020-02-16T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">Sure GraphQL is straightforward. That doesn&#039;t mean it&#039;s obvious(to me anyway)....</summary>
+    <content type="html"><![CDATA[
+        <p>I've heard GraphQL is easy to pick up. I've done a little reading on the official <a href="https://graphql.org/">GraphQL site</a> and watch some videos on YouTube. I figure I got what I need to get started. I just need a GraphQL server.</p>
+
+<p>I went the through the <a href="https://lighthouse-php.com/tutorial/#installation">tutorial</a> on Lighthouse PHP's website. Well, not the whole thing(yet), just the installation part. I stopped there because I got back the user like in their example.</p>
+
+<p>GraphQL Query for a user</p>
+
+<pre><code class="graphql">{
+  user(id: 1) {
+    id
+    name
+    email
+  }
+}
+</code></pre>
+
+<p>With this result:</p>
+
+<pre><code class="graphql">{
+  "data": {
+    "user": {
+      "id": "1",
+      "name": "Shea Spencer DDS",
+      "email": "ismael.fisher@example.net"
+    }
+  }
+}
+</code></pre>
+
+<p>Notice how the of <strong>shape</strong> of the query and the result are similar? Maybe you're wondering why I said <strong>shape</strong>? It seems to be the fancy way the GraphQL folks like to say that, ignoring the "data" key, the query and the result have the same keys in the same order. Therefore if I add or remove keys from the query I can change what comes back. For instance I can remove "email" from the query.</p>
+
+<p>GraphQL query for user without "email":</p>
+
+<pre><code class="graphql">{
+  user(id: 1) {
+    id
+    name
+  }
+}
+</code></pre>
+
+<p>Result of the GraphQL query:</p>
+
+<pre><code class="graphql">{
+  "data": {
+    "user": {
+      "id": "1",
+      "name": "Shea Spencer DDS"
+    }
+  }
+}
+</code></pre>
+
+<p>See how email is gone? Pretty neat, eh? I didn't have to do anything special in my PHP code to make that happen. Lighthouse just handles it for me. Pretty damn spiffy if you ask me. Ok, ok, let's get to the part where I confuse myself and then eventually resolve that confusion in a shower of JSON.</p>
+
+<p>I saw this query for "user(id: 1)". (Can I take you aside for a moment and explain something to you? So those parentheses after "user" that's called an argument. Supposedly any field in GraphQL can take an argument. No more fuddling with the URL non-sense. Rockin' right?). I thought, "If I can get one user I must be able to get 2 users, 3 users, all of the users?" Being the intrepid explorer that I am I tried this query:</p>
+
+<p>First attempt to get users from GraphQL:</p>
+
+<pre><code class="graphql">{
+  # switched user to users
+  # you can put comments in GraphQL queries
+  # so rad
+  users {
+    id
+    name
+    email
+  }
+}
+</code></pre>
+
+<p>This is when I realize...The game is a foot!</p>
+
+<pre><code class="graphql">{
+  "errors": [
+    {
+      "message": "Cannot query field \"id\" on type \"UserPaginator\".",
+      "extensions": {
+        "category": "graphql"
+      },
+      "locations": [
+        {
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "message": "Cannot query field \"name\" on type \"UserPaginator\".",
+      "extensions": {
+        "category": "graphql"
+      },
+      "locations": [
+        {
+          "line": 4,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "message": "Cannot query field \"email\" on type \"UserPaginator\".",
+      "extensions": {
+        "category": "graphql"
+      },
+      "locations": [
+        {
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+
+<p>"I don't want a UserPaginator!", I shake my fist at the screen, "What is this nonsense. I read something about a schema! Show me the schema you foul ruffian!"</p>
+
+<p>The GraphQL Playground has a little schema drawer on the left side. It doesn't response to shouting but it does respond, like a friendly button, to clicks. I scroll around a bit and find what I'm looking for:</p>
+
+<pre><code class="graphql">type UserPaginator {
+  paginatorInfo: PaginatorInfo!
+  data: [User!]!
+}
+</code></pre>
+
+<p>Ah ha! There's the User I want. For some reason it's shouting "User!" at me but I'll worry about that later. For now I venture forward. Everybody is always talking about the shapes of queries so I take a run at shaping my query to get at the "User!" in "UserPaginator".</p>
+
+<p>UserPaginator show me Users!</p>
+
+<pre><code class="graphql">{
+  users {
+    UserPaginator {
+      data {
+        name
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>I guess not:</p>
+
+<pre><code class="graphql">{
+  "errors": [
+    {
+      "message": "Cannot query field \"UserPaginator\" on type \"UserPaginator\".",
+      "extensions": {
+        "category": "graphql"
+      },
+      "locations": [
+        {
+          "line": 3,
+          "column": 5
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+
+<p>Drat! That wasn't it. Back to the schema because I clearly don't understand what I think I'm working with. I find a "users" query defined in the schema. I'm pretty sure I got a hold of something here.</p>
+
+<pre><code class="graphql">type Query {
+  users(
+    first: Int = 10
+    page: Int
+  ): UserPaginator
+  user(id: ID): User
+}
+</code></pre>
+
+<p>Does that mean "users" returns a UserPaginator? If so then I think I should treat the "users" element as a "UserPaginator" and put fields I want in there.</p>
+
+<p>Query for the fields I want on UserPaginator:</p>
+
+<pre><code class="graphql">{
+  users {
+    # data is a field on UserPaginator
+      data {
+        id
+        name
+        email
+      }
+  }
+}
+</code></pre>
+
+<p>The result. I hit pay dirt!</p>
+
+<pre><code class="graphql">{
+  "data": {
+    "users": {
+      "data": [
+        {
+          "id": "1",
+          "name": "Shea Spencer DDS",
+          "email": "ismael.fisher@example.net"
+        },
+        {
+          "id": "2",
+          "name": "Prof. Soledad Larson",
+          "email": "mmorissette@example.net"
+        },
+        {
+          "id": "3",
+          "name": "Dr. Coleman Boehm",
+          "email": "senger.kolby@example.net"
+        },
+        {
+          "id": "4",
+          "name": "Jazmyn Padberg",
+          "email": "london72@example.net"
+        },
+        {
+          "id": "5",
+          "name": "Parker Stokes",
+          "email": "valentina.gulgowski@example.org"
+        },
+        {
+          "id": "6",
+          "name": "Raven McDermott",
+          "email": "fpouros@example.org"
+        },
+        {
+          "id": "7",
+          "name": "Alec Pouros",
+          "email": "erdman.herminio@example.org"
+        },
+        {
+          "id": "8",
+          "name": "Fanny Harber",
+          "email": "erich80@example.com"
+        },
+        {
+          "id": "9",
+          "name": "Emelia Rogahn",
+          "email": "thurman65@example.org"
+        },
+        {
+          "id": "10",
+          "name": "Jayne Klocko",
+          "email": "kaya.rutherford@example.net"
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+
+<p>That's how I figured out how to get fields on the users query. I can't say I fully understand why UserPaginator gets to override "users" in the query. Also, why is the element "data" rather than "users"? It seems like I'm losing some useful type information there.</p>
+
+<p>My questions aside, how's your GraphQL journey going?</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/test-events-were-not-received</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/test-events-were-not-received" />
     <title>I&#039;ll Receive You Some Test Events!</title>
