@@ -14,9 +14,8 @@
         alt="About image"
         class="flex rounded-full h-64 w-64 bg-contain mx-auto md:float-right my-6 md:ml-10">
 
-    <p class="mb-6">This is where you can give a little more information about yourself or site. If you'd like to change the structure of this page, you can find the file at <code>source/about.blade.php</code></p>
+    <p class="mb-6">Bushel is an ag-tech company Fargo, ND. We like to build cool stuff. If you'd like to build cool stuff with us checkout our <a href="https://bushelpowered.com/careers/">careers</a> page.
 
-    <p class="mb-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum officia dolorem accusantium veniam quae, possimus, temporibus explicabo magni voluptas. fugit natus deserunt atque veniam possimus earum harum itaque est!</p>
+    <p class="mb-6">David is a software engineer at Bushel who lives and works in Fargo. He loves to build neat stuff with code, write about it, and make barely discernible LEGO creations with his daughter.</p>
 
-    <p class="mb-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum officia dolorem accusantium veniam quae, possimus, temporibus explicabo magni voluptas. fugit natus deserunt atque veniam!</p>
 @endsection

@@ -11,10 +11,10 @@
 <h1>Contact</h1>
 
 <p class="mb-8">
-    Static sites are unable to handle form submissions. However, there are third-party services, like Tighten’s <a href="https://fieldgoal.io" title="FieldGoal">FieldGoal</a>, which can accept the form submission, email you the result, and redirect back to a thank you page.
+    Got something on your mind? Have a question? Suggestion? Feedback? Interested in working at Bushel? Drop us a line with the simple form below. Don't worry we wont put you on any massive mailing lists.
 </p>
 
-<form action="/contact" class="mb-12">
+<form action="https://fieldgoal.io/f/cfsHQk" method="POST" class="mb-12">
     <div class="flex flex-wrap mb-6 -mx-3">
         <div class="w-full md:w-1/2 mb-6 md:mb-0 px-3">
             <label class="block mb-2 text-gray-800 text-sm font-semibold" for="contact-name">
@@ -57,7 +57,7 @@
             rows="4"
             name="message"
             class="block w-full border shadow rounded-lg outline-none appearance-none mb-2 px-4 py-3"
-            placeholder="A lovely message here."
+            placeholder="Your wonderful words here."
             required
         ></textarea>
     </div>
