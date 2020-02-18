@@ -3,12 +3,127 @@
     <title>David&#039;s Engineering Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-18T02:04:25+00:00</updated>
+    <updated>2020-02-18T03:40:48+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/lambda-sans-return</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/lambda-sans-return" />
+    <title>Lambda Sans Return</title>
+    <published>2020-02-17T00:00:00+00:00</published>
+    <updated>2020-02-17T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">I created a lambda in Kotlin the other day and was perplexed that I couldn&#039;t avoid giving it a return type....</summary>
+    <content type="html"><![CDATA[
+        <p>I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type. Then I heard about <code>Unit</code>. Supposedly, I could return <code>Unit</code> and not have to worry about the return type on my lambdas. I don't know much about <code>Unit</code> but I had to see this in action.</p>
+
+<p>I took some code I've been fiddling with, a sort of observer object that I call a Dispatcher. It accepts a lambda as way to receive an event from the Dispatcher. The test for it looks like so:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+import kotlin.test.Test
+import kotlin.test.*
+
+class DispatcherTest {
+
+    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue = ""
+        val subscribeFunction: (String) -&gt; String = { event -&gt;
+            passedValue = event
+            passedValue
+        }
+
+        dispatcher.subscribe(subscribeFunction)
+        dispatcher.broadcast("event")
+
+        assertEquals("event", passedValue)
+    }
+}
+</code></pre>
+
+<p>Did you see the <code>subscribeFunction</code> that has a weired second line <code>passedValue</code>? Kotlin's lambda like to keep things short and omit the return statement for the last line. I need to have that strange line there because I need to satisfy the type signature and return a String.</p>
+
+<p>The implementation of Dispatcher that makes the test pass:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+class Dispatcher {
+
+    var subscriber: (String) -&gt; String = { "test"  }
+
+    fun subscribe(subscriberFunction: (String) -&gt; String) {
+        subscriber = subscriberFunction
+    }
+
+    fun broadcast(event: String) {
+        subscriber(event)
+    }
+}
+</code></pre>
+
+<p>Notice how the <code>var subscriber</code> has a type signature of <code>(String) -&gt; String</code>. This means that the lambda has to take a String as an argument and return a String. I can make it return a String for the sake of making it work. I don't like it though because it suggests to the reader they should do something with that String. Now that I know about <code>Unit</code> I have what I need to rid my code of this confusion.</p>
+
+<p>I go in and update Dispatcher:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+class Dispatcher {
+
+    var subscriber: (String) -&gt; Unit = {}
+
+    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
+        subscriber = subscriberFunction
+    }
+
+    fun broadcast(event: String) {
+        subscriber(event)
+    }
+}
+</code></pre>
+
+<p>Notice how subscriber type signature is now <code>(String) -&gt; Unit</code>.</p>
+
+<p>Then I update the test:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+import kotlin.test.Test
+import kotlin.test.*
+
+class DispatcherTest {
+
+    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue = ""
+        val subscribeFunction: (String) -&gt; Unit = { event -&gt;
+            passedValue = event
+        }
+
+        dispatcher.subscribe(subscribeFunction)
+        dispatcher.broadcast("event")
+
+        assertEquals("event", passedValue)
+    }
+}
+</code></pre>
+
+<p>Checkout how <code>subscribeFunction</code> matches the type signature of of Dispatcher's <code>subscribe</code> by removing the implied return. Awesome sauce.</p>
+
+<p>I am a bit curious about <code>Unit</code> but that's a topic for a different day.</p>
+
+<p>What cool ways are you finding to shorten your lambdas in Kotlin?</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user" />
     <title>Oh GraphQL, May I Have Some Users?</title>

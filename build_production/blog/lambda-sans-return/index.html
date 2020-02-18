@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="A great blog you&#039;ll love to read!">
 
-        <meta property="og:title" content="David&#039;s Engineering Blog"/>
+        <meta property="og:title" content="Lambda Sans Return | David&#039;s Engineering Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.scaleticket.net/blog"/>
+        <meta property="og:url" content="https://dkanen.scaleticket.net/blog/lambda-sans-return"/>
         <meta property="og:description" content="A great blog you&#039;ll love to read!" />
 
-        <title>David&#039;s Engineering Blog</title>
+        <title>Lambda Sans Return | David&#039;s Engineering Blog</title>
 
         <link rel="home" href="https://dkanen.scaleticket.net">
         <link rel="icon" href="">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Engineering Blog Atom Feed">
 
-            <meta property="og:title" content="David&#039;s Engineering Blog Blog" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://dkanen.scaleticket.net/blog"/>
-    <meta property="og:description" content="The list of blog posts for David&#039;s Engineering Blog" />
+            <meta property="og:title" content="Lambda Sans Return" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dkanen.scaleticket.net/blog/lambda-sans-return"/>
+    <meta property="og:description" content="I created a lambda in Kotlin the other day and was perplexed that I couldn&#039;t avoid giving it a return type." />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -58,7 +58,7 @@
 
                     <nav class="hidden lg:flex items-center justify-end text-lg">
     <a title="David&#039;s Engineering Blog Blog" href="/blog"
-        class="ml-6 text-gray-700 hover:text-blue-600 active text-blue-600">
+        class="ml-6 text-gray-700 hover:text-blue-600 ">
         Blog
     </a>
 
@@ -99,7 +99,7 @@
             <a
                 title="David&#039;s Engineering Blog Blog"
                 href="/blog"
-                class="nav-menu__item hover:text-blue-500 active text-blue"
+                class="nav-menu__item hover:text-blue-500 "
             >Blog</a>
         </li>
         <li class="pl-4">
@@ -120,122 +120,129 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                <h1>Blog</h1>
+                        <img src="/assets/img/post-cover-image-2.png" alt="Lambda Sans Return cover image" class="mb-2">
+    
+    <h1 class="leading-none mb-2">Lambda Sans Return</h1>
 
-    <hr class="border-b my-6">
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 17, 2020</p>
 
-            <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        February 17, 2020
-    </p>
+    
+    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
+        <p>I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type. Then I heard about <code>Unit</code>. Supposedly, I could return <code>Unit</code> and not have to worry about the return type on my lambdas. I don't know much about <code>Unit</code> but I had to see this in action.</p>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.scaleticket.net/blog/lambda-sans-return"
-            title="Read more - Lambda Sans Return"
-            class="text-gray-900 font-extrabold"
-        >Lambda Sans Return</a>
-    </h2>
+<p>I took some code I've been fiddling with, a sort of observer object that I call a Dispatcher. It accepts a lambda as way to receive an event from the Dispatcher. The test for it looks like so:</p>
 
-    <p class="mb-4 mt-0">I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type.</p>
+<pre><code class="kotlin">package com.dkanen
 
-    <a
-        href="https://dkanen.scaleticket.net/blog/lambda-sans-return"
-        title="Read more - Lambda Sans Return"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
+import kotlin.test.Test
+import kotlin.test.*
 
-                    <hr class="border-b my-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        February 16, 2020
-    </p>
+class DispatcherTest {
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user"
-            title="Read more - Oh GraphQL, May I Have Some Users?"
-            class="text-gray-900 font-extrabold"
-        >Oh GraphQL, May I Have Some Users?</a>
-    </h2>
+    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
 
-    <p class="mb-4 mt-0">Sure GraphQL is straightforward. That doesn't mean it's obvious(to me anyway).</p>
+        var passedValue = ""
+        val subscribeFunction: (String) -&gt; String = { event -&gt;
+            passedValue = event
+            passedValue
+        }
 
-    <a
-        href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user"
-        title="Read more - Oh GraphQL, May I Have Some Users?"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
+        dispatcher.subscribe(subscribeFunction)
+        dispatcher.broadcast("event")
 
-                    <hr class="border-b my-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        February 15, 2020
-    </p>
+        assertEquals("event", passedValue)
+    }
+}
+</code></pre>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.scaleticket.net/blog/test-events-were-not-received"
-            title="Read more - I&#039;ll Receive You Some Test Events!"
-            class="text-gray-900 font-extrabold"
-        >I&#039;ll Receive You Some Test Events!</a>
-    </h2>
+<p>Did you see the <code>subscribeFunction</code> that has a weired second line <code>passedValue</code>? Kotlin's lambda like to keep things short and omit the return statement for the last line. I need to have that strange line there because I need to satisfy the type signature and return a String.</p>
 
-    <p class="mb-4 mt-0">I ran into some trouble tonight try to get Intellij to run all my tests. It kept saying "Test events were not received". I scratched my head and wondered aloud what could be the cause of this.</p>
+<p>The implementation of Dispatcher that makes the test pass:</p>
 
-    <a
-        href="https://dkanen.scaleticket.net/blog/test-events-were-not-received"
-        title="Read more - I&#039;ll Receive You Some Test Events!"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
+<pre><code class="kotlin">package com.dkanen
 
-                    <hr class="border-b my-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        February 13, 2020
-    </p>
+class Dispatcher {
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.scaleticket.net/blog/single-expression-functions"
-            title="Read more - Single Expression Functions"
-            class="text-gray-900 font-extrabold"
-        >Single Expression Functions</a>
-    </h2>
+    var subscriber: (String) -&gt; String = { "test"  }
 
-    <p class="mb-4 mt-0">Many of the functions in the Kotlin standard library are implemented as Single Expression Functions. I started wondering how I could use them in my own code.</p>
+    fun subscribe(subscriberFunction: (String) -&gt; String) {
+        subscriber = subscriberFunction
+    }
 
-    <a
-        href="https://dkanen.scaleticket.net/blog/single-expression-functions"
-        title="Read more - Single Expression Functions"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
+    fun broadcast(event: String) {
+        subscriber(event)
+    }
+}
+</code></pre>
 
-            
-            <nav class="flex text-base my-8">
-            
-                            <a
-                    href="/blog"
-                    title="Go to Page 1"
-                    class="bg-gray-200 hover:bg-gray-400 text-blue-700 rounded mr-3 px-5 py-3 text-blue-600"
-                >1</a>
-                            <a
-                    href="/blog/2"
-                    title="Go to Page 2"
-                    class="bg-gray-200 hover:bg-gray-400 text-blue-700 rounded mr-3 px-5 py-3 "
-                >2</a>
-            
-                            <a
-                    href="/blog/2"
-                    title="Next Page"
-                    class="bg-gray-200 hover:bg-gray-400 rounded mr-3 px-5 py-3"
-                >&RightArrow;</a>
-                    </nav>
-            </main>
+<p>Notice how the <code>var subscriber</code> has a type signature of <code>(String) -&gt; String</code>. This means that the lambda has to take a String as an argument and return a String. I can make it return a String for the sake of making it work. I don't like it though because it suggests to the reader they should do something with that String. Now that I know about <code>Unit</code> I have what I need to rid my code of this confusion.</p>
+
+<p>I go in and update Dispatcher:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+class Dispatcher {
+
+    var subscriber: (String) -&gt; Unit = {}
+
+    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
+        subscriber = subscriberFunction
+    }
+
+    fun broadcast(event: String) {
+        subscriber(event)
+    }
+}
+</code></pre>
+
+<p>Notice how subscriber type signature is now <code>(String) -&gt; Unit</code>.</p>
+
+<p>Then I update the test:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+import kotlin.test.Test
+import kotlin.test.*
+
+class DispatcherTest {
+
+    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue = ""
+        val subscribeFunction: (String) -&gt; Unit = { event -&gt;
+            passedValue = event
+        }
+
+        dispatcher.subscribe(subscribeFunction)
+        dispatcher.broadcast("event")
+
+        assertEquals("event", passedValue)
+    }
+}
+</code></pre>
+
+<p>Checkout how <code>subscribeFunction</code> matches the type signature of of Dispatcher's <code>subscribe</code> by removing the implied return. Awesome sauce.</p>
+
+<p>I am a bit curious about <code>Unit</code> but that's a topic for a different day.</p>
+
+<p>What cool ways are you finding to shorten your lambdas in Kotlin?</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user" title="Older Post: Oh GraphQL, May I Have Some Users?">
+                    &LeftArrow; Oh GraphQL, May I Have Some Users?
+                </a>
+                    </div>
+
+        <div>
+                    </div>
+    </nav>
+        </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
