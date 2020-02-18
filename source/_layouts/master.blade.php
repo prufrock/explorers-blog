@@ -14,7 +14,7 @@
         <title>{{ $page->title ?  $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
 
         <link rel="home" href="{{ $page->baseUrl }}">
-        <link rel="icon" href="https://mk0bushelmtprod77fna.kinstacdn.com/wp-content/uploads/2019/06/cropped-favicon_bushel-U-192x192.png">
+        <link rel="icon" href="">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="{{ $page->siteName }} Atom Feed">
 
         @stack('meta')
