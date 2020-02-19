@@ -4,7 +4,7 @@ section: content
 title: Getting Started With Jigsaw
 date: 2020-02-13
 description: You've got some ideas kicking around your heard for a blog. You know how to use Laravel pretty well and want to get to writing things down now! Jigsaw the Laravel based static site generator may be just what you need.
-cover_image: /assets/img/post-cover-image-2.png
+cover_image: /assets/img/4-lamp-posts.svg
 excerpt: With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw's installation guide.
 ---
 
