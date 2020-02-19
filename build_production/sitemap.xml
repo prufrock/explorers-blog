@@ -2,72 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
  <url>
   <loc>https://dkanen.scaleticket.net</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/2</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/test-events-were-not-received</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/lambda-sans-return</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
+  <changefreq>daily</changefreq>
+ </url>
+ <url>
+  <loc>https://dkanen.scaleticket.net/blog/shorthand-function-syntax</loc>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/single-expression-functions</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/getting-started-with-jigsaw</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/thank-you</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/feed.atom</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/about</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/contact</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/categories/configuration</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.scaleticket.net/blog/categories/feature</loc>
-  <lastmod>2020-02-18T03:40:48+00:00</lastmod>
+  <lastmod>2020-02-19T00:18:07+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
 </urlset>

@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="A great blog you&#039;ll love to read!">
 
-        <meta property="og:title" content="Lambda Sans Return | David&#039;s Engineering Blog"/>
+        <meta property="og:title" content="Shorthand Function Syntax | David&#039;s Engineering Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.scaleticket.net/blog/lambda-sans-return"/>
+        <meta property="og:url" content="https://dkanen.scaleticket.net/blog/shorthand-function-syntax"/>
         <meta property="og:description" content="A great blog you&#039;ll love to read!" />
 
-        <title>Lambda Sans Return | David&#039;s Engineering Blog</title>
+        <title>Shorthand Function Syntax | David&#039;s Engineering Blog</title>
 
         <link rel="home" href="https://dkanen.scaleticket.net">
         <link rel="icon" href="">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Engineering Blog Atom Feed">
 
-            <meta property="og:title" content="Lambda Sans Return" />
+            <meta property="og:title" content="Shorthand Function Syntax" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://dkanen.scaleticket.net/blog/lambda-sans-return"/>
-    <meta property="og:description" content="I created a lambda in Kotlin the other day and was perplexed that I couldn&#039;t avoid giving it a return type." />
+    <meta property="og:url" content="https://dkanen.scaleticket.net/blog/shorthand-function-syntax"/>
+    <meta property="og:description" content="Save yourself a some typing(and reading) with Kotlin&#039;s shorthand function syntax." />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -120,95 +120,18 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                        <img src="/assets/img/post-cover-image-2.png" alt="Lambda Sans Return cover image" class="mb-2">
-    
-    <h1 class="leading-none mb-2">Lambda Sans Return</h1>
+                
+    <h1 class="leading-none mb-2">Shorthand Function Syntax</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 17, 2020</p>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 18, 2020</p>
 
     
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type. Then I heard about <code>Unit</code>. Supposedly, I could return <code>Unit</code> and not have to worry about the return type on my lambdas. I don't know much about <code>Unit</code> but I had to see this in action.</p>
+        <p>I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!</p>
 
-<p>I took some code I've been fiddling with, a sort of observer object that I call a Dispatcher. It accepts a lambda as way to receive an event from the Dispatcher. The test for it looks like so:</p>
+<p>I had some code that looked like this:</p>
 
-<pre><code class="kotlin">package com.dkanen
-
-import kotlin.test.Test
-import kotlin.test.*
-
-class DispatcherTest {
-
-    @Test
-    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
-        val dispatcher = Dispatcher()
-
-        var passedValue = ""
-        val subscribeFunction: (String) -&gt; String = { event -&gt;
-            passedValue = event
-            passedValue
-        }
-
-        dispatcher.subscribe(subscribeFunction)
-        dispatcher.broadcast("event")
-
-        assertEquals("event", passedValue)
-    }
-}
-</code></pre>
-
-<p>Did you see the <code>subscribeFunction</code> that has a weired second line <code>passedValue</code>? Kotlin's lambda like to keep things short and omit the return statement for the last line. I need to have that strange line there because I need to satisfy the type signature and return a String.</p>
-
-<p>The implementation of Dispatcher that makes the test pass:</p>
-
-<pre><code class="kotlin">package com.dkanen
-
-class Dispatcher {
-
-    var subscriber: (String) -&gt; String = { "test"  }
-
-    fun subscribe(subscriberFunction: (String) -&gt; String) {
-        subscriber = subscriberFunction
-    }
-
-    fun broadcast(event: String) {
-        subscriber(event)
-    }
-}
-</code></pre>
-
-<p>Notice how the <code>var subscriber</code> has a type signature of <code>(String) -&gt; String</code>. This means that the lambda has to take a String as an argument and return a String. I can make it return a String for the sake of making it work. I don't like it though because it suggests to the reader they should do something with that String. Now that I know about <code>Unit</code> I have what I need to rid my code of this confusion.</p>
-
-<p>I go in and update Dispatcher:</p>
-
-<pre><code class="kotlin">package com.dkanen
-
-class Dispatcher {
-
-    var subscriber: (String) -&gt; Unit = {}
-
-    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
-        subscriber = subscriberFunction
-    }
-
-    fun broadcast(event: String) {
-        subscriber(event)
-    }
-}
-</code></pre>
-
-<p>Notice how subscriber type signature is now <code>(String) -&gt; Unit</code>.</p>
-
-<p>Then I update the test:</p>
-
-<pre><code class="kotlin">package com.dkanen
-
-import kotlin.test.Test
-import kotlin.test.*
-
-class DispatcherTest {
-
-    @Test
+<pre><code class="kotlin">    @Test
     fun `when a lambda is passed to subscribe it can receive a broadcast`() {
         val dispatcher = Dispatcher()
 
@@ -222,27 +145,40 @@ class DispatcherTest {
 
         assertEquals("event", passedValue)
     }
-}
 </code></pre>
 
-<p>Checkout how <code>subscribeFunction</code> matches the type signature of of Dispatcher's <code>subscribe</code> by removing the implied return. Awesome sauce.</p>
+<p>The whole thing with <code>(String) -&gt;Unit</code> didn't seem necessary. It seems like the type should be inferred. Do I even need <code>subscribeFunction</code>? I was pretty sure I'd seen something in the Big Nerd Ranch Kotlin book about a simple syntax for functions. I started clicking through it. After a few trips around the same chapters I found a section title "Shorthand syntax"! That's it! that's what I'm looking for!</p>
 
-<p>I am a bit curious about <code>Unit</code> but that's a topic for a different day.</p>
+<p>Ecstatic, I flipped back to my editor and updated my code to look like so:</p>
 
-<p>What cool ways are you finding to shorten your lambdas in Kotlin?</p>
+<pre><code class="kotlin">    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue = ""
+
+        dispatcher.subscribe { event -&gt; passedValue = event }
+        dispatcher.broadcast("event")
+
+        assertEquals("event", passedValue)
+    }
+</code></pre>
+
+<p>Notice how I was able to get rid of the function's type signature <code>(String) -&gt; Unit</code> and remove the variable <code>subscribeFunction</code>. All I need is the simple block <code>{ event -&gt; passedValue = event }</code>.</p>
+
+<p>What a day my friends! What. A. Day.</p>
+
+<p>What nifty uses have you come up with for the shorthand syntax for functions? Let me know by dropping me a line on the <a href="/contact">contact page</a>.</p>
     </div>
 
     <nav class="flex justify-between text-sm md:text-base">
         <div>
-                            <a href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user" title="Older Post: Oh GraphQL, May I Have Some Users?">
-                    &LeftArrow; Oh GraphQL, May I Have Some Users?
+                            <a href="https://dkanen.scaleticket.net/blog/lambda-sans-return" title="Older Post: Lambda Sans Return">
+                    &LeftArrow; Lambda Sans Return
                 </a>
                     </div>
 
         <div>
-                            <a href="https://dkanen.scaleticket.net/blog/shorthand-function-syntax" title="Newer Post: Shorthand Function Syntax">
-                    Shorthand Function Syntax &RightArrow;
-                </a>
                     </div>
     </nav>
         </main>

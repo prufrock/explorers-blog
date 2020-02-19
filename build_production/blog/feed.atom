@@ -3,12 +3,67 @@
     <title>David&#039;s Engineering Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-18T03:40:48+00:00</updated>
+    <updated>2020-02-19T00:18:07+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/shorthand-function-syntax</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/shorthand-function-syntax" />
+    <title>Shorthand Function Syntax</title>
+    <published>2020-02-18T00:00:00+00:00</published>
+    <updated>2020-02-18T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">I&#039;d seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!...</summary>
+    <content type="html"><![CDATA[
+        <p>I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!</p>
+
+<p>I had some code that looked like this:</p>
+
+<pre><code class="kotlin">    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue = ""
+        val subscribeFunction: (String) -&gt; Unit = { event -&gt;
+            passedValue = event
+        }
+
+        dispatcher.subscribe(subscribeFunction)
+        dispatcher.broadcast("event")
+
+        assertEquals("event", passedValue)
+    }
+</code></pre>
+
+<p>The whole thing with <code>(String) -&gt;Unit</code> didn't seem necessary. It seems like the type should be inferred. Do I even need <code>subscribeFunction</code>? I was pretty sure I'd seen something in the Big Nerd Ranch Kotlin book about a simple syntax for functions. I started clicking through it. After a few trips around the same chapters I found a section title "Shorthand syntax"! That's it! that's what I'm looking for!</p>
+
+<p>Ecstatic, I flipped back to my editor and updated my code to look like so:</p>
+
+<pre><code class="kotlin">    @Test
+    fun `when a lambda is passed to subscribe it can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue = ""
+
+        dispatcher.subscribe { event -&gt; passedValue = event }
+        dispatcher.broadcast("event")
+
+        assertEquals("event", passedValue)
+    }
+</code></pre>
+
+<p>Notice how I was able to get rid of the function's type signature <code>(String) -&gt; Unit</code> and remove the variable <code>subscribeFunction</code>. All I need is the simple block <code>{ event -&gt; passedValue = event }</code>.</p>
+
+<p>What a day my friends! What. A. Day.</p>
+
+<p>What nifty uses have you come up with for the shorthand syntax for functions? Let me know by dropping me a line on the <a href="/contact">contact page</a>.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/lambda-sans-return</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/lambda-sans-return" />
     <title>Lambda Sans Return</title>
