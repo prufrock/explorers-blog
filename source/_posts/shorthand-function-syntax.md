@@ -3,9 +3,10 @@ extends: _layouts.post
 section: content
 title: Shorthand Function Syntax
 date: 2020-02-18
-description: Save yourself a some typing(and reading) with Kotlin's shorthand function syntax.
+description: Save yourself some typing(and reading) with Kotlin's shorthand function syntax.
 cover_image: /assets/img/4-squares.svg
 excerpt: I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!
+categories: [kotlin]
 ---
 
 I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!

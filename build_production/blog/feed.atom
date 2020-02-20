@@ -3,12 +3,135 @@
     <title>David&#039;s Engineering Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-19T22:37:22+00:00</updated>
+    <updated>2020-02-20T03:29:42+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/first-attempt-at-collections</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/first-attempt-at-collections" />
+    <title>First Attempt At Collections</title>
+    <published>2020-02-19T00:00:00+00:00</published>
+    <updated>2020-02-19T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">How I started using Kotlin&#039;s list and determined how to iterate over it....</summary>
+    <content type="html"><![CDATA[
+        <p>I need to figure out someway to satisfy my new test which checked to see if two different functions could subscribe to and receive an event from the Broadcaster. Up to this point, in Test Drive Development(TDD) fashion, my tests had allowed me to get away with sending an event to only one subscriber. I wanted to get this functionality into the Broadcaster so I added this test:</p>
+
+<pre><code class="kotlin">    @Test
+    fun `more than one Subscriber can receive a broadcast`() {
+        val dispatcher = Dispatcher()
+
+        var firstValue = ""
+
+        dispatcher.subscribe { event -&gt; firstValue = event }
+
+        var secondValue = ""
+
+        dispatcher.subscribe { event -&gt; secondValue = event }
+
+        dispatcher.broadcast("event")
+
+
+        assertEquals("event", firstValue)
+        assertEquals("event", secondValue)
+    }
+</code></pre>
+
+<p>Currently, the Dispatcher only supports a subscriber so the first assertion failed since the first subscriber was replaced by the second. How was I going to create a list of subscribers inside of the Dispatcher? I'd seen a few things about lists in the <a href="https://www.bignerdranch.com/books/kotlin-programming-the-big-nerd-ranch-guide-2/">Big Nerd Ranch Kotlin book</a> and in the <a href="https://kotlinlang.org/docs/reference/collections-overview.html">Kotlin documentation</a>. With that and the knowledge I'd won so far I had a place to start.</p>
+
+<p>I began by creating a <code>subscriberList</code> with the type <code>(String) -&gt; Unit</code> to match the type of the lambdas I knew I wanted to stuff in there. My previous experience with accepting a lambda as a parameter and assigning into a variable had prepared for this part. I'd seen the carrot syntax <code>&lt;Type&gt;</code> in documentation so figured that'd be the way to go. One last thing I ran into trouble with was Kotlin wouldn't let leave <code>subscriberList</code> null so I had to initialize it with <code>listOf()</code> something I saw in the Big Nerd Ranch book. I stuck all this together and got a compiling <code>subcriberList</code> declaration.</p>
+
+<pre><code class="kotlin">    var subscriberList: List&lt;(String) -&gt; Unit&gt; = listOf()
+</code></pre>
+
+<p>Cool. Making progress. Now I needed to add a subscriber to my list. I ran into a problem pretty quick. I started updating <code>fun subscribe</code> with <code>subscriberList</code>. I put the <code>.</code> at end of the variable so I could call a method to add an element to the list. I figured I could autocomplete my way to the problem. I typed "a". Didn't see anything. I typed "add". Nothing. I switched to "app" hoping for "append". Nothing. What was going on here? Why weren't there any methods to add something to my list. A quick peak back in the Big Nerd Ranch book and I realize I need a mutable list!</p>
+
+<pre><code class="kotlin">    var subscriberList: MutableList&lt;(String) -&gt; Unit&gt; = mutableListOf()
+</code></pre>
+
+<p>Now I have an "add" method on my list. I put that in place like so:</p>
+
+<pre><code class="kotlin">    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
+        subscriber = subscriberFunction
+        subscriberList.add(subscriber)
+    }
+</code></pre>
+
+<p>One more thing to do. When I broadcast an event it needs to go to all of the subscribers in <code>subscriberList</code>. How do I iterate over this thing? I always liked using <code>map</code> in other languages when I want to loop over the set with a succinct lambda. I give that go here:</p>
+
+<pre><code class="kotlin">    fun broadcast(event: String) {
+        subscriber(event)
+        subscriberList.map { subscriber -&gt; subscriber(event)}
+    }
+</code></pre>
+
+<p>I know there are some other ways to iterate over a list so I give those a shot out of curiosity.</p>
+
+<p>There's <code>for</code> which reminds of PHP's <a href="https://www.php.net/manual/en/control-structures.foreach.php">foreach</a>:</p>
+
+<pre><code class="kotlin">    fun broadcast(event: String) {
+        subscriber(event)
+        for (subscriber in subscriberList) {
+            subscriber(event)
+        }
+    }
+</code></pre>
+
+<p>Then there's <code>forEach</code> which is a bit more functional:</p>
+
+<pre><code class="kotlin">        subscriberList.forEach { subscriber -&gt; subscriber(event) }
+</code></pre>
+
+<p>You know what I think I might like that more. I find that I tend to think <code>map</code> implies the list is going to be modified by the loop. The <a href="https://kotlinlang.org/docs/reference/collection-transformations.html">Kotlin documentation</a> has this to say about <code>map</code>:</p>
+
+<blockquote>
+  <p>The mapping transformation creates a collection from the results of a function on the elements of another collection.</p>
+</blockquote>
+
+<p>The word transformation there stands out to me. I'm not really transforming the collection and I also don't need the result of that transformation. <code>forEach</code> seems much more appropriate. The <strong>semantics</strong> of <code>forEach</code> fit the situation better which means I'll be able to think about the code faster when I come back to it.</p>
+
+<p>There's one last bit of syntactical sugar I'd like to try <code>it</code>. I've see it a bunch of times in various discussions of how lambdas work on collections. I think I can use <code>it</code> here it short up this code just a smidgen:</p>
+
+<pre><code class="kotin">    fun broadcast(event: String) {
+        subscriber(event)
+        subscriberList.forEach { it(event) }
+    }
+</code></pre>
+
+<p>It works! With <code>it</code> I don't need to declare the element I'm work on as a <code>subscriber</code>. Instead Kotlin just assumes the variable is <code>it</code>. Kotlin knows, from the type information, that <code>subscriberList</code> holds lambdas. Therefore anything coming out of <code>subscribeList</code> can be called like a function. From that <code>it</code> can be called as a function. Pretty neat!</p>
+
+<p>Here's how it all came together*:</p>
+
+<pre><code class="kotlin">package com.dkanen
+
+class Dispatcher {
+
+    val subscriberList: MutableList&lt;(String) -&gt; Unit&gt; = mutableListOf()
+
+    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
+        subscriberList.add(subscriberFunction)
+    }
+
+    fun broadcast(event: String) {
+        subscriberList.map { subscriber -&gt; subscriber(event)}
+    }
+
+    fun subscribe(newSubscriber: Subscriber) {
+        subscriberList.add({event -&gt; newSubscriber.receive(event)})
+    }
+}
+</code></pre>
+
+<p>*You may have noticed in the examples above, except the last, I still had references to the old variables like <code>subscriber</code>. It has to do with the way I keep the methods working while I am refactoring. This keeps with test driven development(TDD). I'll write about that some more a different time.</p>
+
+<p>What ways have you found to bring collections into your projects? Let me know by dropping me a line on the <a href="/contact">contact page</a>.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/shorthand-function-syntax</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/shorthand-function-syntax" />
     <title>Shorthand Function Syntax</title>
@@ -17,7 +140,7 @@
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">I&#039;d seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!...</summary>
+    <summary type="html">Save yourself some typing(and reading) with Kotlin&#039;s shorthand function syntax....</summary>
     <content type="html"><![CDATA[
         <p>I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!</p>
 
@@ -187,7 +310,7 @@ class DispatcherTest {
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">Sure GraphQL is straightforward. That doesn&#039;t mean it&#039;s obvious(to me anyway)....</summary>
+    <summary type="html">Where in I struggle and then succeed to get some users from the users query in GraphQL....</summary>
     <content type="html"><![CDATA[
         <p>I've heard GraphQL is easy to pick up. I've done a little reading on the official <a href="https://graphql.org/">GraphQL site</a> and watch some videos on YouTube. I figure I got what I need to get started. I just need a GraphQL server.</p>
 
@@ -451,7 +574,7 @@ class DispatcherTest {
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">I ran into some trouble tonight try to get Intellij to run all my tests. It kept saying &quot;Test events were not received&quot;. I scratched my head and wondered aloud what could be the cause of this....</summary>
+    <summary type="html">A fix for the Intellij message &quot;Test events were not received&quot; when running tests with Gradle and Kotlin....</summary>
     <content type="html"><![CDATA[
         <p>I sat down in front of my laptop to learn some GraphQL. I was flipping through my open windows and I discovered I had some uncommitted Kotlin code in the repo where I am learning Kotlin. This wouldn't do. No, this wouldn't do.</p>
 
@@ -505,7 +628,7 @@ class DispatcherTest {
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">Many of the functions in the Kotlin standard library are implemented as Single Expression Functions. I started wondering how I could use them in my own code....</summary>
+    <summary type="html">I recently learned about single expression functions and am amazed at how simple the function you can created with them are....</summary>
     <content type="html"><![CDATA[
         <p>I was listening to Talking Kotlin <a href="https://pca.st/09ybe338">Kotlin Cookbook</a>. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the functions in the Kotlin standard library are implemented as Single Expression Functions. At this point my curiosity had piqued and I had to know more.</p>
 
@@ -577,7 +700,7 @@ class Adventurer(val name: String) {
     <author>
         <name>David Kanenwisher</name>
     </author>
-    <summary type="html">With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw&#039;s installation guide....</summary>
+    <summary type="html">You&#039;ve got some ideas kicking around your heard for a blog. You know how to use Laravel pretty well and want to get to writing things down now! Jigsaw the Laravel based static site generator may be just what you need....</summary>
     <content type="html"><![CDATA[
         <p>With a few adjustments to get it to build for my environment I was mostly able to follow Jigsaw's <a href="https://jigsaw.tighten.co/docs/installation/">installation guide</a> I'll throw in a quick summary here in case you don't want to have both tabs open:</p>
 

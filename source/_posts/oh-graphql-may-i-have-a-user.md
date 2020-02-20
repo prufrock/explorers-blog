@@ -6,6 +6,7 @@ date: 2020-02-16
 description: Where in I struggle and then succeed to get some users from the users query in GraphQL.
 cover_image: /assets/img/post-cover-image-2.png
 excerpt: Sure GraphQL is straightforward. That doesn't mean it's obvious(to me anyway).
+categories: [graphql]
 ---
 
 I've heard GraphQL is easy to pick up. I've done a little reading on the official [GraphQL site](https://graphql.org/) and watch some videos on YouTube. I figure I got what I need to get started. I just need a GraphQL server.

@@ -6,6 +6,7 @@ date: 2020-02-17
 description: I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type.
 cover_image: /assets/img/post-cover-image-2.png
 excerpt: I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type.
+categories: [kotlin]
 ---
 
 I created a lambda in Kotlin the other day and was perplexed that I couldn't avoid giving it a return type. Then I heard about `Unit`. Supposedly, I could return `Unit` and not have to worry about the return type on my lambdas. I don't know much about `Unit` but I had to see this in action.

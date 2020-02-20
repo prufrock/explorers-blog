@@ -6,6 +6,7 @@ date: 2020-02-13
 description: I recently learned about single expression functions and am amazed at how simple the function you can created with them are.
 cover_image: /assets/img/post-cover-image-2.png
 excerpt: Many of the functions in the Kotlin standard library are implemented as Single Expression Functions. I started wondering how I could use them in my own code.
+categories: [kotlin]
 ---
 
 I was listening to Talking Kotlin [Kotlin Cookbook](https://pca.st/09ybe338). The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the functions in the Kotlin standard library are implemented as Single Expression Functions. At this point my curiosity had piqued and I had to know more.

@@ -7,7 +7,7 @@
     <author>
         <name>{{ $entry->author }}</name>
     </author>
-    <summary type="html">{{ $entry->getExcerpt() }}...</summary>
+    <summary type="html">{{ $entry->description }}...</summary>
     <content type="html"><![CDATA[
         @includeFirst(['_posts.' . $entry->getFilename(), '_posts._tmp.' . $entry->getFilename()])
     ]]></content>
