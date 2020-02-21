@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>David&#039;s Engineering Blog</title>
+    <title>Engineering Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-20T03:29:42+00:00</updated>
+    <updated>2020-02-21T02:36:07+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
-        <name>David Kanenwisher</name>
+        <name>Bushel Engineering</name>
     </author>
                 <entry>
     <id>https://dkanen.scaleticket.net/blog/first-attempt-at-collections</id>

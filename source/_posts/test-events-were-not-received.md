@@ -7,6 +7,7 @@ description: A fix for the Intellij message "Test events were not received" when
 cover_image: /assets/img/post-cover-image-2.png
 excerpt: I ran into some trouble tonight try to get Intellij to run all my tests. It kept saying "Test events were not received". I scratched my head and wondered aloud what could be the cause of this.
 categories: [kotlin]
+author: David Kanenwisher
 ---
 
 I sat down in front of my laptop to learn some GraphQL. I was flipping through my open windows and I discovered I had some uncommitted Kotlin code in the repo where I am learning Kotlin. This wouldn't do. No, this wouldn't do.

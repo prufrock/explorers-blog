@@ -7,6 +7,7 @@ description: Save yourself some typing(and reading) with Kotlin's shorthand func
 cover_image: /assets/img/4-squares.svg
 excerpt: I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!
 categories: [kotlin]
+author: David Kanenwisher
 ---
 
 I'd seen some goofy syntax referred to in Kotlin posts and books and today I figured out how to use it!

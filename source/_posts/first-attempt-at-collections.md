@@ -7,6 +7,7 @@ description: How I started using Kotlin's list and determined how to iterate ove
 cover_image: /assets/img/4-squares.svg
 excerpt: Currently, the Dispatcher only supports a subscriber so the first assertion failed since the first subscriber was replaced by the second. How was I going to create a list of subscribers inside of the Dispatcher?
 categories: [kotlin]
+author: David Kanenwisher
 ---
 
 I need to figure out someway to satisfy my new test which checked to see if two different functions could subscribe to and receive an event from the Broadcaster. Up to this point, in Test Drive Development(TDD) fashion, my tests had allowed me to get away with sending an event to only one subscriber. I wanted to get this functionality into the Broadcaster so I added this test:
