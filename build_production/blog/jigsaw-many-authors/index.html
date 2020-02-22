@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="A great blog you&#039;ll love to read!">
 
-        <meta property="og:title" content="Configuration | Engineering Blog"/>
+        <meta property="og:title" content="Support Many Authors in Jigsaw | Engineering Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.scaleticket.net/blog/categories/configuration"/>
+        <meta property="og:url" content="https://dkanen.scaleticket.net/blog/jigsaw-many-authors"/>
         <meta property="og:description" content="A great blog you&#039;ll love to read!" />
 
-        <title>Configuration | Engineering Blog</title>
+        <title>Support Many Authors in Jigsaw | Engineering Blog</title>
 
         <link rel="home" href="https://dkanen.scaleticket.net">
         <link rel="icon" href="">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="Engineering Blog Atom Feed">
 
-            <meta property="og:title" content="Configuration" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://dkanen.scaleticket.net/blog/categories/configuration"/>
-    <meta property="og:description" content="Posts related to configuring the Jigsaw blog starter template" />
+            <meta property="og:title" content="Support Many Authors in Jigsaw" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dkanen.scaleticket.net/blog/jigsaw-many-authors"/>
+    <meta property="og:description" content="A quick guide on how to support more than one author in Jigsaw." />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -120,36 +120,84 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                <h1>Configuration</h1>
-
-    <div class="text-2xl border-b border-blue-200 mb-6 pb-10">
-        <p>These posts are all related to configuring your Jigsaw blog starter template.</p>
-    </div>
-
+                        <img src="/assets/img/3-ink-bottles.svg" alt="Support Many Authors in Jigsaw cover image" class="mb-2">
     
-    <div class="flex justify-center lg:-mx-12 my-12 p-6 md:px-12 bg-gray-200 border border-gray-400 text-sm md:rounded shadow">
-    <!-- Begin Mailchimp Signup Form -->
-    <div id="mc_embed_signup">
-        <form action="https://your-mail-chimp-list-manage-url" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-            <div id="mc_embed_signup_scroll">
-                <h2>Sign up for our newsletter</h2>
-                <div class="mc-field-group">
-                    <label for="mce-EMAIL">Email Address </label>
-                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email address">
-                </div>
-                <div id="mce-responses" class="clear">
-                    <div class="response" id="mce-error-response" style="display:none"></div>
-                    <div class="response" id="mce-success-response" style="display:none"></div>
-                </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <h1 class="leading-none mb-2">Support Many Authors in Jigsaw</h1>
 
-                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_25582686a9fc051afd5453557_189578c854" tabindex="-1" value=""></div>
-                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-            </div>
-        </form>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 21, 2020</p>
+
+                        <a
+                href="/blog/categories/jigsaw"
+                title="View posts in jigsaw"
+                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
+            >jigsaw</a>
+            
+    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
+        <p>If you were like me and found <code>siteAuthor</code> in config.php and assumed Jigsaw only supported one author, then, my friend, you've come to the right place. The process of adding more than one author isn't too difficult you just have to know it's possible and where to make the necessary tweaks.</p>
+
+<p>When you first install Jigsaw you'll have a <code>config.php</code> that starts with a section that looks like this:</p>
+
+<p>config.php</p>
+
+<pre><code class="text">    'baseUrl' =&gt; '',
+    'production' =&gt; false,
+    'siteName' =&gt; 'Blog Starter Template',
+    'siteDescription' =&gt; 'Generate an elegant blog with Jigsaw',
+    'siteAuthor' =&gt; 'Author Name',
+
+    // collections
+    'collections' =&gt; [
+        'posts' =&gt; [
+            'author' =&gt; 'Author Name', // Default author, if not provided in a post
+            'sort' =&gt; '-date',
+            'path' =&gt; 'blog/{filename}',
+        ],
+        'categories' =&gt; [
+            'path' =&gt; '/blog/categories/{filename}',
+            'posts' =&gt; function ($page, $allPosts) {
+                return $allPosts-&gt;filter(function ($post) use ($page) {
+                    return $post-&gt;categories ? in_array($page-&gt;getFilename(), $post-&gt;categories, true) : false;
+                });
+            },
+        ],
+    ],
+
+</code></pre>
+
+<p>Now <code>siteAuthor</code> struck me as sounding like a pretty big deal and I, incorrectly, assumed it was meant to imply the site could only be authored by one person. Further down there is a <code>collections-&gt;posts-&gt;author</code> which I figured set the author on all of the posts since I didn't see an <code>author</code> in example posts.</p>
+
+<p>It turns out that <code>siteAuthor</code> is only used in <code>source/_layouts/rss.blade.php</code> out of the box. That may have change in your Jigsaw blog so it'd be worth searching the <code>source</code> directory for <code>siteAuthor</code>. In <code>rss.blade.php</code> <code>siteAuthor</code> sets the author of the blog. This means if you didn't want there to be only one author you can set it to something more general like <code>Engineering Blog</code> or <code>Cosmetology Blog</code>. Then either all of your engineer friends or cosmetology friends could blog there.</p>
+
+<p>The <code>collections-&gt;posts-&gt;author</code> in <code>config.php</code> is the author that's used when no author is specified on a post. That begs the question: How do you specify an author on a post? It's pretty straightforward. When you make a post add an <code>author</code> attribute to the meta information at the top like so:</p>
+
+<p>meta information with author at the top of a post:</p>
+
+<pre><code class="text">---
+extends: _layouts.post
+section: content
+title: Support Many Authors in Jigsaw
+date: 2020-02-21
+description: A quick guide on how to support more than one author in Jigsaw.
+cover_image: /assets/img/3-ink-bottles.svg
+excerpt: If you were like me and found "siteAuthor" in config.php and assumed Jigsaw only supported one author, then, my friend, you've come to the right place.
+categories: [jigsaw]
+author: David Kanenwisher
+---
+</code></pre>
+
+<p>Now that I know how to do it I feel a bit silly. It's a feeling I get quite often after I learn something new. What surprising simply but useful thing have you learned recently? Let me know by dropping me a line on the <a href="/contact">contact page</a>.</p>
     </div>
-    <!--End Mailchimp Signup Form -->
-</div>
 
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://dkanen.scaleticket.net/blog/first-attempt-at-collections" title="Older Post: First Attempt At Collections">
+                    &LeftArrow; First Attempt At Collections
+                </a>
+                    </div>
+
+        <div>
+                    </div>
+    </nav>
         </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
@@ -167,11 +215,7 @@
 
         <script src="/assets/build/js/main.js?id=3ee46297b0ef985b07a8"></script>
 
-            <script src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-    <script>(function($) {
-        window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);
-    </script>
-<script>
+        <script>
     const navMenu = {
         toggle() {
             const menu = document.getElementById('js-nav-menu');

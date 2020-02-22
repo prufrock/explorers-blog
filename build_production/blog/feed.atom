@@ -3,12 +3,78 @@
     <title>Engineering Blog</title>
     <link href="https://dkanen.scaleticket.net" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-21T02:36:07+00:00</updated>
+    <updated>2020-02-22T03:35:06+00:00</updated>
     <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
     <author>
         <name>Bushel Engineering</name>
     </author>
                 <entry>
+    <id>https://dkanen.scaleticket.net/blog/jigsaw-many-authors</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/jigsaw-many-authors" />
+    <title>Support Many Authors in Jigsaw</title>
+    <published>2020-02-21T00:00:00+00:00</published>
+    <updated>2020-02-21T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">A quick guide on how to support more than one author in Jigsaw....</summary>
+    <content type="html"><![CDATA[
+        <p>If you were like me and found <code>siteAuthor</code> in config.php and assumed Jigsaw only supported one author, then, my friend, you've come to the right place. The process of adding more than one author isn't too difficult you just have to know it's possible and where to make the necessary tweaks.</p>
+
+<p>When you first install Jigsaw you'll have a <code>config.php</code> that starts with a section that looks like this:</p>
+
+<p>config.php</p>
+
+<pre><code class="text">    'baseUrl' =&gt; '',
+    'production' =&gt; false,
+    'siteName' =&gt; 'Blog Starter Template',
+    'siteDescription' =&gt; 'Generate an elegant blog with Jigsaw',
+    'siteAuthor' =&gt; 'Author Name',
+
+    // collections
+    'collections' =&gt; [
+        'posts' =&gt; [
+            'author' =&gt; 'Author Name', // Default author, if not provided in a post
+            'sort' =&gt; '-date',
+            'path' =&gt; 'blog/{filename}',
+        ],
+        'categories' =&gt; [
+            'path' =&gt; '/blog/categories/{filename}',
+            'posts' =&gt; function ($page, $allPosts) {
+                return $allPosts-&gt;filter(function ($post) use ($page) {
+                    return $post-&gt;categories ? in_array($page-&gt;getFilename(), $post-&gt;categories, true) : false;
+                });
+            },
+        ],
+    ],
+
+</code></pre>
+
+<p>Now <code>siteAuthor</code> struck me as sounding like a pretty big deal and I, incorrectly, assumed it was meant to imply the site could only be authored by one person. Further down there is a <code>collections-&gt;posts-&gt;author</code> which I figured set the author on all of the posts since I didn't see an <code>author</code> in example posts.</p>
+
+<p>It turns out that <code>siteAuthor</code> is only used in <code>source/_layouts/rss.blade.php</code> out of the box. That may have change in your Jigsaw blog so it'd be worth searching the <code>source</code> directory for <code>siteAuthor</code>. In <code>rss.blade.php</code> <code>siteAuthor</code> sets the author of the blog. This means if you didn't want there to be only one author you can set it to something more general like <code>Engineering Blog</code> or <code>Cosmetology Blog</code>. Then either all of your engineer friends or cosmetology friends could blog there.</p>
+
+<p>The <code>collections-&gt;posts-&gt;author</code> in <code>config.php</code> is the author that's used when no author is specified on a post. That begs the question: How do you specify an author on a post? It's pretty straightforward. When you make a post add an <code>author</code> attribute to the meta information at the top like so:</p>
+
+<p>meta information with author at the top of a post:</p>
+
+<pre><code class="text">---
+extends: _layouts.post
+section: content
+title: Support Many Authors in Jigsaw
+date: 2020-02-21
+description: A quick guide on how to support more than one author in Jigsaw.
+cover_image: /assets/img/3-ink-bottles.svg
+excerpt: If you were like me and found "siteAuthor" in config.php and assumed Jigsaw only supported one author, then, my friend, you've come to the right place.
+categories: [jigsaw]
+author: David Kanenwisher
+---
+</code></pre>
+
+<p>Now that I know how to do it I feel a bit silly. It's a feeling I get quite often after I learn something new. What surprising simply but useful thing have you learned recently? Let me know by dropping me a line on the <a href="/contact">contact page</a>.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.scaleticket.net/blog/first-attempt-at-collections</id>
     <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/first-attempt-at-collections" />
     <title>First Attempt At Collections</title>
