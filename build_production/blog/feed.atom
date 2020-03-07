@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>David&#039;s Explorers Blog</title>
+    <title>David&#039;s Explorer Blog</title>
     <link href="https://hungry-lewin-fe0d4b.netlify.com/" />
     <link type="application/atom+xml" rel="self" href="https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom" />
-    <updated>2020-03-07T20:57:01+00:00</updated>
+    <updated>2020-03-07T21:08:00+00:00</updated>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
