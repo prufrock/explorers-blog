@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Engineering Blog</title>
-    <link href="https://dkanen.scaleticket.net" />
-    <link type="application/atom+xml" rel="self" href="https://dkanen.scaleticket.net/blog/feed.atom" />
-    <updated>2020-02-22T03:35:06+00:00</updated>
-    <id>https://dkanen.scaleticket.net/blog/feed.atom</id>
+    <title>David&#039;s Explorers Blog</title>
+    <link href="https://hungry-lewin-fe0d4b.netlify.com/" />
+    <link type="application/atom+xml" rel="self" href="https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom" />
+    <updated>2020-03-07T20:57:01+00:00</updated>
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</id>
     <author>
-        <name>Bushel Engineering</name>
+        <name>David Kanenwisher</name>
     </author>
                 <entry>
-    <id>https://dkanen.scaleticket.net/blog/jigsaw-many-authors</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/jigsaw-many-authors" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/jigsaw-many-authors</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/jigsaw-many-authors" />
     <title>Support Many Authors in Jigsaw</title>
     <published>2020-02-21T00:00:00+00:00</published>
     <updated>2020-02-21T00:00:00+00:00</updated>
@@ -75,8 +75,8 @@ author: David Kanenwisher
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/first-attempt-at-collections</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/first-attempt-at-collections" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/first-attempt-at-collections</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/first-attempt-at-collections" />
     <title>First Attempt At Collections</title>
     <published>2020-02-19T00:00:00+00:00</published>
     <updated>2020-02-19T00:00:00+00:00</updated>
@@ -198,8 +198,8 @@ class Dispatcher {
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/shorthand-function-syntax</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/shorthand-function-syntax" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/shorthand-function-syntax</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/shorthand-function-syntax" />
     <title>Shorthand Function Syntax</title>
     <published>2020-02-18T00:00:00+00:00</published>
     <updated>2020-02-18T00:00:00+00:00</updated>
@@ -253,8 +253,8 @@ class Dispatcher {
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/lambda-sans-return</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/lambda-sans-return" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/lambda-sans-return</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/lambda-sans-return" />
     <title>Lambda Sans Return</title>
     <published>2020-02-17T00:00:00+00:00</published>
     <updated>2020-02-17T00:00:00+00:00</updated>
@@ -368,8 +368,8 @@ class DispatcherTest {
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/oh-graphql-may-i-have-a-user" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/oh-graphql-may-i-have-a-user</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/oh-graphql-may-i-have-a-user" />
     <title>Oh GraphQL, May I Have Some Users?</title>
     <published>2020-02-16T00:00:00+00:00</published>
     <updated>2020-02-16T00:00:00+00:00</updated>
@@ -632,8 +632,8 @@ class DispatcherTest {
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/test-events-were-not-received</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/test-events-were-not-received" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/test-events-were-not-received</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/test-events-were-not-received" />
     <title>I&#039;ll Receive You Some Test Events!</title>
     <published>2020-02-15T00:00:00+00:00</published>
     <updated>2020-02-15T00:00:00+00:00</updated>
@@ -686,8 +686,8 @@ class DispatcherTest {
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/single-expression-functions</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/single-expression-functions" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions" />
     <title>Single Expression Functions</title>
     <published>2020-02-13T00:00:00+00:00</published>
     <updated>2020-02-13T00:00:00+00:00</updated>
@@ -758,8 +758,8 @@ class Adventurer(val name: String) {
     ]]></content>
 </entry>
             <entry>
-    <id>https://dkanen.scaleticket.net/blog/getting-started-with-jigsaw</id>
-    <link type="text/html" rel="alternate" href="https://dkanen.scaleticket.net/blog/getting-started-with-jigsaw" />
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw" />
     <title>Getting Started With Jigsaw</title>
     <published>2020-02-13T00:00:00+00:00</published>
     <updated>2020-02-13T00:00:00+00:00</updated>

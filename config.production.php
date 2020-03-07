@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'baseUrl' => 'https://dkanen.scaleticket.net',
+    'baseUrl' => 'https://hungry-lewin-fe0d4b.netlify.com/',
     'production' => true,
 ];

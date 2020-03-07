@@ -11,7 +11,7 @@
 <h1>Contact</h1>
 
 <p class="mb-8">
-    Got something on your mind? Have a question? Suggestion? Feedback? Interested in working at Bushel? Drop us a line with the simple form below. Don't worry we wont put you on any massive mailing lists.
+    Got something on your mind? Have a question? Suggestion? Feedback? Interested in working at Bushel? Drop me a line with the simple form below. Don't worry we wont put you on any massive mailing lists.
 </p>
 
 <form action="https://fieldgoal.io/f/cfsHQk" method="POST" class="mb-12">

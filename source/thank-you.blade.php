@@ -11,7 +11,7 @@
 <h1>Contact</h1>
 
 <p class="mb-8">
-    Yum! Thanks for dropping us a line.
+    Yum! Thanks for dropping me a line.
     <br/><br/>
     Looking for something to read? Checkout the <a href="{{ $page->blog }}">blog</a>.
 </p>

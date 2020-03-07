@@ -5,14 +5,14 @@ use Illuminate\Support\Str;
 return [
     'baseUrl' => 'http://localhost:3000/',
     'production' => false,
-    'siteName' => 'Engineering Blog',
-    'siteDescription' => 'A great blog you\'ll love to read!',
-    'siteAuthor' => 'Bushel Engineering',
+    'siteName' => 'David\'s Explorers Blog',
+    'siteDescription' => 'Notes about what I discover while programming',
+    'siteAuthor' => 'David Kanenwisher',
 
     // collections
     'collections' => [
         'posts' => [
-            'author' => 'Bushel Engineering', // Default author, if not provided in a post
+            'author' => 'David Kanenwisher', // Default author, if not provided in a post
             'sort' => '-date',
             'path' => 'blog/{filename}',
         ],
