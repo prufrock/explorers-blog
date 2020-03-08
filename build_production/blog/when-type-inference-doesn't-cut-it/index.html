@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="Single Expression Functions | David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="When Type Inference Doesn&#039;t Cut It | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions"/>
+        <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>Single Expression Functions | David&#039;s Explorer Blog</title>
+        <title>When Type Inference Doesn&#039;t Cut It | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://hungry-lewin-fe0d4b.netlify.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-            <meta property="og:title" content="Single Expression Functions" />
+            <meta property="og:title" content="When Type Inference Doesn&#039;t Cut It" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions"/>
-    <meta property="og:description" content="I recently learned about single expression functions and am amazed at how simple the function you can created with them are." />
+    <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it"/>
+    <meta property="og:description" content="" />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -120,11 +120,11 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                        <img src="/assets/img/post-cover-image-2.png" alt="Single Expression Functions cover image" class="mb-2">
+                        <img src="/assets/img/post-cover-image-2.png" alt="When Type Inference Doesn&#039;t Cut It cover image" class="mb-2">
     
-    <h1 class="leading-none mb-2">Single Expression Functions</h1>
+    <h1 class="leading-none mb-2">When Type Inference Doesn&#039;t Cut It</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 13, 2020</p>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 15, 2020</p>
 
                         <a
                 href="/blog/categories/kotlin"
@@ -133,77 +133,55 @@
             >kotlin</a>
             
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>I was listening to Talking Kotlin <a href="https://pca.st/09ybe338">Kotlin Cookbook</a>. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the functions in the Kotlin standard library are implemented as Single Expression Functions. At this point my curiosity had piqued and I had to know more.</p>
+        <p>In order to learn Kotlin I've been working my way through a goofy program called "adventure-venture". I honestly don't have a clear idea of what it does but so far it has adventures in a tavern that want to talk to each other. I'm also trying to understand event based systems so the adventures interact with the world through events.</p>
 
-<p>I did some rapid googling and found myself staring at Programming Kotlin by Stephen Samuel and Stefan Bocutiu. There was a very short chapter in there on Single Expression Functions but after staring at it for a few minutes I had to try it out.</p>
+<p>In the process of trying to the adventurers to talk to each other I've been refactoring the way the system works. When I refactor I like to try and keep all of the tests passing as I advance forward with the refactoring. That way it's clear when I am changing behavior and when I am not. It's in this way that I discovered a situation where I can't rely on type inference.</p>
 
-<p>I've got this dirt simple class that I was able to change from this:</p>
+<p>I got my code to the point where I had these two tests:</p>
 
-<pre><code class="kotlin">com.dkanen
+<pre><code class="kotlin">    @Test
+    fun `it can dispatch an empty event object`() {
+        val dispatcher = Dispatcher()
 
-class Adventurer(val name: String) {
+        var passedValue = EmptyEvent()
 
-    var location: Int = 0
+        dispatcher.eventSubscribe { event -&gt; passedValue = event }
 
-    fun walk(): Int {
-        return (++location)
+        assertEquals("", passedValue.name)
     }
 
-    fun talk(): String {
-        return "You talk to no one in particular."
-    }
+    @Test
+    fun `it can dispatch an emitted event object`() {
+        val dispatcher = Dispatcher()
 
-    fun listen(): String {
-        return "There is no sound to hear."
-    }
+        var passedValue = EmittedEvent("emittedSound")
 
-    fun talk(listener: Adventurer): String {
-       return "Talking to yourself may be a sign of genius"
-    }
+        dispatcher.eventSubscribe { event -&gt; passedValue = event }
 
-    fun heard(): String {
-       return "How fair the beets at this establishment?"
+        assertEquals("emittedSound", passedValue.name)
     }
-
-}
 </code></pre>
 
-<p>To this:</p>
+<p>Notice that in the first test I have <code>var passedValue = EmptyEvent()</code> and in the second test I have a similar line <code>var passedValue = EmittedEvent("emittedSound")</code>. Why not just leave them like this then? Well, they don't compile because <code>dispatcher.eventSubscribe</code> expects a lambda of type <code>(Event) -&gt; Unit</code>. I thought I had this covered by creating the <code>Event</code> interface and making each implement this interface. No dice, I starting getting <code>Type mismatch</code> errors from Intellij on this line:</p>
 
-<pre><code class="kotlin">com.dkanen
-
-class Adventurer(val name: String) {
-
-    var location: Int = 0
-
-    fun walk(): Int = (++location)
-
-    fun talk(): String = "You talk to no one in particular."
-
-    fun listen(): String = "There is no sound to hear."
-
-    fun talk(listener: Adventurer): String = "Talking to yourself may be a sign of genius"
-
-    fun heard(): String = "How fair the beets at this establishment?"
-
-}
+<pre><code class="kotlin">        dispatcher.eventSubscribe { event -&gt; passedValue = event }
 </code></pre>
 
-<p>Do you see the difference? Pretty neat eh?</p>
+<p>After staring at my code a bit a thought occurred to me. The type of <code>event</code> above is <code>Event</code> while the type of <code>passedValue</code> is either <code>EmptyEvent</code> or <code>EmittedEvent</code>. This means I must not be able to assign a more specific type, <code>EmptyEvent</code> or <code>EmittedEvent</code>, to a less specific type <code>Event</code>. This lead to me think I need to declare the type as <code>Event</code>...</p>
 
-<p>What do you think you could use Single Expression Functions to simplify?</p>
+<p>Type inference on both meant that the type</p>
     </div>
 
     <nav class="flex justify-between text-sm md:text-base">
         <div>
-                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw" title="Older Post: Getting Started With Jigsaw">
-                    &LeftArrow; Getting Started With Jigsaw
+                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions" title="Older Post: Single Expression Functions">
+                    &LeftArrow; Single Expression Functions
                 </a>
                     </div>
 
         <div>
-                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it" title="Newer Post: When Type Inference Doesn&#039;t Cut It">
-                    When Type Inference Doesn&#039;t Cut It &RightArrow;
+                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/test-events-were-not-received" title="Newer Post: I&#039;ll Receive You Some Test Events!">
+                    I&#039;ll Receive You Some Test Events! &RightArrow;
                 </a>
                     </div>
     </nav>

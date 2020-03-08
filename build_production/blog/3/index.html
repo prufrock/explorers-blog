@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="Single Expression Functions | David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions"/>
+        <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/3"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>Single Expression Functions | David&#039;s Explorer Blog</title>
+        <title>David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://hungry-lewin-fe0d4b.netlify.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-            <meta property="og:title" content="Single Expression Functions" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions"/>
-    <meta property="og:description" content="I recently learned about single expression functions and am amazed at how simple the function you can created with them are." />
+            <meta property="og:title" content="David&#039;s Explorer Blog Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/3"/>
+    <meta property="og:description" content="The list of blog posts for David&#039;s Explorer Blog" />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -120,94 +120,58 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                        <img src="/assets/img/post-cover-image-2.png" alt="Single Expression Functions cover image" class="mb-2">
-    
-    <h1 class="leading-none mb-2">Single Expression Functions</h1>
+                <h1>Blog</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 13, 2020</p>
+    <hr class="border-b my-6">
 
-                        <a
-                href="/blog/categories/kotlin"
-                title="View posts in kotlin"
-                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
-            >kotlin</a>
+            <div class="flex flex-col mb-4">
+    <p class="text-gray-700 font-medium my-2">
+        February 13, 2020
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw"
+            title="Read more - Getting Started With Jigsaw"
+            class="text-gray-900 font-extrabold"
+        >Getting Started With Jigsaw</a>
+    </h2>
+
+    <p class="mb-4 mt-0">You've got some ideas kicking around your heard for a blog. You know how to use Laravel pretty well and want to get to writing things down now! Jigsaw the Laravel based static site generator may be just what you need.</p>
+
+    <a
+        href="https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw"
+        title="Read more - Getting Started With Jigsaw"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
             
-    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>I was listening to Talking Kotlin <a href="https://pca.st/09ybe338">Kotlin Cookbook</a>. The author of the Kotlin Cookbook, Ken Kousen, mentioned that one of the features he really likes about Kotlin are single expression functions. He even pointed out how cool it was that many of the functions in the Kotlin standard library are implemented as Single Expression Functions. At this point my curiosity had piqued and I had to know more.</p>
-
-<p>I did some rapid googling and found myself staring at Programming Kotlin by Stephen Samuel and Stefan Bocutiu. There was a very short chapter in there on Single Expression Functions but after staring at it for a few minutes I had to try it out.</p>
-
-<p>I've got this dirt simple class that I was able to change from this:</p>
-
-<pre><code class="kotlin">com.dkanen
-
-class Adventurer(val name: String) {
-
-    var location: Int = 0
-
-    fun walk(): Int {
-        return (++location)
-    }
-
-    fun talk(): String {
-        return "You talk to no one in particular."
-    }
-
-    fun listen(): String {
-        return "There is no sound to hear."
-    }
-
-    fun talk(listener: Adventurer): String {
-       return "Talking to yourself may be a sign of genius"
-    }
-
-    fun heard(): String {
-       return "How fair the beets at this establishment?"
-    }
-
-}
-</code></pre>
-
-<p>To this:</p>
-
-<pre><code class="kotlin">com.dkanen
-
-class Adventurer(val name: String) {
-
-    var location: Int = 0
-
-    fun walk(): Int = (++location)
-
-    fun talk(): String = "You talk to no one in particular."
-
-    fun listen(): String = "There is no sound to hear."
-
-    fun talk(listener: Adventurer): String = "Talking to yourself may be a sign of genius"
-
-    fun heard(): String = "How fair the beets at this establishment?"
-
-}
-</code></pre>
-
-<p>Do you see the difference? Pretty neat eh?</p>
-
-<p>What do you think you could use Single Expression Functions to simplify?</p>
-    </div>
-
-    <nav class="flex justify-between text-sm md:text-base">
-        <div>
-                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw" title="Older Post: Getting Started With Jigsaw">
-                    &LeftArrow; Getting Started With Jigsaw
-                </a>
-                    </div>
-
-        <div>
-                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it" title="Newer Post: When Type Inference Doesn&#039;t Cut It">
-                    When Type Inference Doesn&#039;t Cut It &RightArrow;
-                </a>
-                    </div>
-    </nav>
-        </main>
+            <nav class="flex text-base my-8">
+                            <a
+                    href="/blog/2"
+                    title="Previous Page"
+                    class="bg-gray-200 hover:bg-gray-400 rounded mr-3 px-5 py-3"
+                >&LeftArrow;</a>
+            
+                            <a
+                    href="/blog"
+                    title="Go to Page 1"
+                    class="bg-gray-200 hover:bg-gray-400 text-blue-700 rounded mr-3 px-5 py-3 "
+                >1</a>
+                            <a
+                    href="/blog/2"
+                    title="Go to Page 2"
+                    class="bg-gray-200 hover:bg-gray-400 text-blue-700 rounded mr-3 px-5 py-3 "
+                >2</a>
+                            <a
+                    href="/blog/3"
+                    title="Go to Page 3"
+                    class="bg-gray-200 hover:bg-gray-400 text-blue-700 rounded mr-3 px-5 py-3 text-blue-600"
+                >3</a>
+            
+                    </nav>
+            </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
