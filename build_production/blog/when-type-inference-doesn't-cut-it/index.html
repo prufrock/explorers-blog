@@ -20,7 +20,7 @@
             <meta property="og:title" content="When Type Inference Doesn&#039;t Cut It" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it"/>
-    <meta property="og:description" content="" />
+    <meta property="og:description" content="It turns out you can&#039;t always use Kotlin&#039;s type inference. There are times when you need to explicitly call out the type." />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -124,7 +124,7 @@
     
     <h1 class="leading-none mb-2">When Type Inference Doesn&#039;t Cut It</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  February 15, 2020</p>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  March 8, 2020</p>
 
                         <a
                 href="/blog/categories/kotlin"
@@ -133,9 +133,9 @@
             >kotlin</a>
             
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>In order to learn Kotlin I've been working my way through a goofy program called "adventure-venture". I honestly don't have a clear idea of what it does but so far it has adventures in a tavern that want to talk to each other. I'm also trying to understand event based systems so the adventures interact with the world through events.</p>
+        <p>In order to learn Kotlin I've been working my way through a goofy program called "adventure-venture". I honestly don't have a clear idea of what it does but so far it has adventurers in a tavern that want to talk to each other. I'm also trying to understand event based systems so the adventurers interact with the world through events.</p>
 
-<p>In the process of trying to the adventurers to talk to each other I've been refactoring the way the system works. When I refactor I like to try and keep all of the tests passing as I advance forward with the refactoring. That way it's clear when I am changing behavior and when I am not. It's in this way that I discovered a situation where I can't rely on type inference.</p>
+<p>In the process of trying to get the adventurers to talk to each other I've been refactoring the way the system works. When I refactor I like to try and keep all of the tests passing as I advance forward with the refactoring. That way it's clear when I am changing behavior and when I am not. It's in this way that I discovered a situation where I can't rely on type inference.</p>
 
 <p>I got my code to the point where I had these two tests:</p>
 
@@ -167,22 +167,46 @@
 <pre><code class="kotlin">        dispatcher.eventSubscribe { event -&gt; passedValue = event }
 </code></pre>
 
-<p>After staring at my code a bit a thought occurred to me. The type of <code>event</code> above is <code>Event</code> while the type of <code>passedValue</code> is either <code>EmptyEvent</code> or <code>EmittedEvent</code>. This means I must not be able to assign a more specific type, <code>EmptyEvent</code> or <code>EmittedEvent</code>, to a less specific type <code>Event</code>. This lead to me think I need to declare the type as <code>Event</code>...</p>
+<p>After staring at my code a bit a thought occurred to me. The type of <code>event</code> above is <code>Event</code> while the type of <code>passedValue</code> is either <code>EmptyEvent</code> or <code>EmittedEvent</code>. This means I must not be able to assign a more specific type, <code>EmptyEvent</code> or <code>EmittedEvent</code>, to a less specific type <code>Event</code>. This lead to me think I need to declare the type as <code>Event</code> so that <code>passedValue</code> can always hold an <code>Event</code>.</p>
 
-<p>Type inference on both meant that the type</p>
+<p>I added explicit type information to <code>passedValue</code> by changing it to <code>passedValue: Event</code> like so:</p>
+
+<pre><code class="kotlin">    @Test
+    fun `it can dispatch an empty event object`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue: Event = EmptyEvent()
+
+        dispatcher.eventSubscribe { event -&gt; passedValue = event }
+
+        assertEquals("", passedValue.name)
+    }
+
+    @Test
+    fun `it can dispatch an emitted event object`() {
+        val dispatcher = Dispatcher()
+
+        var passedValue: Event = EmittedEvent("emittedSound")
+
+        dispatcher.eventSubscribe { event -&gt; passedValue = event }
+
+        assertEquals("emittedSound", passedValue.name)
+    }
+</code></pre>
+
+<p>That did the trick and my tests start passing. I do wonder if generics could help out here but I haven't played with them much yet.</p>
+
+<p>How about you? Let me know if you've learned anything interesting about Kotlin's type inference by dropping me a line on the <a href="/contact">contact page</a>.</p>
     </div>
 
     <nav class="flex justify-between text-sm md:text-base">
         <div>
-                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions" title="Older Post: Single Expression Functions">
-                    &LeftArrow; Single Expression Functions
+                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/jigsaw-many-authors" title="Older Post: Support Many Authors in Jigsaw">
+                    &LeftArrow; Support Many Authors in Jigsaw
                 </a>
                     </div>
 
         <div>
-                            <a href="https://hungry-lewin-fe0d4b.netlify.com/blog/test-events-were-not-received" title="Newer Post: I&#039;ll Receive You Some Test Events!">
-                    I&#039;ll Receive You Some Test Events! &RightArrow;
-                </a>
                     </div>
     </nav>
         </main>
