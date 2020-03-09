@@ -4,7 +4,7 @@ section: content
 title: When Type Inference Doesn't Cut It
 date: 2020-03-08
 description: It turns out you can't always use Kotlin's type inference. There are times when you need to explicitly call out the type. 
-cover_image: /assets/img/post-cover-image-2.png
+cover_image: /assets/img/type-inference.svg
 excerpt: I thought I had this covered by creating the `Event` interface and making each implement this interface. No dice, I starting getting `Type mismatch` errors from Intellij.
 categories: [kotlin]
 author: David Kanenwisher
