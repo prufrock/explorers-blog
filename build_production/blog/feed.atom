@@ -3,12 +3,149 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://hungry-lewin-fe0d4b.netlify.com/" />
     <link type="application/atom+xml" rel="self" href="https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom" />
-    <updated>2020-03-09T01:59:07+00:00</updated>
+    <updated>2020-03-22T02:50:15+00:00</updated>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv" />
+    <title>Build OpenCV for Java/Kotlin on macOS</title>
+    <published>2020-03-22T00:00:00+00:00</published>
+    <updated>2020-03-22T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">Building OpenCV for Java can be a bit of a trip....</summary>
+    <content type="html"><![CDATA[
+        <p>The other day I went to bring OpenCV <a href="https://opencv.org/">OpenCV</a> into an <a href="https://openrndr.org/">OpenRNDR</a> project. I soon discovered there was more to it than I first thought.</p>
+
+<p>Let's start with a few housekeeping things:</p>
+
+<ol>
+<li>Homebrew</li>
+<li>Ant</li>
+<li>SDKMAN</li>
+</ol>
+
+<p>If you don't have Homebrew, you'll either need to get it or find another way to install Ant.</p>
+
+<p>You need to have Ant to build OpenCV. You can check if it's installed on the command line by checking it's version:</p>
+
+<pre><code class="text">$ ant -v
+Apache Ant(TM) version 1.10.7 compiled on September 1 2019
+Trying the default build file: build.xml
+Buildfile: build.xml does not exist!
+Build failed
+</code></pre>
+
+<p>If you don't have Ant, I recommend installing it via homebrew like so:</p>
+
+<pre><code class="text">$ brew install ant
+</code></pre>
+
+<p>Do you already have SDKMAN? It's not absolutely necessary but it makes it easy to switch between versions and to know they are configured in such a way OpenCV's build process can find it. You can find the install steps here: <a href="https://sdkman.io/install">https://sdkman.io/install</a>.</p>
+
+<p>SDKMAN doesn't have the official JDK in it but you can add in any you have installed. You can either place them in the SDKMAN directory <code>/Users/davidkanenwisher/.sdkman/candidates/java</code> or link them. I have my JDK installed in <code>/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/</code> so I linked it into SDKMAN like so:</p>
+
+<pre><code class="text">ln -s /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/ /Users/davidkanenwisher/.sdkman/candidates/java/1.8.0_241-oracle
+</code></pre>
+
+<p>Lastly, lets install and use your preferred java version. I'm going with Java 11 open JDK. With SDKMAN this is pretty easy. In your terminal run this command and answer yes to "set as default":</p>
+
+<pre><code class="text">$ sdk install java 11.0.2-open
+</code></pre>
+
+<p>Feel free to use your preferred JDK though I don't know enough about OpenCV and Java to know if a certain JDK's won't work.</p>
+
+<p>Let's get down to building OpenCV.</p>
+
+<p>First, go to the OpenCV website and download the sources of the version you want to build: <a href="https://opencv.org/releases/">https://opencv.org/releases/</a>. I'm going with 4.2.0.</p>
+
+<p>This unzips into the folder <code>opencv-4.2.0</code>. Don't switch into that directory yet! In the same directory as <code>opencv-4.2.0</code> create a folder <code>build_opencv-420</code> and switch into it <code>build_opencv-420</code>:</p>
+
+<pre><code class="text">$ mkdir build_opencv-420
+$ cd build_opencv-420
+</code></pre>
+
+<p>Before you can build OpenCV you need configure and create the cmake file:</p>
+
+<pre><code class="text">$ cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DBUILD_opencv_java=ON ../opencv-4.2.0 &amp;&gt; output.txt
+</code></pre>
+
+<p>Now take a peak at <code>output.txt</code> and check to see if Java support is going to be built. In there you should see:</p>
+
+<pre><code class="text">--     To be built:                 calib3d core dnn features2d flann gapi highgui imgcodecs imgproc java ml objdetect photo python3 stitching ts video videoio
+</code></pre>
+
+<pre><code class="text">--   Java:
+--     ant:                         /usr/local/bin/ant (ver 1.10.7)
+--     JNI:                         /Users/davidkanenwisher/.sdkman/candidates/java/current/include /Users/davidkanenwisher/.sdkman/candidates/java/current/include/darwin /Users/davidkanenwisher/.sdkman/candidates/java/current/include
+--     Java wrappers:               YES
+--     Java tests:                  YES
+</code></pre>
+
+<p>Ok, now it's time to build OpenCV. Your poor computer is going to have to work pretty hard to make this happen so make sure you can live without it for an hour or so depending on your hardware. When you're ready run this command:</p>
+
+<pre><code class="text">$ make -j8
+</code></pre>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-opencv</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-opencv" />
+    <title>Starting Up Kotlin and OpenCV</title>
+    <published>2020-03-22T00:00:00+00:00</published>
+    <updated>2020-03-22T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">Where Kotlin and OpenCV show they are the best of friends....</summary>
+    <content type="html"><![CDATA[
+        <p>I started playing with <a href="https://openrndr.org/">OpenRNDR</a> after hearing about it on <a href="https://talkingkotlin.com/openrndr-with-edwin-jakobs/">Talking Kotlin</a>. I saw there was <a href="https://guide.openrndr.org/#/10_OPENRNDR_Extras/C02_Kinect">Kinect</a> support. Once I had a connect I suddenly found myself want to use <a href="https://opencv.org/">OpenCV</a>. At which point I promptly feel mostly wonderfully into a deep, deep rabbit hole of getting OpenCV to work in Kotlin.</p>
+
+<p>I prefer Gradle with Kotlin script so I'll be using that for this guide.</p>
+
+<p>Lets start by essentially following Gradle's <a href="https://guides.gradle.org/building-kotlin-jvm-libraries/">Building Kotlin JVM Libraries</a> guide.</p>
+
+<p>Create a project directory from the shell:
+```shell script
+$ mkdir -p example-opencv
+$ cd example-opencv</p>
+
+<pre><code><br />Then create the project with gradle:
+```shell script
+$ gradle init
+</code></pre>
+
+<p>When prompted choose these options:
+* Select type of project to generate 2: application
+* Select implementation language 4: Kotlin
+* Select build script DSL 2: Kotlin
+* Project name (default: opencv-start): example-opencv
+* Source package (default: opencv.start): example-opencv</p>
+
+<p>Then add some controls on the JDK version to the top:</p>
+
+<pre><code class="text">import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+configure&lt;JavaPluginConvention&gt; {
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+tasks.withType&lt;KotlinCompile&gt; {
+    kotlinOptions.jvmTarget = "11"
+}
+</code></pre>
+
+<p>This makes it easier when we have to set the version to compile OpenCV against.</p>
+
+<p>Now lets open the project up in Intellij.</p>
+
+<p>Open up Intellij then go to <code>File &gt; Project From Existing Sources...</code>, navigate to the project, and click <code>Open</code>.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it</id>
     <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn&#039;t-cut-it" />
     <title>When Type Inference Doesn&#039;t Cut It</title>
