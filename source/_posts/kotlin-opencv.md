@@ -45,3 +45,7 @@ tasks.withType<KotlinCompile> {
 }
 ```
 This makes it easier when we have to set the version to compile OpenCV against.
+
+Now lets open the project up in Intellij.
+
+Open up Intellij then go to `File > Project From Existing Sources...`, navigate to the project, and click `Open`.
