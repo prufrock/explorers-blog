@@ -3,7 +3,7 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://hungry-lewin-fe0d4b.netlify.com/" />
     <link type="application/atom+xml" rel="self" href="https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom" />
-    <updated>2020-03-24T02:12:16+00:00</updated>
+    <updated>2020-03-24T02:18:04+00:00</updated>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
@@ -107,59 +107,6 @@ lib/libopencv_java420.dylib
 <p>The second, <code>libopencv_java420.dylib</code>, is the natively compiled library that you'll need to point to when you run your application.</p>
 
 <p>Now that you have OpenCV ready to run in your Java/Kotlin application what awesome uses are you going to put it to? Send me a message on the <a href="/contact">contact page</a>.</p>
-    ]]></content>
-</entry>
-            <entry>
-    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-opencv</id>
-    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-opencv" />
-    <title>Starting Up Kotlin and OpenCV</title>
-    <published>2020-03-22T00:00:00+00:00</published>
-    <updated>2020-03-22T00:00:00+00:00</updated>
-    <author>
-        <name>David Kanenwisher</name>
-    </author>
-    <summary type="html">Where Kotlin and OpenCV show they are the best of friends....</summary>
-    <content type="html"><![CDATA[
-        <p>I started playing with <a href="https://openrndr.org/">OpenRNDR</a> after hearing about it on <a href="https://talkingkotlin.com/openrndr-with-edwin-jakobs/">Talking Kotlin</a>. I saw there was <a href="https://guide.openrndr.org/#/10_OPENRNDR_Extras/C02_Kinect">Kinect</a> support. Once I had a connect I suddenly found myself want to use <a href="https://opencv.org/">OpenCV</a>. At which point I promptly feel mostly wonderfully into a deep, deep rabbit hole of getting OpenCV to work in Kotlin.</p>
-
-<p>I prefer Gradle with Kotlin script so I'll be using that for this guide.</p>
-
-<p>Lets start by essentially following Gradle's <a href="https://guides.gradle.org/building-kotlin-jvm-libraries/">Building Kotlin JVM Libraries</a> guide.</p>
-
-<p>Create a project directory from the shell:
-```shell script
-$ mkdir -p example-opencv
-$ cd example-opencv</p>
-
-<pre><code><br />Then create the project with gradle:
-```shell script
-$ gradle init
-</code></pre>
-
-<p>When prompted choose these options:
-* Select type of project to generate 2: application
-* Select implementation language 4: Kotlin
-* Select build script DSL 2: Kotlin
-* Project name (default: opencv-start): example-opencv
-* Source package (default: opencv.start): example-opencv</p>
-
-<p>Then add some controls on the JDK version to the top:</p>
-
-<pre><code class="text">import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-configure&lt;JavaPluginConvention&gt; {
-    sourceCompatibility = JavaVersion.VERSION_11
-}
-tasks.withType&lt;KotlinCompile&gt; {
-    kotlinOptions.jvmTarget = "11"
-}
-</code></pre>
-
-<p>This makes it easier when we have to set the version to compile OpenCV against.</p>
-
-<p>Now lets open the project up in Intellij.</p>
-
-<p>Open up Intellij then go to <code>File &gt; Project From Existing Sources...</code>, navigate to the project, and click <code>Open</code>.</p>
     ]]></content>
 </entry>
             <entry>
