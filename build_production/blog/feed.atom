@@ -3,7 +3,7 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://hungry-lewin-fe0d4b.netlify.com/" />
     <link type="application/atom+xml" rel="self" href="https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom" />
-    <updated>2020-03-22T02:50:15+00:00</updated>
+    <updated>2020-03-24T02:12:16+00:00</updated>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
@@ -12,8 +12,8 @@
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv</id>
     <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv" />
     <title>Build OpenCV for Java/Kotlin on macOS</title>
-    <published>2020-03-22T00:00:00+00:00</published>
-    <updated>2020-03-22T00:00:00+00:00</updated>
+    <published>2020-03-23T00:00:00+00:00</published>
+    <updated>2020-03-23T00:00:00+00:00</updated>
     <author>
         <name>David Kanenwisher</name>
     </author>
@@ -90,6 +90,23 @@ $ cd build_opencv-420
 
 <pre><code class="text">$ make -j8
 </code></pre>
+
+<p>If all goes well you should get the message:</p>
+
+<pre><code class="text">BUILD SUCCESSFUL
+</code></pre>
+
+<p>Amongst a whole bunch of other files you should have:</p>
+
+<pre><code class="text">bin/opencv-420.jar
+lib/libopencv_java420.dylib
+</code></pre>
+
+<p>The first, <code>opencv-420.jar</code>, is the jar file you'll need to import into your project.</p>
+
+<p>The second, <code>libopencv_java420.dylib</code>, is the natively compiled library that you'll need to point to when you run your application.</p>
+
+<p>Now that you have OpenCV ready to run in your Java/Kotlin application what awesome uses are you going to put it to? Send me a message on the <a href="/contact">contact page</a>.</p>
     ]]></content>
 </entry>
             <entry>

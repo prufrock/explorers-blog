@@ -2,7 +2,7 @@
 extends: _layouts.post
 section: content
 title: Build OpenCV for Java/Kotlin on macOS
-date: 2020-03-22
+date: 2020-03-23
 description: Building OpenCV for Java can be a bit of a trip.
 cover_image: /assets/img/3-ink-bottles.svg
 excerpt: I soon discovered there was more to it than I thought.
@@ -89,3 +89,21 @@ Ok, now it's time to build OpenCV. Your poor computer is going to have to work p
 ```text
 $ make -j8
 ``` 
+
+If all goes well you should get the message:
+```text
+BUILD SUCCESSFUL
+```
+
+Amongst a whole bunch of other files you should have:
+
+```text
+bin/opencv-420.jar
+lib/libopencv_java420.dylib
+```
+
+The first, `opencv-420.jar`, is the jar file you'll need to import into your project.
+
+The second, `libopencv_java420.dylib`, is the natively compiled library that you'll need to point to when you run your application.
+
+Now that you have OpenCV ready to run in your Java/Kotlin application what awesome uses are you going to put it to? Send me a message on the [contact page](/contact).

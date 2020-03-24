@@ -124,7 +124,7 @@
     
     <h1 class="leading-none mb-2">Build OpenCV for Java/Kotlin on macOS</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  March 22, 2020</p>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  March 23, 2020</p>
 
                         <a
                 href="/blog/categories/kotlin"
@@ -204,6 +204,23 @@ $ cd build_opencv-420
 
 <pre><code class="text">$ make -j8
 </code></pre>
+
+<p>If all goes well you should get the message:</p>
+
+<pre><code class="text">BUILD SUCCESSFUL
+</code></pre>
+
+<p>Amongst a whole bunch of other files you should have:</p>
+
+<pre><code class="text">bin/opencv-420.jar
+lib/libopencv_java420.dylib
+</code></pre>
+
+<p>The first, <code>opencv-420.jar</code>, is the jar file you'll need to import into your project.</p>
+
+<p>The second, <code>libopencv_java420.dylib</code>, is the natively compiled library that you'll need to point to when you run your application.</p>
+
+<p>Now that you have OpenCV ready to run in your Java/Kotlin application what awesome uses are you going to put it to? Send me a message on the <a href="/contact">contact page</a>.</p>
     </div>
 
     <nav class="flex justify-between text-sm md:text-base">
