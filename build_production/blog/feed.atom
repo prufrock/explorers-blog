@@ -3,12 +3,124 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://hungry-lewin-fe0d4b.netlify.com/" />
     <link type="application/atom+xml" rel="self" href="https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom" />
-    <updated>2020-03-24T02:18:04+00:00</updated>
+    <updated>2020-04-01T00:15:24+00:00</updated>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-folder</id>
+    <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-folder" />
+    <title>Kotlin Folder Got To Have It</title>
+    <published>2020-03-31T00:00:00+00:00</published>
+    <updated>2020-03-31T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">I ran into some trouble tonight when I didn&#039;t make a kotlin folder....</summary>
+    <content type="html"><![CDATA[
+        <p>I wanted to make a simple Kotlin project that I could use to try out different bits of code I found when reading other peoples code. I figured I'd just use <a href="https://guides.gradle.org/building-kotlin-jvm-libraries/">Gradle tutorial</a> to get me started but with a few tweaks. Namely, I wanted to use my own folder name <code>org/example</code> and remove the <code>kotlin</code> folder since I figured it was part of the tutorial. It turns out I was wrong.</p>
+
+<p>I created a project with this structure:</p>
+
+<pre><code class="text">$ tree
+.
+├── build.gradle.kts
+└── src
+    ├── main
+    │   └── com
+    │       └── dkanen
+    │           └── MyLibrary.kt
+    └── test
+        └── com
+            └── dkanen
+                └── MyLibraryTest.kt
+</code></pre>
+
+<p>Notice the lack of a <code>kotlin</code> folder.</p>
+
+<p>I set my Gradle file to look like the one in the tutorial up to the part about adding support for tests:</p>
+
+<pre><code class="text">plugins {
+    kotlin("jvm") version "1.3.61" 
+}
+
+repositories {
+    jcenter() 
+}
+
+dependencies {
+    implementation(kotlin("stdlib"))
+    testImplementation("junit:junit:4.12")
+}
+</code></pre>
+
+<p>I ran <code>gradle test</code> but the output was suspicious:</p>
+
+<pre><code class="text"> gradle test
+
+BUILD SUCCESSFUL in 1s
+</code></pre>
+
+<p>Shouldn't there have been something about my tests? I tinkered for a bit to no avail.</p>
+
+<p>I thought maybe my tests are running so I adjusted them to make them fail. I got the same output as before; something was clearly wrong at this point.</p>
+
+<p>I loaded it up in Intellij. In there I found that Intellij was refusing to run the tests claiming, "No test events were received."</p>
+
+<p>I was perplexed. I looked back at the examples and saw the <code>kotlin</code> folder. I figured it was worth a shot.</p>
+
+<p>I adjusted my directory structure like so:</p>
+
+<pre><code class="text">.
+├── build.gradle.kts
+└── src
+    ├── main
+    │   └── kotlin
+    │       └── com
+    │           └── dkanen
+    │               └── MyLibrary.kt
+    └── test
+        └── kotlin
+            └── com
+                └── dkanen
+                    └── MyLibraryTest.kt
+</code></pre>
+
+<p>Notice the existence of the <code>kotlin</code> folder!</p>
+
+<p>Now when I run with my failing test I get:</p>
+
+<pre><code class="text">$ gradle test
+
+&gt; Task :test FAILED
+
+com.dkanen.MyLibraryTest &gt; testMyLanguage FAILED
+    java.lang.AssertionError at MyLibraryTest.kt:9
+
+1 test completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+&gt; There were failing tests. See the report at: file:///Users/davidkanenwisher/IntelliJProjects/folder-trouble/build/reports/tests/test/index.html
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 1s
+3 actionable tasks: 3 executed
+</code></pre>
+
+<p>Yay! It works now.</p>
+
+<p>What was the last pesky problem you ran into getting Kotlin to work in Gradle? Let me know on the <a href="/contact">contact page</a>.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv</id>
     <link type="text/html" rel="alternate" href="https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv" />
     <title>Build OpenCV for Java/Kotlin on macOS</title>
