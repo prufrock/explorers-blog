@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'baseUrl' => 'https://hungry-lewin-fe0d4b.netlify.com/',
+    'baseUrl' => 'https://dkanen.com/',
     'production' => true,
 ];

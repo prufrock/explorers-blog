@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/2</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/2</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/3</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/3</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/test-events-were-not-received</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/test-events-were-not-received</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/kotlin-folder</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/kotlin-folder</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/first-attempt-at-collections</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/first-attempt-at-collections</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/jigsaw-many-authors</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/jigsaw-many-authors</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/lambda-sans-return</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/lambda-sans-return</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/shorthand-function-syntax</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/shorthand-function-syntax</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/when-type-inference-doesn't-cut-it</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/when-type-inference-doesn't-cut-it</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/oh-graphql-may-i-have-a-user</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/oh-graphql-may-i-have-a-user</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/single-expression-functions</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/single-expression-functions</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/getting-started-with-jigsaw</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/getting-started-with-jigsaw</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/openrndr-with-opencv</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/openrndr-with-opencv</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/java-build-opencv</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/java-build-opencv</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/thank-you</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/thank-you</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/feed.atom</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/feed.atom</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/about</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/about</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/contact</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/contact</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/categories/jigsaw</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/categories/jigsaw</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/categories/kotlin</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/categories/kotlin</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/categories/graphql</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/categories/graphql</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://hungry-lewin-fe0d4b.netlify.com/blog/categories/feature</loc>
-  <lastmod>2020-04-03T02:22:23+00:00</lastmod>
+  <loc>https://dkanen.com/blog/categories/feature</loc>
+  <lastmod>2020-04-03T02:23:49+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
 </urlset>
