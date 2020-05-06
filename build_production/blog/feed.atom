@@ -3,12 +3,78 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2020-04-03T02:23:49+00:00</updated>
+    <updated>2020-05-06T02:42:18+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/no-observable-object</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/no-observable-object" />
+    <title>No Observable Object</title>
+    <published>2020-05-05T00:00:00+00:00</published>
+    <updated>2020-05-05T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">It&#039;s not always clear why views don&#039;t render in Xcode&#039;s preview....</summary>
+    <content type="html"><![CDATA[
+        <p>I ran into some trouble after I opened up the app I've been toying with in Xcode. The SwiftUI preview wouldn't render. I clicked "Diagnostics" and it said:</p>
+
+<pre><code class="text">|  Error Domain=com.apple.dt.ultraviolet.service Code=12 "Rendering service was interrupted" UserInfo={NSLocalizedDescription=Rendering service was interrupted}
+</code></pre>
+
+<p>I have no idea what the ultraviolet service is, what it means that the code is 12, and it seems pretty clear the "Rendering service was interrupted". I did manage to find some more information by looking real close.</p>
+
+<p>Depending on the size of your screen, on mine it was rather small, there's a little "i" with a circle around after the crashed message. I clicked that then clicked "Show Crash Logs".</p>
+
+<p>After scrolling through a bunch of information I don't understand I struck gold. I saw something I could understand:</p>
+
+<pre><code class="text">Fatal error: No ObservableObject of type AppData found. A View.environmentObject(_:) for AppData may be missing as an ancestor of this view.: file SwiftUI, line 0
+</code></pre>
+
+<p>Thankfully, I'd recently gained a higher understanding of ObservableObjects plus AppData is a name of a variable in my project. Thankfully and reasonably, AppData is an ObservableObject. How do I know it's an ObservableObject? Why I made it implement ObservableObject protocol:</p>
+
+<pre><code class="swift">import SwiftUI
+
+class AppData: ObservableObject {
+    @Published var imageCache = ImageCache()
+}
+</code></pre>
+
+<p>So the fatal error seems to be telling me that AppData is missing from the current view. This was the preview for my ContentView so the first place I go is the SceneDelegate. It looks like that's passing AppData:</p>
+
+<pre><code class="swift">window.rootViewController = UIHostingController(rootView: contentView.environmentObject(appData))
+</code></pre>
+
+<p>"Ah but this is the preview!", I cry with a finger pointed firmly and vertically in the air.</p>
+
+<p>I take a look at PreviewProvider in ContentView.</p>
+
+<pre><code class="swift">struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+</code></pre>
+
+<p>"Well there's your problem" points out the surly mechanic in my head.</p>
+
+<p>If you are like the surly mechanic in my head then you likely noticed that <code>ContentView()</code> is bereft of a call to "environmentObject". This is the source of the fatal error reported earlier. A quick touch up and it's good to go:</p>
+
+<pre><code class="swift">struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView().environmentObject(AppData())
+    }
+}
+</code></pre>
+
+<p>That did the trick! I can see my exceptional preview.</p>
+
+<p>What hard to decipher error messages are you getting from SwiftUI? Let me know by dropping me a line on the <a href="/contact">contact page</a>.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/openrndr-with-opencv</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/openrndr-with-opencv" />
     <title>Use OpenCV with OpenRNDR</title>
