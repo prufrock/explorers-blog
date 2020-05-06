@@ -6,7 +6,7 @@ date: 2020-05-05
 description: It's not always clear why views don't render in Xcode's preview.
 cover_image: /assets/img/type-inference.svg
 excerpt: I have no idea what the ultraviolet service is, what it means that the code is 12, and it seems pretty clear the "Rendering service was interrupted". 
-categories: [SwiftUI]
+categories: [swiftui]
 author: David Kanenwisher
 ---
 
