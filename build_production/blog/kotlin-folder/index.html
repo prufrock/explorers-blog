@@ -39,7 +39,7 @@
                 <!-- End Matomo Code -->
         
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=595cdd7e11901d0dab8b">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=5caa0c2f7bf9e21596b3">
     </head>
 
     <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
@@ -137,7 +137,7 @@
 
 <p>I created a project with this structure:</p>
 
-<pre><code class="text">$ tree
+<pre><code class="language-text">$ tree
 .
 ├── build.gradle.kts
 └── src
@@ -155,7 +155,7 @@
 
 <p>I set my Gradle file to look like the one in the tutorial up to the part about adding support for tests:</p>
 
-<pre><code class="text">plugins {
+<pre><code class="language-text">plugins {
     kotlin("jvm") version "1.3.61" 
 }
 
@@ -171,7 +171,7 @@ dependencies {
 
 <p>I ran <code>gradle test</code> but the output was suspicious:</p>
 
-<pre><code class="text"> gradle test
+<pre><code class="language-text"> gradle test
 
 BUILD SUCCESSFUL in 1s
 </code></pre>
@@ -186,7 +186,7 @@ BUILD SUCCESSFUL in 1s
 
 <p>I adjusted my directory structure like so:</p>
 
-<pre><code class="text">.
+<pre><code class="language-text">.
 ├── build.gradle.kts
 └── src
     ├── main
@@ -205,7 +205,7 @@ BUILD SUCCESSFUL in 1s
 
 <p>Now when I run with my failing test I get:</p>
 
-<pre><code class="text">$ gradle test
+<pre><code class="language-text">$ gradle test
 
 &gt; Task :test FAILED
 
@@ -252,7 +252,7 @@ BUILD FAILED in 1s
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
                 <li class="md:mr-2">
-                    &copy; David Kanenwisher 2020.
+                    &copy; David Kanenwisher 2021.
                 </li>
 
                 <li>

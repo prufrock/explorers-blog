@@ -39,7 +39,7 @@
                 <!-- End Matomo Code -->
         
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=595cdd7e11901d0dab8b">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=5caa0c2f7bf9e21596b3">
     </head>
 
     <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
@@ -135,7 +135,7 @@
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
         <p>I need to figure out someway to satisfy my new test which checked to see if two different functions could subscribe to and receive an event from the Broadcaster. Up to this point, in Test Drive Development(TDD) fashion, my tests had allowed me to get away with sending an event to only one subscriber. I wanted to get this functionality into the Broadcaster so I added this test:</p>
 
-<pre><code class="kotlin">    @Test
+<pre><code class="language-kotlin">    @Test
     fun `more than one Subscriber can receive a broadcast`() {
         val dispatcher = Dispatcher()
 
@@ -159,17 +159,17 @@
 
 <p>I began by creating a <code>subscriberList</code> with the type <code>(String) -&gt; Unit</code> to match the type of the lambdas I knew I wanted to stuff in there. My previous experience with accepting a lambda as a parameter and assigning into a variable had prepared for this part. I'd seen the carrot syntax <code>&lt;Type&gt;</code> in documentation so figured that'd be the way to go. One last thing I ran into trouble with was Kotlin wouldn't let leave <code>subscriberList</code> null so I had to initialize it with <code>listOf()</code> something I saw in the Big Nerd Ranch book. I stuck all this together and got a compiling <code>subcriberList</code> declaration.</p>
 
-<pre><code class="kotlin">    var subscriberList: List&lt;(String) -&gt; Unit&gt; = listOf()
+<pre><code class="language-kotlin">    var subscriberList: List&lt;(String) -&gt; Unit&gt; = listOf()
 </code></pre>
 
 <p>Cool. Making progress. Now I needed to add a subscriber to my list. I ran into a problem pretty quick. I started updating <code>fun subscribe</code> with <code>subscriberList</code>. I put the <code>.</code> at end of the variable so I could call a method to add an element to the list. I figured I could autocomplete my way to the problem. I typed "a". Didn't see anything. I typed "add". Nothing. I switched to "app" hoping for "append". Nothing. What was going on here? Why weren't there any methods to add something to my list. A quick peak back in the Big Nerd Ranch book and I realize I need a mutable list!</p>
 
-<pre><code class="kotlin">    var subscriberList: MutableList&lt;(String) -&gt; Unit&gt; = mutableListOf()
+<pre><code class="language-kotlin">    var subscriberList: MutableList&lt;(String) -&gt; Unit&gt; = mutableListOf()
 </code></pre>
 
 <p>Now I have an "add" method on my list. I put that in place like so:</p>
 
-<pre><code class="kotlin">    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
+<pre><code class="language-kotlin">    fun subscribe(subscriberFunction: (String) -&gt; Unit) {
         subscriber = subscriberFunction
         subscriberList.add(subscriber)
     }
@@ -177,7 +177,7 @@
 
 <p>One more thing to do. When I broadcast an event it needs to go to all of the subscribers in <code>subscriberList</code>. How do I iterate over this thing? I always liked using <code>map</code> in other languages when I want to loop over the set with a succinct lambda. I give that go here:</p>
 
-<pre><code class="kotlin">    fun broadcast(event: String) {
+<pre><code class="language-kotlin">    fun broadcast(event: String) {
         subscriber(event)
         subscriberList.map { subscriber -&gt; subscriber(event)}
     }
@@ -187,7 +187,7 @@
 
 <p>There's <code>for</code> which reminds of PHP's <a href="https://www.php.net/manual/en/control-structures.foreach.php">foreach</a>:</p>
 
-<pre><code class="kotlin">    fun broadcast(event: String) {
+<pre><code class="language-kotlin">    fun broadcast(event: String) {
         subscriber(event)
         for (subscriber in subscriberList) {
             subscriber(event)
@@ -197,7 +197,7 @@
 
 <p>Then there's <code>forEach</code> which is a bit more functional:</p>
 
-<pre><code class="kotlin">        subscriberList.forEach { subscriber -&gt; subscriber(event) }
+<pre><code class="language-kotlin">        subscriberList.forEach { subscriber -&gt; subscriber(event) }
 </code></pre>
 
 <p>You know what I think I might like that more. I find that I tend to think <code>map</code> implies the list is going to be modified by the loop. The <a href="https://kotlinlang.org/docs/reference/collection-transformations.html">Kotlin documentation</a> has this to say about <code>map</code>:</p>
@@ -210,7 +210,7 @@
 
 <p>There's one last bit of syntactical sugar I'd like to try <code>it</code>. I've see it a bunch of times in various discussions of how lambdas work on collections. I think I can use <code>it</code> here it short up this code just a smidgen:</p>
 
-<pre><code class="kotin">    fun broadcast(event: String) {
+<pre><code class="language-kotin">    fun broadcast(event: String) {
         subscriber(event)
         subscriberList.forEach { it(event) }
     }
@@ -220,7 +220,7 @@
 
 <p>Here's how it all came together*:</p>
 
-<pre><code class="kotlin">package com.dkanen
+<pre><code class="language-kotlin">package com.dkanen
 
 class Dispatcher {
 
@@ -263,7 +263,7 @@ class Dispatcher {
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
                 <li class="md:mr-2">
-                    &copy; David Kanenwisher 2020.
+                    &copy; David Kanenwisher 2021.
                 </li>
 
                 <li>

@@ -39,7 +39,7 @@
                 <!-- End Matomo Code -->
         
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=595cdd7e11901d0dab8b">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=5caa0c2f7bf9e21596b3">
     </head>
 
     <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
@@ -163,7 +163,7 @@
 
 <p>Now open <code>build.gradle.kts</code>. Find <code>dependencies</code> and inside the curly braces <code>{}</code> add the line <code>implementation(files("/Users/davidkanenwisher/Projects/build_opencv-349/bin/opencv-349.jar"))</code>. Make sure to replace my path with your path. You're <code>dependencies</code> section should look something like this:</p>
 
-<pre><code class="text">dependencies {
+<pre><code class="language-text">dependencies {
 
     /*  This is where you add additional (third-party) dependencies */
 
@@ -231,7 +231,7 @@
 
 <p>The second step you only need to do if didn't build OpenCV against Java 8. I built mine against Java 11. This meant I had to update these lines in <code>build.gradle.kts</code> to reflect that:</p>
 
-<pre><code class="text">configure&lt;JavaPluginConvention&gt; {
+<pre><code class="language-text">configure&lt;JavaPluginConvention&gt; {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.withType&lt;KotlinCompile&gt; {
@@ -241,7 +241,7 @@ tasks.withType&lt;KotlinCompile&gt; {
 
 <p>I changed these from <code>JavaVersion.VERSION_1_8</code> to <code>JavaVersion.VERSION_11</code> and <code>1.8</code> to <code>11</code> like so:</p>
 
-<pre><code class="text">configure&lt;JavaPluginConvention&gt; {
+<pre><code class="language-text">configure&lt;JavaPluginConvention&gt; {
     sourceCompatibility = JavaVersion.VERSION_11
 }
 tasks.withType&lt;KotlinCompile&gt; {
@@ -257,7 +257,7 @@ tasks.withType&lt;KotlinCompile&gt; {
 
 <p>Now let's see if this puppy runs! Open <code>TemplateProgram.kt</code> and change it to:</p>
 
-<pre><code class="kotlin">import org.opencv.core.Core
+<pre><code class="language-kotlin">import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.Scalar
@@ -287,7 +287,7 @@ fun main() = application {
 
 <p>Then click the little green arrow next to <code>main()</code> and you should get this output:</p>
 
-<pre><code class="text">Welcome to OpenCV 3.4.9Welcome to OpenCV 3.4.9
+<pre><code class="language-text">Welcome to OpenCV 3.4.9Welcome to OpenCV 3.4.9
 OpenCV Mat: Mat [ 5*10*CV_8UC1, isCont=true, isSubmat=false, nativeObj=0x7fa51864a6e0, dataAddr=0x7fa51864a740 ]
          OpenCV Mat data:
          [  0,   0,   0,   0,   0,   5,   0,   0,   0,   0;
@@ -318,7 +318,7 @@ OpenCV Mat: Mat [ 5*10*CV_8UC1, isCont=true, isSubmat=false, nativeObj=0x7fa5186
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
                 <li class="md:mr-2">
-                    &copy; David Kanenwisher 2020.
+                    &copy; David Kanenwisher 2021.
                 </li>
 
                 <li>

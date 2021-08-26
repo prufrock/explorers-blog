@@ -39,7 +39,7 @@
                 <!-- End Matomo Code -->
         
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=595cdd7e11901d0dab8b">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=5caa0c2f7bf9e21596b3">
     </head>
 
     <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
@@ -147,7 +147,7 @@
 
 <p>You need to have Ant to build OpenCV. You can check if it's installed on the command line by checking it's version:</p>
 
-<pre><code class="text">$ ant -v
+<pre><code class="language-text">$ ant -v
 Apache Ant(TM) version 1.10.7 compiled on September 1 2019
 Trying the default build file: build.xml
 Buildfile: build.xml does not exist!
@@ -156,19 +156,19 @@ Build failed
 
 <p>If you don't have Ant, I recommend installing it via homebrew like so:</p>
 
-<pre><code class="text">$ brew install ant
+<pre><code class="language-text">$ brew install ant
 </code></pre>
 
 <p>Do you already have SDKMAN? It's not absolutely necessary but it makes it easy to switch between versions and to know they are configured in such a way OpenCV's build process can find it. You can find the install steps here: <a href="https://sdkman.io/install">https://sdkman.io/install</a>.</p>
 
 <p>SDKMAN doesn't have the official JDK in it but you can add in any you have installed. You can either place them in the SDKMAN directory <code>/Users/davidkanenwisher/.sdkman/candidates/java</code> or link them. I have my JDK installed in <code>/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/</code> so I linked it into SDKMAN like so:</p>
 
-<pre><code class="text">ln -s /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/ /Users/davidkanenwisher/.sdkman/candidates/java/1.8.0_241-oracle
+<pre><code class="language-text">ln -s /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/ /Users/davidkanenwisher/.sdkman/candidates/java/1.8.0_241-oracle
 </code></pre>
 
 <p>Lastly, lets install and use your preferred java version. I'm going with Java 11 open JDK. With SDKMAN this is pretty easy. In your terminal run this command and answer yes to "set as default":</p>
 
-<pre><code class="text">$ sdk install java 11.0.2-open
+<pre><code class="language-text">$ sdk install java 11.0.2-open
 </code></pre>
 
 <p>Feel free to use your preferred JDK though I don't know enough about OpenCV and Java to know if a certain JDK's won't work.</p>
@@ -179,21 +179,21 @@ Build failed
 
 <p>This unzips into the folder <code>opencv-4.2.0</code>. Don't switch into that directory yet! In the same directory as <code>opencv-4.2.0</code> create a folder <code>build_opencv-420</code> and switch into it <code>build_opencv-420</code>:</p>
 
-<pre><code class="text">$ mkdir build_opencv-420
+<pre><code class="language-text">$ mkdir build_opencv-420
 $ cd build_opencv-420
 </code></pre>
 
 <p>Before you can build OpenCV you need configure and create the cmake file:</p>
 
-<pre><code class="text">$ cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DBUILD_opencv_java=ON ../opencv-4.2.0 &amp;&gt; output.txt
+<pre><code class="language-text">$ cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DBUILD_opencv_java=ON ../opencv-4.2.0 &amp;&gt; output.txt
 </code></pre>
 
 <p>Now take a peak at <code>output.txt</code> and check to see if Java support is going to be built. In there you should see:</p>
 
-<pre><code class="text">--     To be built:                 calib3d core dnn features2d flann gapi highgui imgcodecs imgproc java ml objdetect photo python3 stitching ts video videoio
+<pre><code class="language-text">--     To be built:                 calib3d core dnn features2d flann gapi highgui imgcodecs imgproc java ml objdetect photo python3 stitching ts video videoio
 </code></pre>
 
-<pre><code class="text">--   Java:
+<pre><code class="language-text">--   Java:
 --     ant:                         /usr/local/bin/ant (ver 1.10.7)
 --     JNI:                         /Users/davidkanenwisher/.sdkman/candidates/java/current/include /Users/davidkanenwisher/.sdkman/candidates/java/current/include/darwin /Users/davidkanenwisher/.sdkman/candidates/java/current/include
 --     Java wrappers:               YES
@@ -202,17 +202,17 @@ $ cd build_opencv-420
 
 <p>Ok, now it's time to build OpenCV. Your poor computer is going to have to work pretty hard to make this happen so make sure you can live without it for an hour or so depending on your hardware. When you're ready run this command:</p>
 
-<pre><code class="text">$ make -j8
+<pre><code class="language-text">$ make -j8
 </code></pre>
 
 <p>If all goes well you should get the message:</p>
 
-<pre><code class="text">BUILD SUCCESSFUL
+<pre><code class="language-text">BUILD SUCCESSFUL
 </code></pre>
 
 <p>Amongst a whole bunch of other files you should have:</p>
 
-<pre><code class="text">bin/opencv-420.jar
+<pre><code class="language-text">bin/opencv-420.jar
 lib/libopencv_java420.dylib
 </code></pre>
 
@@ -241,7 +241,7 @@ lib/libopencv_java420.dylib
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
                 <li class="md:mr-2">
-                    &copy; David Kanenwisher 2020.
+                    &copy; David Kanenwisher 2021.
                 </li>
 
                 <li>

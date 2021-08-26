@@ -39,7 +39,7 @@
                 <!-- End Matomo Code -->
         
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=595cdd7e11901d0dab8b">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=5caa0c2f7bf9e21596b3">
     </head>
 
     <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
@@ -139,7 +139,7 @@
 
 <p>I got my code to the point where I had these two tests:</p>
 
-<pre><code class="kotlin">    @Test
+<pre><code class="language-kotlin">    @Test
     fun `it can dispatch an empty event object`() {
         val dispatcher = Dispatcher()
 
@@ -164,14 +164,14 @@
 
 <p>Notice that in the first test I have <code>var passedValue = EmptyEvent()</code> and in the second test I have a similar line <code>var passedValue = EmittedEvent("emittedSound")</code>. Why not just leave them like this then? Well, they don't compile because <code>dispatcher.eventSubscribe</code> expects a lambda of type <code>(Event) -&gt; Unit</code>. I thought I had this covered by creating the <code>Event</code> interface and making each implement this interface. No dice, I starting getting <code>Type mismatch</code> errors from Intellij on this line:</p>
 
-<pre><code class="kotlin">        dispatcher.eventSubscribe { event -&gt; passedValue = event }
+<pre><code class="language-kotlin">        dispatcher.eventSubscribe { event -&gt; passedValue = event }
 </code></pre>
 
 <p>After staring at my code a bit a thought occurred to me. The type of <code>event</code> above is <code>Event</code> while the type of <code>passedValue</code> is either <code>EmptyEvent</code> or <code>EmittedEvent</code>. This means I must not be able to assign a more specific type, <code>EmptyEvent</code> or <code>EmittedEvent</code>, to a less specific type <code>Event</code>. This lead to me think I need to declare the type as <code>Event</code> so that <code>passedValue</code> can always hold an <code>Event</code>.</p>
 
 <p>I added explicit type information to <code>passedValue</code> by changing it to <code>passedValue: Event</code> like so:</p>
 
-<pre><code class="kotlin">    @Test
+<pre><code class="language-kotlin">    @Test
     fun `it can dispatch an empty event object`() {
         val dispatcher = Dispatcher()
 
@@ -217,7 +217,7 @@
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
                 <li class="md:mr-2">
-                    &copy; David Kanenwisher 2020.
+                    &copy; David Kanenwisher 2021.
                 </li>
 
                 <li>

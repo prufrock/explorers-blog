@@ -39,7 +39,7 @@
                 <!-- End Matomo Code -->
         
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=595cdd7e11901d0dab8b">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=5caa0c2f7bf9e21596b3">
     </head>
 
     <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
@@ -135,7 +135,7 @@
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
         <p>I ran into some trouble after I opened up the app I've been toying with in Xcode. The SwiftUI preview wouldn't render. I clicked "Diagnostics" and it said:</p>
 
-<pre><code class="text">|  Error Domain=com.apple.dt.ultraviolet.service Code=12 "Rendering service was interrupted" UserInfo={NSLocalizedDescription=Rendering service was interrupted}
+<pre><code class="language-text">|  Error Domain=com.apple.dt.ultraviolet.service Code=12 "Rendering service was interrupted" UserInfo={NSLocalizedDescription=Rendering service was interrupted}
 </code></pre>
 
 <p>I have no idea what the ultraviolet service is, what it means that the code is 12, and it seems pretty clear the "Rendering service was interrupted". I did manage to find some more information by looking real close.</p>
@@ -144,12 +144,12 @@
 
 <p>After scrolling through a bunch of information I don't understand I struck gold. I saw something I could understand:</p>
 
-<pre><code class="text">Fatal error: No ObservableObject of type AppData found. A View.environmentObject(_:) for AppData may be missing as an ancestor of this view.: file SwiftUI, line 0
+<pre><code class="language-text">Fatal error: No ObservableObject of type AppData found. A View.environmentObject(_:) for AppData may be missing as an ancestor of this view.: file SwiftUI, line 0
 </code></pre>
 
 <p>Thankfully, I'd recently gained a higher understanding of ObservableObjects plus AppData is a name of a variable in my project. Thankfully and reasonably, AppData is an ObservableObject. How do I know it's an ObservableObject? Why I made it implement ObservableObject protocol:</p>
 
-<pre><code class="swift">import SwiftUI
+<pre><code class="language-swift">import SwiftUI
 
 class AppData: ObservableObject {
     @Published var imageCache = ImageCache()
@@ -158,14 +158,14 @@ class AppData: ObservableObject {
 
 <p>So the fatal error seems to be telling me that AppData is missing from the current view. This was the preview for my ContentView so the first place I go is the SceneDelegate. It looks like that's passing AppData:</p>
 
-<pre><code class="swift">window.rootViewController = UIHostingController(rootView: contentView.environmentObject(appData))
+<pre><code class="language-swift">window.rootViewController = UIHostingController(rootView: contentView.environmentObject(appData))
 </code></pre>
 
 <p>"Ah but this is the preview!", I cry with a finger pointed firmly and vertically in the air.</p>
 
 <p>I take a look at PreviewProvider in ContentView.</p>
 
-<pre><code class="swift">struct ContentView_Previews: PreviewProvider {
+<pre><code class="language-swift">struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
@@ -176,7 +176,7 @@ class AppData: ObservableObject {
 
 <p>If you are like the surly mechanic in my head then you likely noticed that <code>ContentView()</code> is bereft of a call to "environmentObject". This is the source of the fatal error reported earlier. A quick touch up and it's good to go:</p>
 
-<pre><code class="swift">struct ContentView_Previews: PreviewProvider {
+<pre><code class="language-swift">struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environmentObject(AppData())
     }
@@ -203,7 +203,7 @@ class AppData: ObservableObject {
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
                 <li class="md:mr-2">
-                    &copy; David Kanenwisher 2020.
+                    &copy; David Kanenwisher 2021.
                 </li>
 
                 <li>
