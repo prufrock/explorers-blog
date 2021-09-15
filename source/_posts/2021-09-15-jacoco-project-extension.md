@@ -6,7 +6,7 @@ date: 2021-09-15
 description: Ran into trouble after upgrading to new version of Kotlin
 cover_image: /assets/img/type-inference.svg
 excerpt: I recently ran into a spot of trouble with JaCoCo after upgrading to a new version of Kotlin.
-categories: [kotlin]
+categories: [kotlin, gradle]
 author: David Kanenwisher
 ---
 

@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="JaCoCo Doesn&#039;t Like New Version of Kotlin | David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="Gradle | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"/>
+        <meta property="og:url" content="https://dkanen.com/blog/categories/gradle"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>JaCoCo Doesn&#039;t Like New Version of Kotlin | David&#039;s Explorer Blog</title>
+        <title>Gradle | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://dkanen.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-            <meta property="og:title" content="JaCoCo Doesn&#039;t Like New Version of Kotlin" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"/>
-    <meta property="og:description" content="Ran into trouble after upgrading to new version of Kotlin" />
+            <meta property="og:title" content="Gradle" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dkanen.com/blog/categories/gradle"/>
+    <meta property="og:description" content="Posts related to Gradle and learning Gradle." />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -120,57 +120,35 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                        <img src="/assets/img/type-inference.svg" alt="JaCoCo Doesn&#039;t Like New Version of Kotlin cover image" class="mb-2">
-    
-    <h1 class="leading-none mb-2">JaCoCo Doesn&#039;t Like New Version of Kotlin</h1>
+                <h1>Gradle</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  September 15, 2021</p>
-
-                        <a
-                href="/blog/categories/kotlin"
-                title="View posts in kotlin"
-                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
-            >kotlin</a>
-                    <a
-                href="/blog/categories/gradle"
-                title="View posts in gradle"
-                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
-            >gradle</a>
-            
-    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>I recently ran into a spot of trouble with JaCoCo after upgrading to a new version of Kotlin. The project was on Kotlin <code>1.3.72</code> and I bumped it all the way to <code>1.5.30</code>. I was a bit surprised that this all seemed to go smoothly until JaCoCo kicked out a weird error at me:</p>
-
-<pre><code class="language-text">Unexpected SMAP line: *S
-</code></pre>
-
-<p>What?! I wasn't sure what to make of that. Thankfully a google search turned up a <a href="https://github.com/jacoco/jacoco/issues/1187">github issue</a>. Basically, I needed to update my version of JaCoCo to <code>0.8.7</code>. This seemed simple enough until I found myself digging around in our various gradle.build files unable to find a <code>dependencies</code> block with JaCoCo in it. All I could find was the JaCoCo plugin being applied: <code>apply plugin: 'jacoco'</code>.</p>
-
-<p>After the significance of it being a plugin sunk in I google for "jacoco plugin" and ended on Gradle's <a href="https://docs.gradle.org/current/userguide/jacoco_plugin.html">JaCoCo plugin page</a>. This show a helpful little block:</p>
-
-<pre><code class="language-text">jacoco {
-    toolVersion = "0.8.7"
-}
-</code></pre>
-
-<p>I put this in my build.gradle at the project level(or not nested inside any mustaches since that implies the project) and my build worked again! Hooray!</p>
-
-<p>What is the JaCoCo plugin using that allows it to set a property at the project level though? <a href="https://docs.gradle.org/current/userguide/custom_plugins.html#sec:mapping_extension_properties_to_task_properties">Project Extensions</a>! These allow you to give the power to the user of the build script to configure tasks. Mind Blown.</p>
+    <div class="text-2xl border-b border-blue-200 mb-6 pb-10">
+        <p>These posts are all related to Gradle and learning Gradle.</p>
     </div>
 
-    <nav class="flex justify-between text-sm md:text-base">
-        <div>
-                            <a href="https://dkanen.com/blog/no-observable-object" title="Older Post: No Observable Object">
-                    &LeftArrow; No Observable Object
-                </a>
-                    </div>
+            <div class="flex flex-col mb-4">
+    <p class="text-gray-700 font-medium my-2">
+        September 15, 2021
+    </p>
 
-        <div>
-                            <a href="https://dkanen.com/blog/determining-generic-type" title="Newer Post: Determining Generic Type">
-                    Determining Generic Type &RightArrow;
-                </a>
-                    </div>
-    </nav>
-        </main>
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
+            title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
+            class="text-gray-900 font-extrabold"
+        >JaCoCo Doesn&#039;t Like New Version of Kotlin</a>
+    </h2>
+
+    <p class="mb-4 mt-0">Ran into trouble after upgrading to new version of Kotlin</p>
+
+    <a
+        href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
+        title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
