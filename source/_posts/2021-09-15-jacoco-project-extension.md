@@ -1,7 +1,7 @@
 ---
 extends: _layouts.post
 section: content
-title: JaCoCo Doesn't New Version of Kotlin
+title: JaCoCo Doesn't Like New Version of Kotlin
 date: 2021-09-15
 description: Ran into trouble after upgrading to new version of Kotlin
 cover_image: /assets/img/type-inference.svg

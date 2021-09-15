@@ -3,7 +3,7 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2021-09-15T16:56:42+00:00</updated>
+    <updated>2021-09-15T17:01:10+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
@@ -62,7 +62,7 @@ public fun &lt;T&gt; CoroutineScope.async(
             <entry>
     <id>https://dkanen.com/blog/2021-09-15-jacoco-project-extension</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension" />
-    <title>JaCoCo Doesn&#039;t New Version of Kotlin</title>
+    <title>JaCoCo Doesn&#039;t Like New Version of Kotlin</title>
     <published>2021-09-15T00:00:00+00:00</published>
     <updated>2021-09-15T00:00:00+00:00</updated>
     <author>
