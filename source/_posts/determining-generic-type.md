@@ -5,13 +5,12 @@ title: Determining Generic Type
 date: 2021-09-15
 description: Generics need a type to know their type.
 cover_image: /assets/img/type-inference.svg
-excerpt: 
+excerpt: Generics need a way to know the generic type it's working. This seems obvious when you say but building an API that reasonably makes this happen can be tricky.
 categories: [kotlin]
 author: David Kanenwisher
 ---
 
-Generics need a way to know the generic type it's working. This seems obvious when you say but building an API that
-reasonably makes this happen can be tricky.
+Generics need a way to know the generic type it's working. This seems obvious when you say but building an API that reasonably makes this happen can be tricky.
 
 The coroutine function `async` does this by accepting a lambda. The return type of the lambda ends up becoming the return type of the generic. This is more clever than I initially realized. Let's take a look at usage:
 

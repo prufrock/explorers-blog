@@ -2,142 +2,147 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
  <url>
   <loc>https://dkanen.com</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/2</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/3</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/4</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/test-events-were-not-received</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/kotlin-folder</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/first-attempt-at-collections</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/jigsaw-many-authors</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/lambda-sans-return</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/shorthand-function-syntax</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/when-type-inference-doesn't-cut-it</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/oh-graphql-may-i-have-a-user</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
+  <changefreq>daily</changefreq>
+ </url>
+ <url>
+  <loc>https://dkanen.com/blog/2021-09-15-jacoco-project-extension</loc>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/single-expression-functions</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/no-observable-object</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/getting-started-with-jigsaw</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/openrndr-with-opencv</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/java-build-opencv</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/determining-generic-type</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/thank-you</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/feed.atom</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/about</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/contact</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/categories/swiftui</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/categories/jigsaw</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/categories/kotlin</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/categories/graphql</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://dkanen.com/blog/categories/feature</loc>
-  <lastmod>2021-09-15T14:34:31+00:00</lastmod>
+  <lastmod>2021-09-15T16:56:42+00:00</lastmod>
   <changefreq>daily</changefreq>
  </url>
 </urlset>
