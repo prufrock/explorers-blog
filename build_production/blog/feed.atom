@@ -3,7 +3,7 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2021-09-19T03:05:53+00:00</updated>
+    <updated>2021-09-19T03:12:59+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
@@ -30,7 +30,7 @@
 }
 </code></pre>
 
-<p>While digging around in the code this extension on <code>Array</code> from <code>Collection.Array.swift</code> jumped out at me:</p>
+<p>While digging around in the code I found this extension on <code>Array</code> from <code>Collection.Array.swift</code> jumped out at me:</p>
 
 <pre><code class="language-swift">extension ContiguousArray {
     @inlinable public mutating func replaceSubrange&lt;C&gt;(

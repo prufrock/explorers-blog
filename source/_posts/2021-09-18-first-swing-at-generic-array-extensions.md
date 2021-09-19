@@ -20,7 +20,7 @@ extension Array {
 }
 ```
 
-While digging around in the code this extension on `Array` from `Collection.Array.swift` jumped out at me:
+While digging around in the code I found this extension on `Array` from `Collection.Array.swift` jumped out at me:
 ```swift
 extension ContiguousArray {
     @inlinable public mutating func replaceSubrange<C>(
