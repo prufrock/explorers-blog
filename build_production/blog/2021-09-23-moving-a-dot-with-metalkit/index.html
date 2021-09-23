@@ -6,18 +6,22 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="Moving a Dot with MetalKit | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.com/"/>
+        <meta property="og:url" content="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>David&#039;s Explorer Blog</title>
+        <title>Moving a Dot with MetalKit | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://dkanen.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-        
+            <meta property="og:title" content="Moving a Dot with MetalKit" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"/>
+    <meta property="og:description" content="Got a green dot to move across the screen with MetalKit." />
+
                     <!-- Matomo -->
                 <script type="text/javascript">
                     var _paq = window._paq || [];
@@ -116,168 +120,54 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                <div>
-    <h1>Welcome!</h1>
-</div>    
-            <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 23, 2021
-    </p>
+                        <img src="https://res.cloudinary.com/demmholkv/image/upload/v1632440487/blog/xcode-green-dot_q06spo.png" alt="Moving a Dot with MetalKit cover image" class="mb-2">
+    
+    <h1 class="leading-none mb-2">Moving a Dot with MetalKit</h1>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"
-            title="Read more - Moving a Dot with MetalKit"
-            class="text-gray-900 font-extrabold"
-        >Moving a Dot with MetalKit</a>
-    </h2>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  September 23, 2021</p>
 
-    <p class="mb-4 mt-0">Got a green dot to move across the screen with MetalKit.</p>
+                        <a
+                href="/blog/categories/swift"
+                title="View posts in swift"
+                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
+            >swift</a>
+            
+    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
+        <p>I got <a href="https://youtu.be/w_zOEUQF5BA">a dot to animate across the screen</a> with MetalKit. It doesn't seem like much but it's been quite a trip to get here. All of the code to make it work can be found in <a href="https://github.com/prufrock/MetalForge/tree/main/Metal003GameLoop">Metal003GameLoop</a>.</p>
 
-    <a
-        href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"
-        title="Read more - Moving a Dot with MetalKit"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+<p>The key part of this project for me was figuring out how to set up a game loop that gets along with MetalKit while avoiding the more complex <a href="https://developer.apple.com/documentation/quartzcore/cadisplaylink">CADisplayLink</a>. This meant using the <code>draw</code> method of <code>MTKViewDelegate</code> to update the game <em>and</em> draw the result.</p>
 
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 18, 2021
-    </p>
+<pre><code class="language-swift">extension Drawer: MTKViewDelegate {
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        print(#function)
+    }
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions"
-            title="Read more - Swift First Swing at Generic Array Extension"
-            class="text-gray-900 font-extrabold"
-        >Swift First Swing at Generic Array Extension</a>
-    </h2>
+    func draw(in view: MTKView) {
+        let current = CACurrentMediaTime()
+        let delta = current - previous
+        previous = current
 
-    <p class="mb-4 mt-0">Leveling up my understanding of generic extensions on Arrays</p>
+        world.update(elapsed: delta)
 
-    <a
-        href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions"
-        title="Read more - Swift First Swing at Generic Array Extension"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+        render(in: view)
+    }
+}
+</code></pre>
 
-                                    </div>
+<p>I still have a lot to figure out but this is some exciting progress.</p>
+    </div>
 
-                    <hr class="w-full border-b mt-2 mb-6">
-                    <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 15, 2021
-    </p>
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions" title="Older Post: Swift First Swing at Generic Array Extension">
+                    &LeftArrow; Swift First Swing at Generic Array Extension
+                </a>
+                    </div>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
-            title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
-            class="text-gray-900 font-extrabold"
-        >JaCoCo Doesn&#039;t Like New Version of Kotlin</a>
-    </h2>
-
-    <p class="mb-4 mt-0">Ran into trouble after upgrading to new version of Kotlin</p>
-
-    <a
-        href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
-        title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 15, 2021
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/determining-generic-type"
-            title="Read more - Determining Generic Type"
-            class="text-gray-900 font-extrabold"
-        >Determining Generic Type</a>
-    </h2>
-
-    <p class="mb-4 mt-0">Generics need a type to know their type.</p>
-
-    <a
-        href="https://dkanen.com/blog/determining-generic-type"
-        title="Read more - Determining Generic Type"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    </div>
-
-                    <hr class="w-full border-b mt-2 mb-6">
-                    <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        May 5, 2020
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/no-observable-object"
-            title="Read more - No Observable Object"
-            class="text-gray-900 font-extrabold"
-        >No Observable Object</a>
-    </h2>
-
-    <p class="mb-4 mt-0">It's not always clear why views don't render in Xcode's preview.</p>
-
-    <a
-        href="https://dkanen.com/blog/no-observable-object"
-        title="Read more - No Observable Object"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        April 2, 2020
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/openrndr-with-opencv"
-            title="Read more - Use OpenCV with OpenRNDR"
-            class="text-gray-900 font-extrabold"
-        >Use OpenCV with OpenRNDR</a>
-    </h2>
-
-    <p class="mb-4 mt-0">Make OpenCV available with the OpenRNDR template</p>
-
-    <a
-        href="https://dkanen.com/blog/openrndr-with-opencv"
-        title="Read more - Use OpenCV with OpenRNDR"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    </div>
-
-                    </main>
+        <div>
+                    </div>
+    </nav>
+        </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">

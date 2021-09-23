@@ -3,12 +3,47 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2021-09-19T03:12:59+00:00</updated>
+    <updated>2021-09-23T23:46:18+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit" />
+    <title>Moving a Dot with MetalKit</title>
+    <published>2021-09-23T00:00:00+00:00</published>
+    <updated>2021-09-23T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">Got a green dot to move across the screen with MetalKit....</summary>
+    <content type="html"><![CDATA[
+        <p>I got <a href="https://youtu.be/w_zOEUQF5BA">a dot to animate across the screen</a> with MetalKit. It doesn't seem like much but it's been quite a trip to get here. All of the code to make it work can be found in <a href="https://github.com/prufrock/MetalForge/tree/main/Metal003GameLoop">Metal003GameLoop</a>.</p>
+
+<p>The key part of this project for me was figuring out how to set up a game loop that gets along with MetalKit while avoiding the more complex <a href="https://developer.apple.com/documentation/quartzcore/cadisplaylink">CADisplayLink</a>. This meant using the <code>draw</code> method of <code>MTKViewDelegate</code> to update the game <em>and</em> draw the result.</p>
+
+<pre><code class="language-swift">extension Drawer: MTKViewDelegate {
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        print(#function)
+    }
+
+    func draw(in view: MTKView) {
+        let current = CACurrentMediaTime()
+        let delta = current - previous
+        previous = current
+
+        world.update(elapsed: delta)
+
+        render(in: view)
+    }
+}
+</code></pre>
+
+<p>I still have a lot to figure out but this is some exciting progress.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions" />
     <title>Swift First Swing at Generic Array Extension</title>
