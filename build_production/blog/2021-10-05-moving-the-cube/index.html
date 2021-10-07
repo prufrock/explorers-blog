@@ -6,18 +6,22 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="Moving the Cube | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.com/"/>
+        <meta property="og:url" content="https://dkanen.com/blog/2021-10-05-moving-the-cube"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>David&#039;s Explorer Blog</title>
+        <title>Moving the Cube | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://dkanen.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-        
+            <meta property="og:title" content="Moving the Cube" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dkanen.com/blog/2021-10-05-moving-the-cube"/>
+    <meta property="og:description" content="The cube is moving!" />
+
                     <!-- Matomo -->
                 <script type="text/javascript">
                     var _paq = window._paq || [];
@@ -116,168 +120,105 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                <div>
-    <h1>Welcome!</h1>
-</div>    
-            <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        October 5, 2021
-    </p>
+                        <img src="https://res.cloudinary.com/demmholkv/image/upload/v1632451436/blog/xcode-green-cube_hval5y.png" alt="Moving the Cube cover image" class="mb-2">
+    
+    <h1 class="leading-none mb-2">Moving the Cube</h1>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-10-05-moving-the-cube"
-            title="Read more - Moving the Cube"
-            class="text-gray-900 font-extrabold"
-        >Moving the Cube</a>
-    </h2>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  October 5, 2021</p>
 
-    <p class="mb-4 mt-0">The cube is moving!</p>
+                        <a
+                href="/blog/categories/swift"
+                title="View posts in swift"
+                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
+            >swift</a>
+            
+    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
+        <p>After a little bit of re-arranging I was able to get the <a href="https://youtu.be/S7AV-UgXneQ">cube moving</a>. The most interesting parts of the code can be found in <a href="https://github.com/prufrock/MetalForge/blob/main/Metal003GameLoop/Metal003GameLoop/Shared/Drawer.swift">Drawer.swift</a>.</p>
 
-    <a
-        href="https://dkanen.com/blog/2021-10-05-moving-the-cube"
-        title="Read more - Moving the Cube"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+<p>The big adjustment here was separating the model from the location of the object. This meant I translated the <em>location</em> of the object on the CPU but translated the object itself on GPU.</p>
 
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 23, 2021
-    </p>
+<pre><code class="language-swift">        @discardableResult
+        func translate(_ x: Float, _ y: Float, _ z: Float) -&gt; Node {
+            location = location.translate(x, y, z)
+            transformation = float4x4.translate(
+                x: location.rawValue.x + x,
+                y: location.rawValue.y + y,
+                z: location.rawValue.z + z
+            )
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"
-            title="Read more - Moving a Dot with MetalKit"
-            class="text-gray-900 font-extrabold"
-        >Moving a Dot with MetalKit</a>
-    </h2>
+            return self
+        }
+</code></pre>
 
-    <p class="mb-4 mt-0">Got a green dot to move across the screen with MetalKit.</p>
+<p>In the code above the location is translated and a transformation matrix is created with the same amount of translation. This transformation matrix is part of the Node so the rendering code is able to get a hold of it.</p>
 
-    <a
-        href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"
-        title="Read more - Moving a Dot with MetalKit"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+<pre><code class="language-swift">        var transform = matrix_identity_float4x4
+                // projection
+                * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+                // model
+                * world.node.transformation
 
-                                    </div>
+        encoder.setVertexBytes(&amp;transform, length: MemoryLayout&lt;float4x4&gt;.stride, index: 1)
+</code></pre>
 
-                    <hr class="w-full border-b mt-2 mb-6">
-                    <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 18, 2021
-    </p>
+<p>Above the rendering code combines the perspective project matrix(camera) with the node transformation(model). It's then passed to the encoder so the GPU can pick it up and perform the transformation.</p>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions"
-            title="Read more - Swift First Swing at Generic Array Extension"
-            class="text-gray-900 font-extrabold"
-        >Swift First Swing at Generic Array Extension</a>
-    </h2>
+<p>I also nearly forgot to actually have the cube translate based on elapsed game time so made a quick adjustment for that:</p>
 
-    <p class="mb-4 mt-0">Leveling up my understanding of generic extensions on Arrays</p>
+<pre><code class="language-swift">    func draw(in view: MTKView) {
+        let current = CACurrentMediaTime()
+        let delta = current - previous
+        previous = current
 
-    <a
-        href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions"
-        title="Read more - Swift First Swing at Generic Array Extension"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+        world.update(elapsed: delta)
 
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 15, 2021
-    </p>
+        render(in: view)
+    }
+</code></pre>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
-            title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
-            class="text-gray-900 font-extrabold"
-        >JaCoCo Doesn&#039;t Like New Version of Kotlin</a>
-    </h2>
+<p>And really what's the point of rendering 3D graphics in realtime if you can't interact with them?! I added a bit to pause the animation when the screen is touched(not terribly exciting but gave me a chance to try it out).</p>
 
-    <p class="mb-4 mt-0">Ran into trouble after upgrading to new version of Kotlin</p>
+<pre><code class="language-swift">extension ViewController {
+    override func mouseDown(with event: NSEvent) {
+        drawer!.click()
+        print("x: \(event.locationInWindow.x) y: \(event.locationInWindow.y)")
+    }
+}
 
-    <a
-        href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
-        title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+extension Drawer {
+    func click() {
+        world.click()
+    }
+}
 
-                                    </div>
+class GameWorld: World {
+    // skip a bunch of stuff
+    func click() {
+        switch state {
+        case .playing:
+            state = .paused
+        case .paused:
+            state = .playing
+        }
+    }
+    // skip a bunch of other stufff
+}
+</code></pre>
 
-                    <hr class="w-full border-b mt-2 mb-6">
-                    <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 15, 2021
-    </p>
+<p>I've been especially interested in state-machines lately and how they can be used to model reactive systems. It worked pretty well to pass the click event down to the GameWorld which then changed <code>state</code>. Then when <code>Drawer</code> asks <code>GameWorld</code> for updates <code>GameWorld</code> simply checks <code>state</code> to determine what to do. This is extremely simplistic but still a good way to get my feet wet.</p>
+    </div>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/determining-generic-type"
-            title="Read more - Determining Generic Type"
-            class="text-gray-900 font-extrabold"
-        >Determining Generic Type</a>
-    </h2>
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit" title="Older Post: Moving a Dot with MetalKit">
+                    &LeftArrow; Moving a Dot with MetalKit
+                </a>
+                    </div>
 
-    <p class="mb-4 mt-0">Generics need a type to know their type.</p>
-
-    <a
-        href="https://dkanen.com/blog/determining-generic-type"
-        title="Read more - Determining Generic Type"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        May 5, 2020
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/no-observable-object"
-            title="Read more - No Observable Object"
-            class="text-gray-900 font-extrabold"
-        >No Observable Object</a>
-    </h2>
-
-    <p class="mb-4 mt-0">It's not always clear why views don't render in Xcode's preview.</p>
-
-    <a
-        href="https://dkanen.com/blog/no-observable-object"
-        title="Read more - No Observable Object"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    </div>
-
-                    </main>
+        <div>
+                    </div>
+    </nav>
+        </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">

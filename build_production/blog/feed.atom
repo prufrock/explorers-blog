@@ -3,12 +3,98 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2021-09-23T23:46:18+00:00</updated>
+    <updated>2021-10-07T03:04:40+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/2021-10-05-moving-the-cube</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-10-05-moving-the-cube" />
+    <title>Moving the Cube</title>
+    <published>2021-10-05T00:00:00+00:00</published>
+    <updated>2021-10-05T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">The cube is moving!...</summary>
+    <content type="html"><![CDATA[
+        <p>After a little bit of re-arranging I was able to get the <a href="https://youtu.be/S7AV-UgXneQ">cube moving</a>. The most interesting parts of the code can be found in <a href="https://github.com/prufrock/MetalForge/blob/main/Metal003GameLoop/Metal003GameLoop/Shared/Drawer.swift">Drawer.swift</a>.</p>
+
+<p>The big adjustment here was separating the model from the location of the object. This meant I translated the <em>location</em> of the object on the CPU but translated the object itself on GPU.</p>
+
+<pre><code class="language-swift">        @discardableResult
+        func translate(_ x: Float, _ y: Float, _ z: Float) -&gt; Node {
+            location = location.translate(x, y, z)
+            transformation = float4x4.translate(
+                x: location.rawValue.x + x,
+                y: location.rawValue.y + y,
+                z: location.rawValue.z + z
+            )
+
+            return self
+        }
+</code></pre>
+
+<p>In the code above the location is translated and a transformation matrix is created with the same amount of translation. This transformation matrix is part of the Node so the rendering code is able to get a hold of it.</p>
+
+<pre><code class="language-swift">        var transform = matrix_identity_float4x4
+                // projection
+                * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+                // model
+                * world.node.transformation
+
+        encoder.setVertexBytes(&amp;transform, length: MemoryLayout&lt;float4x4&gt;.stride, index: 1)
+</code></pre>
+
+<p>Above the rendering code combines the perspective project matrix(camera) with the node transformation(model). It's then passed to the encoder so the GPU can pick it up and perform the transformation.</p>
+
+<p>I also nearly forgot to actually have the cube translate based on elapsed game time so made a quick adjustment for that:</p>
+
+<pre><code class="language-swift">    func draw(in view: MTKView) {
+        let current = CACurrentMediaTime()
+        let delta = current - previous
+        previous = current
+
+        world.update(elapsed: delta)
+
+        render(in: view)
+    }
+</code></pre>
+
+<p>And really what's the point of rendering 3D graphics in realtime if you can't interact with them?! I added a bit to pause the animation when the screen is touched(not terribly exciting but gave me a chance to try it out).</p>
+
+<pre><code class="language-swift">extension ViewController {
+    override func mouseDown(with event: NSEvent) {
+        drawer!.click()
+        print("x: \(event.locationInWindow.x) y: \(event.locationInWindow.y)")
+    }
+}
+
+extension Drawer {
+    func click() {
+        world.click()
+    }
+}
+
+class GameWorld: World {
+    // skip a bunch of stuff
+    func click() {
+        switch state {
+        case .playing:
+            state = .paused
+        case .paused:
+            state = .playing
+        }
+    }
+    // skip a bunch of other stufff
+}
+</code></pre>
+
+<p>I've been especially interested in state-machines lately and how they can be used to model reactive systems. It worked pretty well to pass the click event down to the GameWorld which then changed <code>state</code>. Then when <code>Drawer</code> asks <code>GameWorld</code> for updates <code>GameWorld</code> simply checks <code>state</code> to determine what to do. This is extremely simplistic but still a good way to get my feet wet.</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit" />
     <title>Moving a Dot with MetalKit</title>
