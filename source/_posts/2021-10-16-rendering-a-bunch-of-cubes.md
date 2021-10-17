@@ -17,26 +17,36 @@ In some ways this wasn't as hard as I thought it would be. I simply put a bunch 
 I wanted a new cube to appear in a random place each time the screen is touched. I made this happen by moving the code the creates the point into the code that updates the world in response to a "click" event:
 
 ```swift
-    func click() {
-        switch state {
-        case .playing:
-            state = .paused
-            self.nodes.append(
-                Node(
-                    location: Point(
-                        Float.random(in: -1...1),
-                        Float.random(in: self.cameraBottom...self.cameraTop),
-                        Float.random(in: 0...1)
-                    ),
-                    vertices: VerticeCollection().c[.cube]!
-                )
+func click() {
+    switch state {
+    case .playing:
+        state = .paused
+        self.nodes.append(
+            Node(
+                location: Point(
+                    Float.random(in: -1...1),
+                    Float.random(in: self.cameraBottom...self.cameraTop),
+                    Float.random(in: 0...1)
+                ),
+                vertices: VerticeCollection().c[.cube]!
             )
-        case .paused:
-            state = .playing
-        }
+        )
+    case .paused:
+        state = .playing
     }
+}
 ```
 
 The biggest change was moving the random Point code out of Vertices. This became even more important as I tried to keep the points in side the camera by reference the top and bottom of the camera. This made me realize that it's likely some models need to information about the camera. This allows them to make decisions about their geometry if they need to show up in direct relation to the camera in someway.
 
-I also wanted the newest cube to appear red so you can track where it goes. This took a bit more adjusting so the color of the Vertices can be changed after the fact. It also revealed a need to have more control of the logic around what cube is red in one place. I didn't fix this yet but I hope to get to it soon.
+I also wanted the newest cube to appear red allowing you to track where it goes. This took a bit more adjusting so the color of the Vertices can be changed after the fact. It also revealed a need to have more control of the logic around what cube is red in one place. For instance I have this bit in `render()`:
+
+```swift
+// this probably shouldn't be here but it's currently the easiest place
+// to make it happen.
+if node === world.nodes.last {
+    color = Colors().red
+}
+```
+
+I didn't fix this yet, but I hope to get to it soon. Gotta eat one bite at a time!
