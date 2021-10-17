@@ -17,28 +17,23 @@ In some ways this wasn't as hard as I thought it would be. I simply put a bunch 
 I wanted a new cube to appear in a random place each time the screen is touched. I made this happen by moving the code the creates the point into the code that updates the world in response to a "click" event:
 
 ```swift
-    func click() -> GMWorld {
+    func click() {
         switch state {
         case .playing:
             state = .paused
             self.nodes.append(
-                GMCreateNode(
+                Node(
                     location: Point(
                         Float.random(in: -1...1),
                         Float.random(in: self.cameraBottom...self.cameraTop),
                         Float.random(in: 0...1)
                     ),
-                    vertices: VerticeCollection().c[.cube]!,
-                    initialState: .forward,
-                    rate: Float(0.26),
-                    color: Colors().green
+                    vertices: VerticeCollection().c[.cube]!
                 )
             )
         case .paused:
             state = .playing
         }
-
-        return self
     }
 ```
 
