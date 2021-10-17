@@ -3,12 +3,63 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2021-10-07T03:04:40+00:00</updated>
+    <updated>2021-10-17T03:12:22+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes" />
+    <title>Rendering a Bunch of Cubes</title>
+    <published>2021-10-16T00:00:00+00:00</published>
+    <updated>2021-10-16T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">All the cubes you could ask for....</summary>
+    <content type="html"><![CDATA[
+        <p>If you thought one moving cube was cool you are gonna love <a href="https://youtu.be/4wH-3VwPxtQ">Lots of Moving Cubes</a>!</p>
+
+<p>In some ways this wasn't as hard as I thought it would be. I simply put a bunch of cubes on the screen!</p>
+
+<p>I wanted a new cube to appear in a random place each time the screen is touched. I made this happen by moving the code the creates the point into the code that updates the world in response to a "click" event:</p>
+
+<pre><code class="language-swift">func click() {
+    switch state {
+    case .playing:
+        state = .paused
+        self.nodes.append(
+            Node(
+                location: Point(
+                    Float.random(in: -1...1),
+                    Float.random(in: self.cameraBottom...self.cameraTop),
+                    Float.random(in: 0...1)
+                ),
+                vertices: VerticeCollection().c[.cube]!
+            )
+        )
+    case .paused:
+        state = .playing
+    }
+}
+</code></pre>
+
+<p>The biggest change was moving the random Point code out of Vertices. This became even more important as I tried to keep the points in side the camera by reference the top and bottom of the camera. This made me realize that it's likely some models need to information about the camera. This allows them to make decisions about their geometry if they need to show up in direct relation to the camera in someway.</p>
+
+<p>I also wanted the newest cube to appear red allowing you to track where it goes. This took a bit more adjusting so the color of the Vertices can be changed after the fact. It also revealed a need to have more control of the logic around what cube is red in one place. For instance I have this bit in <code>render()</code>:</p>
+
+<pre><code class="language-swift">// this probably shouldn't be here but it's currently the easiest place
+// to make it happen.
+if node === world.nodes.last {
+    color = Colors().red
+}
+</code></pre>
+
+<p>I didn't fix this yet, but I hope to get to it soon. Gotta eat one bite at a time!</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/2021-10-05-moving-the-cube</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-10-05-moving-the-cube" />
     <title>Moving the Cube</title>

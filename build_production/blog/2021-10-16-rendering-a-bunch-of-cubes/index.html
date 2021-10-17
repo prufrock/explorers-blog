@@ -6,18 +6,22 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="Rendering a Bunch of Cubes | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.com/"/>
+        <meta property="og:url" content="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>David&#039;s Explorer Blog</title>
+        <title>Rendering a Bunch of Cubes | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://dkanen.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-        
+            <meta property="og:title" content="Rendering a Bunch of Cubes" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes"/>
+    <meta property="og:description" content="All the cubes you could ask for." />
+
                     <!-- Matomo -->
                 <script type="text/javascript">
                     var _paq = window._paq || [];
@@ -116,168 +120,70 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                <div>
-    <h1>Welcome!</h1>
-</div>    
-            <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        October 16, 2021
-    </p>
+                        <img src="https://res.cloudinary.com/demmholkv/image/upload/v1633453571/blog/cubes-on-xcode_zoryur.jpg" alt="Rendering a Bunch of Cubes cover image" class="mb-2">
+    
+    <h1 class="leading-none mb-2">Rendering a Bunch of Cubes</h1>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes"
-            title="Read more - Rendering a Bunch of Cubes"
-            class="text-gray-900 font-extrabold"
-        >Rendering a Bunch of Cubes</a>
-    </h2>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  October 16, 2021</p>
 
-    <p class="mb-4 mt-0">All the cubes you could ask for.</p>
+                        <a
+                href="/blog/categories/swift"
+                title="View posts in swift"
+                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
+            >swift</a>
+            
+    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
+        <p>If you thought one moving cube was cool you are gonna love <a href="https://youtu.be/4wH-3VwPxtQ">Lots of Moving Cubes</a>!</p>
 
-    <a
-        href="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes"
-        title="Read more - Rendering a Bunch of Cubes"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+<p>In some ways this wasn't as hard as I thought it would be. I simply put a bunch of cubes on the screen!</p>
 
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        October 5, 2021
-    </p>
+<p>I wanted a new cube to appear in a random place each time the screen is touched. I made this happen by moving the code the creates the point into the code that updates the world in response to a "click" event:</p>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-10-05-moving-the-cube"
-            title="Read more - Moving the Cube"
-            class="text-gray-900 font-extrabold"
-        >Moving the Cube</a>
-    </h2>
+<pre><code class="language-swift">func click() {
+    switch state {
+    case .playing:
+        state = .paused
+        self.nodes.append(
+            Node(
+                location: Point(
+                    Float.random(in: -1...1),
+                    Float.random(in: self.cameraBottom...self.cameraTop),
+                    Float.random(in: 0...1)
+                ),
+                vertices: VerticeCollection().c[.cube]!
+            )
+        )
+    case .paused:
+        state = .playing
+    }
+}
+</code></pre>
 
-    <p class="mb-4 mt-0">The cube is moving!</p>
+<p>The biggest change was moving the random Point code out of Vertices. This became even more important as I tried to keep the points in side the camera by reference the top and bottom of the camera. This made me realize that it's likely some models need to information about the camera. This allows them to make decisions about their geometry if they need to show up in direct relation to the camera in someway.</p>
 
-    <a
-        href="https://dkanen.com/blog/2021-10-05-moving-the-cube"
-        title="Read more - Moving the Cube"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
+<p>I also wanted the newest cube to appear red allowing you to track where it goes. This took a bit more adjusting so the color of the Vertices can be changed after the fact. It also revealed a need to have more control of the logic around what cube is red in one place. For instance I have this bit in <code>render()</code>:</p>
 
-                                    </div>
+<pre><code class="language-swift">// this probably shouldn't be here but it's currently the easiest place
+// to make it happen.
+if node === world.nodes.last {
+    color = Colors().red
+}
+</code></pre>
 
-                    <hr class="w-full border-b mt-2 mb-6">
-                    <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 23, 2021
-    </p>
+<p>I didn't fix this yet, but I hope to get to it soon. Gotta eat one bite at a time!</p>
+    </div>
 
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"
-            title="Read more - Moving a Dot with MetalKit"
-            class="text-gray-900 font-extrabold"
-        >Moving a Dot with MetalKit</a>
-    </h2>
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://dkanen.com/blog/2021-10-05-moving-the-cube" title="Older Post: Moving the Cube">
+                    &LeftArrow; Moving the Cube
+                </a>
+                    </div>
 
-    <p class="mb-4 mt-0">Got a green dot to move across the screen with MetalKit.</p>
-
-    <a
-        href="https://dkanen.com/blog/2021-09-23-moving-a-dot-with-metalkit"
-        title="Read more - Moving a Dot with MetalKit"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 18, 2021
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions"
-            title="Read more - Swift First Swing at Generic Array Extension"
-            class="text-gray-900 font-extrabold"
-        >Swift First Swing at Generic Array Extension</a>
-    </h2>
-
-    <p class="mb-4 mt-0">Leveling up my understanding of generic extensions on Arrays</p>
-
-    <a
-        href="https://dkanen.com/blog/2021-09-18-first-swing-at-generic-array-extensions"
-        title="Read more - Swift First Swing at Generic Array Extension"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    </div>
-
-                    <hr class="w-full border-b mt-2 mb-6">
-                    <div class="flex flex-col md:flex-row md:-mx-6">
-                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 15, 2021
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
-            title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
-            class="text-gray-900 font-extrabold"
-        >JaCoCo Doesn&#039;t Like New Version of Kotlin</a>
-    </h2>
-
-    <p class="mb-4 mt-0">Ran into trouble after upgrading to new version of Kotlin</p>
-
-    <a
-        href="https://dkanen.com/blog/2021-09-15-jacoco-project-extension"
-        title="Read more - JaCoCo Doesn&#039;t Like New Version of Kotlin"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    <hr class="block md:hidden w-full border-b mt-2 mb-6">
-                                            <div class="w-full md:w-1/2 md:mx-6">
-                    <div class="flex flex-col mb-4">
-    <p class="text-gray-700 font-medium my-2">
-        September 15, 2021
-    </p>
-
-    <h2 class="text-3xl mt-0">
-        <a
-            href="https://dkanen.com/blog/determining-generic-type"
-            title="Read more - Determining Generic Type"
-            class="text-gray-900 font-extrabold"
-        >Determining Generic Type</a>
-    </h2>
-
-    <p class="mb-4 mt-0">Generics need a type to know their type.</p>
-
-    <a
-        href="https://dkanen.com/blog/determining-generic-type"
-        title="Read more - Determining Generic Type"
-        class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
-</div>
-                </div>
-
-                                    </div>
-
-                    </main>
+        <div>
+                    </div>
+    </nav>
+        </main>
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-none">
