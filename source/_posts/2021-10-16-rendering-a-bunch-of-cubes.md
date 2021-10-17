@@ -5,7 +5,7 @@ title: Rendering a Bunch of Cubes
 date: 2021-10-16
 description: All the cubes you could ask for.
 cover_image: https://res.cloudinary.com/demmholkv/image/upload/v1633453571/blog/cubes-on-xcode_zoryur.jpg
-excerpt: ???
+excerpt: In some ways this wasn't as hard as I thought it would be. I simply put a bunch of cubes on the screen!
 categories: [swift]
 author: David Kanenwisher
 ---
