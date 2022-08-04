@@ -3,12 +3,95 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2022-08-04T01:14:12+00:00</updated>
+    <updated>2022-08-04T02:49:23+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader" />
+    <title>Sprite Sheets in Metal Shader</title>
+    <published>2022-08-03T00:00:00+00:00</published>
+    <updated>2022-08-03T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">All the cubes you could ask for....</summary>
+    <content type="html"><![CDATA[
+        <p>I got it working to render the textures for the weapons from a sprite sheet rather than from a separate texture for each animation frame. This is pretty exciting since before I used a shader that looked like this:</p>
+
+<pre><code>fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
+                              texture2d&lt;half&gt; texture0 [[ texture(0) ]],
+                              texture2d&lt;half&gt; texture1 [[ texture(1) ]],
+                              texture2d&lt;half&gt; texture2 [[ texture(2) ]],
+                              texture2d&lt;half&gt; texture3 [[ texture(3) ]],
+                              texture2d&lt;half&gt; texture4 [[ texture(4) ]],
+                              texture2d&lt;half&gt; texture5 [[ texture(5) ]],
+                              texture2d&lt;half&gt; texture6 [[ texture(6) ]],
+                              texture2d&lt;half&gt; texture7 [[ texture(7) ]],
+                              texture2d&lt;half&gt; texture8 [[ texture(8) ]],
+                              texture2d&lt;half&gt; texture9 [[ texture(9) ]],
+                              texture2d&lt;half&gt; texture10 [[ texture(10) ]],
+                              texture2d&lt;half&gt; texture11 [[ texture(11) ]],
+                              texture2d&lt;half&gt; texture12 [[ texture(12) ]],
+                              texture2d&lt;half&gt; texture13 [[ texture(13) ]],
+                              texture2d&lt;half&gt; texture14 [[ texture(14) ]],
+                              texture2d&lt;half&gt; texture15 [[ texture(15) ]],
+                              texture2d&lt;half&gt; texture16 [[ texture(16) ]],
+                              texture2d&lt;half&gt; texture17 [[ texture(17) ]],
+                              texture2d&lt;half&gt; texture18 [[ texture(18) ]],
+                              texture2d&lt;half&gt; texture19 [[ texture(19) ]],
+                              texture2d&lt;half&gt; texture20 [[ texture(20) ]],
+                              constant float4 &amp;color [[buffer(0)]]
+                                      ) {
+</code></pre>
+
+<p>I had to pass in so many separate textures to get this to work. I had a rough idea of how to get a sprite sheet to work after doing the work to get to render text from a sprite sheet for the RetroRampage tutorial.</p>
+
+<p>I took that idea and applied it to applying textures to weapons. This translated easily enough because weapons, like pretty much everything else in the game, are being rendered to square billboards. I ended up with a fragment shader that looks like this:</p>
+
+<pre><code>fragment float4 fragment_sprite_sheet(
+                                      VertexOutOnlyPositionAndUv in [[stage_in]],
+                                      texture2d&lt;half&gt; texture [[ texture(0) ]],
+                                      constant float4 &amp;color [[buffer(0)]]
+                                      ) {
+</code></pre>
+
+<p>It only takes one texture now since it's the sprite sheet. I had hoped most of the work for the spite sheet could happen in the fragment shader. It didn't work out since the fragment shader gets interpolated values so it can determine the color of each pixel. I honestly don't quite understand the magic here. Instead, the vertex shader ends up having to do most of the heavy lifting.</p>
+
+<p>The vertex shader now needs to know the dimensions of the sprite sheet and the sprite to display. Now that information gets passed into the fragment shader as <code>uint</code> via <code>textureId</code> and a shared struct <code>SpriteSheet</code>. The <code>SpriteSheet</code> struct knows the height width of texture and of the sprites in the texture. This it possible to determine what texture to use with the single value <code>textureId</code>.</p>
+
+<pre><code>    float txX = in.texcoord.x;
+    float txY = in.texcoord.y;
+    int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
+    int spriteX = textureId % spritesPerRow;
+    int spriteY = textureId / spritesPerRow;
+    float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
+    float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
+    if (txX == 1.0) {
+        txX = txOffsetX + txOffsetX * spriteX;
+    } else if (txX == 0.0) {
+        txX = txOffsetX * spriteX;
+    }
+    if (txY == 1.0) {
+        txY = txOffsetY + txOffsetY * spriteY;
+    } else if (txY == 0.0) {
+        txY = txOffsetY * spriteY;
+    }
+
+    VertexOutOnlyPositionAndUv vertex_out {
+        .position = finalTransform * float4(in.position, 1),
+        .uv = float2(txX, txY)
+    };
+</code></pre>
+
+<p>Now the uv coordinates for each vertex are adjusted to show only the part of the sprite sheet needed for the current animation frame.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/v1659581153/blog/sprite-sheet-wand_i7svzt.png" alt="Image of a lo-res game with a magic wand showing" title="Wand rendered in game with a sprite sheet" /></p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes" />
     <title>Rendering a Bunch of Cubes</title>

@@ -6,20 +6,20 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="Rendering a Bunch of Cubes | David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="Sprite Sheets in Metal Shader | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes"/>
+        <meta property="og:url" content="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>Rendering a Bunch of Cubes | David&#039;s Explorer Blog</title>
+        <title>Sprite Sheets in Metal Shader | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://dkanen.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-            <meta property="og:title" content="Rendering a Bunch of Cubes" />
+            <meta property="og:title" content="Sprite Sheets in Metal Shader" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes"/>
+    <meta property="og:url" content="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader"/>
     <meta property="og:description" content="All the cubes you could ask for." />
 
                     <!-- Matomo -->
@@ -120,11 +120,11 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                        <img src="https://res.cloudinary.com/demmholkv/image/upload/v1633453571/blog/cubes-on-xcode_zoryur.jpg" alt="Rendering a Bunch of Cubes cover image" class="mb-2">
+                        <img src="https://res.cloudinary.com/demmholkv/image/upload/v1659576217/blog/shader-sprite-sheet_p9okql.png" alt="Sprite Sheets in Metal Shader cover image" class="mb-2">
     
-    <h1 class="leading-none mb-2">Rendering a Bunch of Cubes</h1>
+    <h1 class="leading-none mb-2">Sprite Sheets in Metal Shader</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  October 16, 2021</p>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  August 3, 2022</p>
 
                         <a
                 href="/blog/categories/swift"
@@ -133,57 +133,86 @@
             >swift</a>
             
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>If you thought one moving cube was cool you are gonna love <a href="https://youtu.be/4wH-3VwPxtQ">Lots of Moving Cubes</a>!</p>
+        <p>I got it working to render the textures for the weapons from a sprite sheet rather than from a separate texture for each animation frame. This is pretty exciting since before I used a shader that looked like this:</p>
 
-<p>In some ways this wasn't as hard as I thought it would be. I simply put a bunch of cubes on the screen!</p>
+<pre><code>fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
+                              texture2d&lt;half&gt; texture0 [[ texture(0) ]],
+                              texture2d&lt;half&gt; texture1 [[ texture(1) ]],
+                              texture2d&lt;half&gt; texture2 [[ texture(2) ]],
+                              texture2d&lt;half&gt; texture3 [[ texture(3) ]],
+                              texture2d&lt;half&gt; texture4 [[ texture(4) ]],
+                              texture2d&lt;half&gt; texture5 [[ texture(5) ]],
+                              texture2d&lt;half&gt; texture6 [[ texture(6) ]],
+                              texture2d&lt;half&gt; texture7 [[ texture(7) ]],
+                              texture2d&lt;half&gt; texture8 [[ texture(8) ]],
+                              texture2d&lt;half&gt; texture9 [[ texture(9) ]],
+                              texture2d&lt;half&gt; texture10 [[ texture(10) ]],
+                              texture2d&lt;half&gt; texture11 [[ texture(11) ]],
+                              texture2d&lt;half&gt; texture12 [[ texture(12) ]],
+                              texture2d&lt;half&gt; texture13 [[ texture(13) ]],
+                              texture2d&lt;half&gt; texture14 [[ texture(14) ]],
+                              texture2d&lt;half&gt; texture15 [[ texture(15) ]],
+                              texture2d&lt;half&gt; texture16 [[ texture(16) ]],
+                              texture2d&lt;half&gt; texture17 [[ texture(17) ]],
+                              texture2d&lt;half&gt; texture18 [[ texture(18) ]],
+                              texture2d&lt;half&gt; texture19 [[ texture(19) ]],
+                              texture2d&lt;half&gt; texture20 [[ texture(20) ]],
+                              constant float4 &amp;color [[buffer(0)]]
+                                      ) {
+</code></pre>
 
-<p>I wanted a new cube to appear in a random place each time the screen is touched. I made this happen by moving the code the creates the point into the code that updates the world in response to a "click" event:</p>
+<p>I had to pass in so many separate textures to get this to work. I had a rough idea of how to get a sprite sheet to work after doing the work to get to render text from a sprite sheet for the RetroRampage tutorial.</p>
 
-<pre><code class="language-swift">func click() {
-    switch state {
-    case .playing:
-        state = .paused
-        self.nodes.append(
-            Node(
-                location: Point(
-                    Float.random(in: -1...1),
-                    Float.random(in: self.cameraBottom...self.cameraTop),
-                    Float.random(in: 0...1)
-                ),
-                vertices: VerticeCollection().c[.cube]!
-            )
-        )
-    case .paused:
-        state = .playing
+<p>I took that idea and applied it to applying textures to weapons. This translated easily enough because weapons, like pretty much everything else in the game, are being rendered to square billboards. I ended up with a fragment shader that looks like this:</p>
+
+<pre><code>fragment float4 fragment_sprite_sheet(
+                                      VertexOutOnlyPositionAndUv in [[stage_in]],
+                                      texture2d&lt;half&gt; texture [[ texture(0) ]],
+                                      constant float4 &amp;color [[buffer(0)]]
+                                      ) {
+</code></pre>
+
+<p>It only takes one texture now since it's the sprite sheet. I had hoped most of the work for the spite sheet could happen in the fragment shader. It didn't work out since the fragment shader gets interpolated values so it can determine the color of each pixel. I honestly don't quite understand the magic here. Instead, the vertex shader ends up having to do most of the heavy lifting.</p>
+
+<p>The vertex shader now needs to know the dimensions of the sprite sheet and the sprite to display. Now that information gets passed into the fragment shader as <code>uint</code> via <code>textureId</code> and a shared struct <code>SpriteSheet</code>. The <code>SpriteSheet</code> struct knows the height width of texture and of the sprites in the texture. This it possible to determine what texture to use with the single value <code>textureId</code>.</p>
+
+<pre><code>    float txX = in.texcoord.x;
+    float txY = in.texcoord.y;
+    int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
+    int spriteX = textureId % spritesPerRow;
+    int spriteY = textureId / spritesPerRow;
+    float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
+    float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
+    if (txX == 1.0) {
+        txX = txOffsetX + txOffsetX * spriteX;
+    } else if (txX == 0.0) {
+        txX = txOffsetX * spriteX;
     }
-}
+    if (txY == 1.0) {
+        txY = txOffsetY + txOffsetY * spriteY;
+    } else if (txY == 0.0) {
+        txY = txOffsetY * spriteY;
+    }
+
+    VertexOutOnlyPositionAndUv vertex_out {
+        .position = finalTransform * float4(in.position, 1),
+        .uv = float2(txX, txY)
+    };
 </code></pre>
 
-<p>The biggest change was moving the random Point code out of Vertices. This became even more important as I tried to keep the points in side the camera by reference the top and bottom of the camera. This made me realize that it's likely some models need to information about the camera. This allows them to make decisions about their geometry if they need to show up in direct relation to the camera in someway.</p>
+<p>Now the uv coordinates for each vertex are adjusted to show only the part of the sprite sheet needed for the current animation frame.</p>
 
-<p>I also wanted the newest cube to appear red allowing you to track where it goes. This took a bit more adjusting so the color of the Vertices can be changed after the fact. It also revealed a need to have more control of the logic around what cube is red in one place. For instance I have this bit in <code>render()</code>:</p>
-
-<pre><code class="language-swift">// this probably shouldn't be here but it's currently the easiest place
-// to make it happen.
-if node === world.nodes.last {
-    color = Colors().red
-}
-</code></pre>
-
-<p>I didn't fix this yet, but I hope to get to it soon. Gotta eat one bite at a time!</p>
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/v1659581153/blog/sprite-sheet-wand_i7svzt.png" alt="Image of a lo-res game with a magic wand showing" title="Wand rendered in game with a sprite sheet" /></p>
     </div>
 
     <nav class="flex justify-between text-sm md:text-base">
         <div>
-                            <a href="https://dkanen.com/blog/2021-10-05-moving-the-cube" title="Older Post: Moving the Cube">
-                    &LeftArrow; Moving the Cube
+                            <a href="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes" title="Older Post: Rendering a Bunch of Cubes">
+                    &LeftArrow; Rendering a Bunch of Cubes
                 </a>
                     </div>
 
         <div>
-                            <a href="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader" title="Newer Post: Sprite Sheets in Metal Shader">
-                    Sprite Sheets in Metal Shader &RightArrow;
-                </a>
                     </div>
     </nav>
         </main>
