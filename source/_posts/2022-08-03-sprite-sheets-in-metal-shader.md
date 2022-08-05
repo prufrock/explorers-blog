@@ -83,4 +83,4 @@ Now the uv coordinates for each vertex are adjusted to show only the part of the
 
 
 
-![Image of a lo-res game with a magic wand showing](https://res.cloudinary.com/demmholkv/image/upload/v1659581153/blog/sprite-sheet-wand_i7svzt.png "Wand rendered in game with a sprite sheet")
+![Image of a lo-res game with a magic wand showing](https://res.cloudinary.com/demmholkv/image/upload/v1659666221/blog/sprite-sheet-wand_mmoxma.gif "Wand rendered in game with a sprite sheet")
