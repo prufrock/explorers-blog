@@ -6,21 +6,21 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Notes about what I discover while programming">
 
-        <meta property="og:title" content="Sprite Sheets in Metal Shader | David&#039;s Explorer Blog"/>
+        <meta property="og:title" content="Surface Normals | David&#039;s Explorer Blog"/>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader"/>
+        <meta property="og:url" content="https://dkanen.com/blog/2022-09-24-surface-normals"/>
         <meta property="og:description" content="Notes about what I discover while programming" />
 
-        <title>Sprite Sheets in Metal Shader | David&#039;s Explorer Blog</title>
+        <title>Surface Normals | David&#039;s Explorer Blog</title>
 
         <link rel="home" href="https://dkanen.com/">
         <link rel="icon" href="/favicon.ico">
         <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="David&#039;s Explorer Blog Atom Feed">
 
-            <meta property="og:title" content="Sprite Sheets in Metal Shader" />
+            <meta property="og:title" content="Surface Normals" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader"/>
-    <meta property="og:description" content="All the cubes you could ask for." />
+    <meta property="og:url" content="https://dkanen.com/blog/2022-09-24-surface-normals"/>
+    <meta property="og:description" content="Putting surface normals in place" />
 
                     <!-- Matomo -->
                 <script type="text/javascript">
@@ -120,11 +120,11 @@
 </nav>
 
         <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-                        <img src="https://res.cloudinary.com/demmholkv/image/upload/v1659576217/blog/shader-sprite-sheet_p9okql.png" alt="Sprite Sheets in Metal Shader cover image" class="mb-2">
+                        <img src="https://res.cloudinary.com/demmholkv/image/upload/c_fill,g_auto,h_250,w_970/b_rgb:000000,e_gradient_fade,y_-0.5/v1664066859/blog/normals-all-over.jpg" alt="Surface Normals cover image" class="mb-2">
     
-    <h1 class="leading-none mb-2">Sprite Sheets in Metal Shader</h1>
+    <h1 class="leading-none mb-2">Surface Normals</h1>
 
-    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  August 3, 2022</p>
+    <p class="text-gray-700 text-xl md:mt-0">David Kanenwisher  •  September 24, 2022</p>
 
                         <a
                 href="/blog/categories/swift"
@@ -133,89 +133,77 @@
             >swift</a>
             
     <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
-        <p>I got it working to render the textures for the weapons from a sprite sheet rather than from a separate texture for each animation frame. This is pretty exciting since before I used a shader that looked like this:</p>
+        <p>My first attempt is confusing and clearly not correct.</p>
 
-<pre><code>fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
-                              texture2d&lt;half&gt; texture0 [[ texture(0) ]],
-                              texture2d&lt;half&gt; texture1 [[ texture(1) ]],
-                              texture2d&lt;half&gt; texture2 [[ texture(2) ]],
-                              texture2d&lt;half&gt; texture3 [[ texture(3) ]],
-                              texture2d&lt;half&gt; texture4 [[ texture(4) ]],
-                              texture2d&lt;half&gt; texture5 [[ texture(5) ]],
-                              texture2d&lt;half&gt; texture6 [[ texture(6) ]],
-                              texture2d&lt;half&gt; texture7 [[ texture(7) ]],
-                              texture2d&lt;half&gt; texture8 [[ texture(8) ]],
-                              texture2d&lt;half&gt; texture9 [[ texture(9) ]],
-                              texture2d&lt;half&gt; texture10 [[ texture(10) ]],
-                              texture2d&lt;half&gt; texture11 [[ texture(11) ]],
-                              texture2d&lt;half&gt; texture12 [[ texture(12) ]],
-                              texture2d&lt;half&gt; texture13 [[ texture(13) ]],
-                              texture2d&lt;half&gt; texture14 [[ texture(14) ]],
-                              texture2d&lt;half&gt; texture15 [[ texture(15) ]],
-                              texture2d&lt;half&gt; texture16 [[ texture(16) ]],
-                              texture2d&lt;half&gt; texture17 [[ texture(17) ]],
-                              texture2d&lt;half&gt; texture18 [[ texture(18) ]],
-                              texture2d&lt;half&gt; texture19 [[ texture(19) ]],
-                              texture2d&lt;half&gt; texture20 [[ texture(20) ]],
-                              constant float4 &amp;color [[buffer(0)]]
-                                      ) {
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664066859/blog/normals-all-over.jpg" alt="wireframe view of a game green lines for walls, red lines for normals, the normals are scattered all over" title="normals all over" /></p>
+
+<p>I isolate a few wall tiles to make it easier to see the problem:</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664066675/blog/isolate-normals.jpg" alt="a green wireframe cube with red lines as normals pointing diagonal off the bottom" title="isolate normals" /></p>
+
+<p>I get the normals to appear horizontal.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664067851/blog/horizontal-normals.jpg" alt="a green wireframe cube red lines as normals pointing horizontally out from it" title="horizontal normals" /></p>
+
+<p>I add half the vertical normals.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664068066/blog/vertical-normals.jpg" alt="a green wireframe cube red lines as normals pointing horizontall out from it and some pointing from the bottom of it" title="vertical normals" /></p>
+
+<p>I’m passing the normals through to the shader but there may be something a little off.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664068670/blog/yellow-hall.gif" alt="walking through a yellow 3D hallway with green and blue triangular splashes of color" title="bright yellow hall" /></p>
+
+<p>I think the trouble might be that I don’t have enough normals.</p>
+
+<pre><code>// .normal
+$0.attributes[VertexAttribute.normal.rawValue].format = MTLVertexFormat.float3
+$0.attributes[VertexAttribute.normal.rawValue].bufferIndex = VertexAttribute.normal.rawValue
+$0.attributes[VertexAttribute.normal.rawValue].offset = 0
+$0.layouts[VertexAttribute.normal.rawValue].stride = MemoryLayout&lt;Float3&gt;.stride
 </code></pre>
 
-<p>I had to pass in so many separate textures to get this to work. I had a rough idea of how to get a sprite sheet to work after doing the work to get to render text from a sprite sheet for the RetroRampage tutorial.</p>
+<p>I think I still have something wrong with my understanding of normals. I think the normals are more like UV coordinates. They a property of the surface of the object. They are just a direction from the surface of the object.</p>
 
-<p>I took that idea and applied it to applying textures to weapons. This translated easily enough because weapons, like pretty much everything else in the game, are being rendered to square billboards. I ended up with a fragment shader that looks like this:</p>
+<p>All of the surfaces are flat so I may be able to just use <code>float3(1.0, 1.0, 1.0)</code> in the shader as the normal for all the vertices and <code>return float4(normal.x, normal.y, normal.z, 1);</code>. This is what I get:</p>
 
-<pre><code>fragment float4 fragment_sprite_sheet(
-                                      VertexOutOnlyPositionAndUv in [[stage_in]],
-                                      texture2d&lt;half&gt; texture [[ texture(0) ]],
-                                      constant float4 &amp;color [[buffer(0)]]
-                                      ) {
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664069123/blog/all-white.jpg" alt="a white image of 3D game with only a door and part of a wall" title="all white" /></p>
+
+<p>I switch to the vertex’s normals <code>float3(in.normal.x, in.normal.y, in.normal.z)</code> I get:</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664069643/blog/green-and-red-walls.jpg" alt="The 3D walls are show squares the gradually become more red in one direction and more green in another." title="green and red walls" /></p>
+
+<p>I think this is what I want because it gives the surface a top and bottom and a left a right for the lighting to shade. The red is the darkest on the right because where the value of x is the highest. The green is darkest on the top where the value of y is the highest. I’m not sure if that’s quite right but it seems better. The ceiling might be a bit of a problem...for a different day.</p>
+
+<p>Lets see what this looks like with some lighting, starting with hemispheric lighting:</p>
+
+<pre><code>float4 sky = float4(0.34, 0.9, 1.0, 1.0);
+float4 earth = float4(0.29, 0.58, 0.2, 1.0);
+
+float intensity = in.normal.y * 0.5 + 0.5;
+return mix(mix(sky, earth, intensity), float4(colorSample), in.normal.y * 0.5 + 0.5);
 </code></pre>
 
-<p>It only takes one texture now since it's the sprite sheet. I had hoped most of the work for the spite sheet could happen in the fragment shader. It didn't work out since the fragment shader gets interpolated values so it can determine the color of each pixel. I honestly don't quite understand the magic here. Instead, the vertex shader ends up having to do most of the heavy lifting.</p>
+<p>The idea here being that the top is a bluish color and bottom is a greenish color[1].</p>
 
-<p>The vertex shader now needs to know the dimensions of the sprite sheet and the sprite to display. Now that information gets passed into the fragment shader as <code>uint</code> via <code>textureId</code> and a shared struct <code>SpriteSheet</code>. The <code>SpriteSheet</code> struct knows the height width of texture and of the sprites in the texture. This it possible to determine what texture to use with the single value <code>textureId</code>.</p>
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664070152/blog/hemispheric-lighting.jpg" alt="The 3D walls have a variety of colors to make them look like they are underground with a blue gradient coming from the bottom." title="hemispheric lighting" /></p>
 
-<pre><code>    float txX = in.texcoord.x;
-    float txY = in.texcoord.y;
-    int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
-    int spriteX = textureId % spritesPerRow;
-    int spriteY = textureId / spritesPerRow;
-    float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
-    float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
-    if (txX == 1.0) {
-        txX = txOffsetX + txOffsetX * spriteX;
-    } else if (txX == 0.0) {
-        txX = txOffsetX * spriteX;
-    }
-    if (txY == 1.0) {
-        txY = txOffsetY + txOffsetY * spriteY;
-    } else if (txY == 0.0) {
-        txY = txOffsetY * spriteY;
-    }
+<p>Then just for fun with the world transform:</p>
 
-    VertexOutOnlyPositionAndUv vertex_out {
-        .position = finalTransform * float4(in.position, 1),
-        .uv = float2(txX, txY)
-    };
-</code></pre>
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664070637/blog/hemispheric-lighting-world-transform.gif" alt="Animation of walking through an undergound maze with bright teal areas" title="hemispheric lighting world transform" /></p>
 
-<p>Now the uv coordinates for each vertex are adjusted to show only the part of the sprite sheet needed for the current animation frame.</p>
+<p>I love the colors from this. Eventually I’ll have to figure out how to intentionally get something similar.</p>
 
-<p><img src="https://res.cloudinary.com/demmholkv/image/upload/v1659666221/blog/sprite-sheet-wand_mmoxma.gif" alt="Image of a lo-res game with a magic wand showing" title="Wand rendered in game with a sprite sheet" /></p>
+<p>[1] Thanks for the lighting tutorials Metal By Tutorials! By Caroline Begbie &amp; Marius Horga</p>
     </div>
 
     <nav class="flex justify-between text-sm md:text-base">
         <div>
-                            <a href="https://dkanen.com/blog/2021-10-16-rendering-a-bunch-of-cubes" title="Older Post: Rendering a Bunch of Cubes">
-                    &LeftArrow; Rendering a Bunch of Cubes
+                            <a href="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader" title="Older Post: Sprite Sheets in Metal Shader">
+                    &LeftArrow; Sprite Sheets in Metal Shader
                 </a>
                     </div>
 
         <div>
-                            <a href="https://dkanen.com/blog/2022-09-24-surface-normals" title="Newer Post: Surface Normals">
-                    Surface Normals &RightArrow;
-                </a>
                     </div>
     </nav>
         </main>

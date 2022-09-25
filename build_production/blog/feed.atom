@@ -3,12 +3,86 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2022-08-05T02:26:34+00:00</updated>
+    <updated>2022-09-25T02:03:15+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/2022-09-24-surface-normals</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2022-09-24-surface-normals" />
+    <title>Surface Normals</title>
+    <published>2022-09-24T00:00:00+00:00</published>
+    <updated>2022-09-24T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">Putting surface normals in place...</summary>
+    <content type="html"><![CDATA[
+        <p>My first attempt is confusing and clearly not correct.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664066859/blog/normals-all-over.jpg" alt="wireframe view of a game green lines for walls, red lines for normals, the normals are scattered all over" title="normals all over" /></p>
+
+<p>I isolate a few wall tiles to make it easier to see the problem:</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664066675/blog/isolate-normals.jpg" alt="a green wireframe cube with red lines as normals pointing diagonal off the bottom" title="isolate normals" /></p>
+
+<p>I get the normals to appear horizontal.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664067851/blog/horizontal-normals.jpg" alt="a green wireframe cube red lines as normals pointing horizontally out from it" title="horizontal normals" /></p>
+
+<p>I add half the vertical normals.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664068066/blog/vertical-normals.jpg" alt="a green wireframe cube red lines as normals pointing horizontall out from it and some pointing from the bottom of it" title="vertical normals" /></p>
+
+<p>I’m passing the normals through to the shader but there may be something a little off.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664068670/blog/yellow-hall.gif" alt="walking through a yellow 3D hallway with green and blue triangular splashes of color" title="bright yellow hall" /></p>
+
+<p>I think the trouble might be that I don’t have enough normals.</p>
+
+<pre><code>// .normal
+$0.attributes[VertexAttribute.normal.rawValue].format = MTLVertexFormat.float3
+$0.attributes[VertexAttribute.normal.rawValue].bufferIndex = VertexAttribute.normal.rawValue
+$0.attributes[VertexAttribute.normal.rawValue].offset = 0
+$0.layouts[VertexAttribute.normal.rawValue].stride = MemoryLayout&lt;Float3&gt;.stride
+</code></pre>
+
+<p>I think I still have something wrong with my understanding of normals. I think the normals are more like UV coordinates. They a property of the surface of the object. They are just a direction from the surface of the object.</p>
+
+<p>All of the surfaces are flat so I may be able to just use <code>float3(1.0, 1.0, 1.0)</code> in the shader as the normal for all the vertices and <code>return float4(normal.x, normal.y, normal.z, 1);</code>. This is what I get:</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664069123/blog/all-white.jpg" alt="a white image of 3D game with only a door and part of a wall" title="all white" /></p>
+
+<p>I switch to the vertex’s normals <code>float3(in.normal.x, in.normal.y, in.normal.z)</code> I get:</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664069643/blog/green-and-red-walls.jpg" alt="The 3D walls are show squares the gradually become more red in one direction and more green in another." title="green and red walls" /></p>
+
+<p>I think this is what I want because it gives the surface a top and bottom and a left a right for the lighting to shade. The red is the darkest on the right because where the value of x is the highest. The green is darkest on the top where the value of y is the highest. I’m not sure if that’s quite right but it seems better. The ceiling might be a bit of a problem...for a different day.</p>
+
+<p>Lets see what this looks like with some lighting, starting with hemispheric lighting:</p>
+
+<pre><code>float4 sky = float4(0.34, 0.9, 1.0, 1.0);
+float4 earth = float4(0.29, 0.58, 0.2, 1.0);
+
+float intensity = in.normal.y * 0.5 + 0.5;
+return mix(mix(sky, earth, intensity), float4(colorSample), in.normal.y * 0.5 + 0.5);
+</code></pre>
+
+<p>The idea here being that the top is a bluish color and bottom is a greenish color[1].</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664070152/blog/hemispheric-lighting.jpg" alt="The 3D walls have a variety of colors to make them look like they are underground with a blue gradient coming from the bottom." title="hemispheric lighting" /></p>
+
+<p>Then just for fun with the world transform:</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/q_80,h_400/v1664070637/blog/hemispheric-lighting-world-transform.gif" alt="Animation of walking through an undergound maze with bright teal areas" title="hemispheric lighting world transform" /></p>
+
+<p>I love the colors from this. Eventually I’ll have to figure out how to intentionally get something similar.</p>
+
+<p>[1] Thanks for the lighting tutorials Metal By Tutorials! By Caroline Begbie &amp; Marius Horga</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2022-08-03-sprite-sheets-in-metal-shader" />
     <title>Sprite Sheets in Metal Shader</title>
