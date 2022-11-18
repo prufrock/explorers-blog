@@ -3,12 +3,34 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2022-09-25T02:03:15+00:00</updated>
+    <updated>2022-11-18T03:16:03+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
     </author>
                 <entry>
+    <id>https://dkanen.com/blog/2022-11-17-specify-point-size</id>
+    <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2022-11-17-specify-point-size" />
+    <title>Don&#039;t Forget Point Size</title>
+    <published>2022-11-17T00:00:00+00:00</published>
+    <updated>2022-11-17T00:00:00+00:00</updated>
+    <author>
+        <name>David Kanenwisher</name>
+    </author>
+    <summary type="html">Output is weird when point size isn&#039;t set...</summary>
+    <content type="html"><![CDATA[
+        <p>I ran into some trouble when I didn't specify the <code>point_size</code> in the output from the vertex function.</p>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/v1668740611/blog/no-point-size.gif" alt="a white screen with a red point flickering across it" title="jumpy point" /></p>
+
+<p>It took me quite a bit of head scratching to figure out what was going on. It lead me to the <a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">Metal Shading Language Specification</a> where I found that all of the possible values are predefined.</p>
+
+<p>After seeing <code>position</code> in there it makes the interpolation in the fragment function make more sense. I had been trying to figure out how the fragment function knows which attribute of the input is the value to interpolate. Clearly, with <code>position</code> being part of the specification it simpy knows.</p>
+
+<p>Fascinating!</p>
+    ]]></content>
+</entry>
+            <entry>
     <id>https://dkanen.com/blog/2022-09-24-surface-normals</id>
     <link type="text/html" rel="alternate" href="https://dkanen.com/blog/2022-09-24-surface-normals" />
     <title>Surface Normals</title>
