@@ -3,7 +3,7 @@
     <title>David&#039;s Explorer Blog</title>
     <link href="https://dkanen.com/" />
     <link type="application/atom+xml" rel="self" href="https://dkanen.com/blog/feed.atom" />
-    <updated>2022-11-18T03:16:03+00:00</updated>
+    <updated>2022-11-18T03:31:52+00:00</updated>
     <id>https://dkanen.com/blog/feed.atom</id>
     <author>
         <name>David Kanenwisher</name>
@@ -26,6 +26,16 @@
 <p>It took me quite a bit of head scratching to figure out what was going on. It lead me to the <a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">Metal Shading Language Specification</a> where I found that all of the possible values are predefined.</p>
 
 <p>After seeing <code>position</code> in there it makes the interpolation in the fragment function make more sense. I had been trying to figure out how the fragment function knows which attribute of the input is the value to interpolate. Clearly, with <code>position</code> being part of the specification it simpy knows.</p>
+
+<p>After updating the shader with the point it works as expected.</p>
+
+<pre><code>VertexOut vertex_out {
+    .position = transform * float4(v.position, 1),
+    .point_size = 20.0
+};
+</code></pre>
+
+<p><img src="https://res.cloudinary.com/demmholkv/image/upload/v1668741687/blog/steady-point_omj8vr.png" alt="a white screen with a red point in the middle" title="the point holds steady" /></p>
 
 <p>Fascinating!</p>
     ]]></content>

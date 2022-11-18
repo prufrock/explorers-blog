@@ -18,4 +18,15 @@ It took me quite a bit of head scratching to figure out what was going on. It le
 
 After seeing `position` in there it makes the interpolation in the fragment function make more sense. I had been trying to figure out how the fragment function knows which attribute of the input is the value to interpolate. Clearly, with `position` being part of the specification it simpy knows.
 
+After updating the shader with the point it works as expected.
+
+```
+VertexOut vertex_out {
+    .position = transform * float4(v.position, 1),
+    .point_size = 20.0
+};
+```
+
+![a white screen with a red point in the middle](https://res.cloudinary.com/demmholkv/image/upload/v1668741687/blog/steady-point_omj8vr.png "the point holds steady")
+
 Fascinating!
