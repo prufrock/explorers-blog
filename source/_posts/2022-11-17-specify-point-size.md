@@ -16,7 +16,7 @@ I ran into some trouble when I didn't specify the `point_size` in the output fro
 
 It took me quite a bit of head scratching to figure out what was going on. It lead me to the [Metal Shading Language Specification](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf) where I found that all of the possible values are predefined.
 
-After seeing `position` in there it makes the interpolation in the fragment function make more sense. I had been trying to figure out how the fragment function knows which attribute of the input is the value to interpolate. Clearly, with `position` being part of the specification it simpy knows.
+After seeing `position` in there it makes the interpolation in the fragment function make more sense. I had been trying to figure out how the fragment function knows which attribute of the input is the value to interpolate. Clearly, with `position` being part of the specification it simply knows.
 
 After updating the shader with the point it works as expected.
 
