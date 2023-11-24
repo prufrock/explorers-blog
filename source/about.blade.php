@@ -1,11 +1,8 @@
-@extends('_layouts.master')
-
-@push('meta')
-    <meta property="og:title" content="About {{ $page->siteName }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ $page->getUrl() }}"/>
-    <meta property="og:description" content="A little bit about {{ $page->siteName }}" />
-@endpush
+---
+title: About
+description: A little bit about the site
+---
+@extends('_layouts.main')
 
 @section('body')
     <h1>About</h1>
@@ -14,7 +11,5 @@
         alt="About image"
         class="flex rounded-full h-64 w-64 bg-contain mx-auto md:float-right my-6 md:ml-10">
 
-    <p class="mb-6">David is a software engineer at Bushel who lives and works in Fargo. He loves to build neat stuff with code, write about it, and make barely discernible LEGO creations with his daughter.</p>
-
-    <p class="mb-6">Bushel is an ag-tech company Fargo, ND. We like to build cool stuff. If you'd like to build cool stuff with us checkout our <a href="https://bushelpowered.com/careers/">careers</a> page.
+    <p class="mb-6">David loves to build neat stuff with code, write about it, and make barely discernible LEGO creations with his daughter.</p>
 @endsection

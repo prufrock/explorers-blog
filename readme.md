@@ -2,7 +2,7 @@
 
 This is a starter template for creating a beautiful, customizable blog in Jigsaw with minimal effort. You’ll only have to change a few settings and you’re ready to go.
 
-[View a preview of the blog template.](http://jigsaw-blog-staging.tighten.co/)
+[View a preview of the blog template.](http://jigsaw-blog-template.tighten.co/)
 
 ## Installation
 
@@ -26,7 +26,7 @@ This starter template includes samples of common page types, and comes pre-confi
 
 ---
 
-![Blog starter template screenshot](https://user-images.githubusercontent.com/357312/50345466-355c7700-04fd-11e9-83dd-f4e13ecdc97c.png)
+![Blog starter template screenshot](/.github/screenshots/template-blog.png)
 
 ---
 
@@ -60,7 +60,7 @@ The top of each content page contains a YAML header that specifies how it should
 extends: _layouts.post
 section: content
 title: Getting Started
-date: 2018-12-25
+date: 2022-08-02
 description: Getting started with the Jigsaw blog starter template
 cover_image: /assets/img/post-cover-image-2.png
 featured: true
@@ -71,7 +71,7 @@ featured: true
 
 ### Adding Assets
 
-Any assets that need to be compiled (such as JavaScript, Less, or Sass files) can be added to the `source/_assets/` directory, and Laravel Mix will process them when running `npm run local` or `npm run production`. The processed assets will be stored in `/source/assets/build/` (note there is no underscore on this second `assets` directory).
+Any assets that need to be compiled (such as JavaScript, Less, or Sass files) can be added to the `source/_assets/` directory, and Laravel Mix will process them when running `npm run dev` or `npm run prod`. The processed assets will be stored in `/source/assets/build/` (note there is no underscore on this second `assets` directory).
 
 Then, when Jigsaw builds your site, the entire `/source/assets/` directory containing your built files (and any other directories containing static assets, such as images or fonts, that you choose to store there) will be copied to the destination build folders (`build_local`, on your local machine).
 
@@ -90,6 +90,6 @@ Now that you’ve edited your configuration variables and know how to customize 
 ./vendor/bin/jigsaw build
 
 # compile assets with Laravel Mix
-# options: dev, staging, production
+# options: dev, prod
 npm run dev
 ```

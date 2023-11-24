@@ -1,7 +1,6 @@
-@extends('_layouts.master')
+@extends('_layouts.main')
 
 @section('body')
-    @include('_components.welcome')
     @foreach ($posts->where('featured', true) as $featuredPost)
         <div class="w-full mb-6">
             @if ($featuredPost->cover_image)

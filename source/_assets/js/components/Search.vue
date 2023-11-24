@@ -10,7 +10,7 @@
                 id="search"
                 v-model="query"
                 ref="search"
-                class="transition-fast relative block h-10 w-full lg:w-1/2 lg:focus:w-3/4 bg-gray-100 border border-gray-500 focus:border-blue-400 outline-none cursor-pointer text-gray-700 px-4 pb-0 pt-px"
+                class="relative block h-10 w-full lg:w-1/2 lg:focus:w-3/4 bg-gray-100 border border-gray-500 focus:border-blue-400 outline-none cursor-pointer text-gray-700 px-4 pb-0 pt-px transition-all duration-200 ease-out"
                 :class="{ 'transition-border': query }"
                 autocomplete="off"
                 name="search"
@@ -28,19 +28,19 @@
 
             <transition name="fade">
                 <div v-if="query" class="absolute left-0 right-0 md:inset-auto w-full lg:w-3/4 text-left mb-4 md:mt-10">
-                    <div class="flex flex-col bg-white border border-b-0 border-t-0 border-blue-400 rounded-b-lg shadow-lg mx-4 md:mx-0">
+                    <div class="flex flex-col bg-white border border-b-0 border-t-0 border-blue-400 rounded-b-lg shadow-search mx-4 md:mx-0">
                         <a
                             v-for="(result, index) in results"
                             class="bg-white hover:bg-blue-100 border-b border-blue-400 text-xl cursor-pointer p-4"
-                            :class="{ 'rounded-b-lg' : (index === results.length - 1) }"
-                            :href="result.link"
-                            :title="result.title"
+                            :class="{ 'rounded-b-lg': (index === results.length - 1) }"
+                            :href="result.item.link"
+                            :title="result.item.title"
                             :key="result.link"
                             @mousedown.prevent
                         >
-                            {{ result.title }}
+                            {{ result.item.title }}
 
-                            <span class="block font-normal text-gray-700 text-sm my-1" v-html="result.snippet"></span>
+                            <span class="block font-normal text-gray-700 text-sm my-1" v-html="result.item.snippet"></span>
                         </a>
 
                         <div
@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import Fuse from 'fuse.js';
+
 export default {
     data() {
         return {
@@ -93,7 +95,7 @@ export default {
     },
     created() {
         axios('/index.json').then(response => {
-            this.fuse = new fuse(response.data, {
+            this.fuse = new Fuse(response.data, {
                 minMatchCharLength: 6,
                 keys: ['title', 'snippet', 'categories'],
             });

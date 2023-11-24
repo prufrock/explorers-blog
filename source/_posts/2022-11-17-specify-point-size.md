@@ -5,7 +5,7 @@ title: Don't Forget Point Size
 date: 2022-11-17
 description: Output is weird when point size isn't set
 cover_image: https://res.cloudinary.com/demmholkv/image/upload/v1668741273/blog/trouble-no-point-size.pnga
-excerpt: It turn
+excerpt: It turns out you need to set the point size.
 categories: [swift]
 author: David Kanenwisher
 ---

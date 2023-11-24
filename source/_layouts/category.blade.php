@@ -1,11 +1,4 @@
-@extends('_layouts.master')
-
-@push('meta')
-    <meta property="og:title" content="{{ $page->title }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ $page->getUrl() }}"/>
-    <meta property="og:description" content="{{ $page->description }}" />
-@endpush
+@extends('_layouts.main')
 
 @section('body')
     <h1>{{ $page->title }}</h1>
@@ -21,4 +14,6 @@
             <hr class="w-full border-b mt-2 mb-6">
         @endif
     @endforeach
+
+    @include('_components.newsletter-signup')
 @stop

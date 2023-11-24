@@ -3,7 +3,7 @@
 use Illuminate\Support\Str;
 
 return [
-    'baseUrl' => 'http://localhost:3000/',
+    'baseUrl' => '',
     'production' => false,
     'siteName' => 'David\'s Explorer Blog',
     'siteDescription' => 'Notes about what I discover while programming',
@@ -44,7 +44,7 @@ return [
         );
 
         if (count($content) > 1) {
-            return $content[0];
+            return $cleaned;
         }
 
         $truncated = substr($cleaned, 0, $length);
