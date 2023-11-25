@@ -3,7 +3,7 @@ extends: _layouts.post
 section: content
 title: Don't Forget Point Size
 date: 2022-11-17
-description: Output is weird when point size isn't set
+description: Output is weird when point size isn't set...build
 cover_image: https://res.cloudinary.com/demmholkv/image/upload/v1668741273/blog/trouble-no-point-size.pnga
 excerpt: It turns out you need to set the point size.
 categories: [swift]
