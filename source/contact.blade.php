@@ -8,7 +8,7 @@ description: Get in touch with me
 <h1>Contact</h1>
 
 <p class="mb-8">
-    Sorry, I decided to disable this for now.
+    Someday I'll reconnect this...
 </p>
 
 @stop
