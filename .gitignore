@@ -3,3 +3,5 @@
 /source/assets/build/
 /vendor/
 .DS_Store
+
+.idea/
