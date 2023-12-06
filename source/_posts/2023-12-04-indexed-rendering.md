@@ -179,6 +179,7 @@ encoder.drawIndexedPrimitives(
     indexBuffer: indexBuffer,
     indexBufferOffset: 0,
     instanceCount: finalTransforms.count
+)
 ```
 
 It’s very important that the buffers and indexes passed to `setVertexBytes` line up with the parameters to `vertex_main`.

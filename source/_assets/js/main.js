@@ -13,6 +13,9 @@ hljs.registerLanguage('markdown', require('highlight.js/lib/languages/markdown')
 hljs.registerLanguage('php', require('highlight.js/lib/languages/php'));
 hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss'));
 hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'));
+hljs.registerLanguage('kotlin', require('highlight.js/lib/languages/kotlin'));
+hljs.registerLanguage('swift', require('highlight.js/lib/languages/swift'));
+hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'));
 
 document.querySelectorAll('pre code').forEach((block) => {
     hljs.highlightBlock(block);
