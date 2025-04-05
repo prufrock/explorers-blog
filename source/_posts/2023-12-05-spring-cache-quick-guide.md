@@ -11,6 +11,7 @@ author: David Kanenwisher
 ---
 
 The caching in Spring is managed by annotations.
+
 * The CacheManager needs to be configured with the names of the caches.
 * Need to make sure classes using the annotations are injected so the ApplicationContext can supply the configured CacheManager.
 
